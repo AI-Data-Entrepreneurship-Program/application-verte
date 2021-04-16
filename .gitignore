@@ -13,3 +13,5 @@ web-build/
 .DS_Store
 
 .prettierrc
+.vscode/
+__pycache__
