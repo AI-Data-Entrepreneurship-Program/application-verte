@@ -1,23 +1,21 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Tab from './navigation/TabNavigator';
+import HomeScreen from './screens/HomeScreen';
+import SuggestionScreen from './screens/SuggestionScreen';
+import CommunityScreen from './screens/CommunityScreen';
 
 const App = () => {
     return (
-        <View style={styles.container}>
-            <Text>Hello, world!</Text>
-            <StatusBar style='auto' />
-        </View>
+        <NavigationContainer>
+            <Tab.Navigator initialRouteName='Home'>
+                <Tab.Screen name='Home' component={HomeScreen} />
+                <Tab.Screen name='Suggestion' component={SuggestionScreen} />
+                <Tab.Screen name='Community' component={CommunityScreen} />
+            </Tab.Navigator>
+        </NavigationContainer>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
 
 export default App;
