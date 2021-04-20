@@ -8,7 +8,11 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen name='Home' component={TabNavigator} />
+            <Stack.Screen
+                name='Home'
+                component={TabNavigator}
+                options={{ headerShown: false }}
+            />
         </Stack.Navigator>
     );
 };
