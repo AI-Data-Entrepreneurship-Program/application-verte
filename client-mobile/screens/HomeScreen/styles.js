@@ -6,7 +6,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    titleContainer: {
+
+    yoursContainer: {
+        width: '100%'
+    },
+    exploreContainer: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    header: {
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center'
@@ -17,7 +27,7 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 50,
-        backgroundColor: 'lightgrey',
+        backgroundColor: 'rgba(95, 95, 95, 0.1)',
         alignItems: 'center',
         justifyContent: 'center',
         height: 20,
