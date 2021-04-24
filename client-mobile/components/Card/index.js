@@ -1,28 +1,42 @@
 import React from 'react';
 import {
-    View,
+    Image,
+    ImageBackground,
     Text,
     TouchableOpacity,
-    ImageBackground,
-    Image
+    useWindowDimensions,
+    View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
-
+import PressableIcon from '../PressableIcon';
 import styles from './styles';
 
-const troncateTitle = (title, large = false) => {
-    const maxLength = large ? 18 : 35;
+const getCardWidth = (width, type) => {
+    let cardWidth = width;
 
-    if (title.length < maxLength) return title;
-    return title.substring(0, maxLength).trimEnd().concat('...');
+    if (type === 'normal') {
+        if (width <= 400) cardWidth = width * 0.9;
+        else cardWidth = 400;
+    }
+
+    if (type === 'detailed') {
+        if (width <= 800) cardWidth = width * 0.9;
+        else cardWidth = 800;
+    }
+
+    return cardWidth;
 };
 
-const Large = ({ item }) => {
+const Normal = ({ item }) => {
+    const { width } = useWindowDimensions();
+
     const containerPressHandler = () => {};
 
     return (
         <TouchableOpacity
-            style={styles.largeContainer}
+            style={[
+                styles.normalContainer,
+                { width: getCardWidth(width, 'normal') }
+            ]}
             activeOpacity={0.8}
             onPress={containerPressHandler}
         >
@@ -38,8 +52,10 @@ const Large = ({ item }) => {
                             styles.title,
                             { color: 'white', marginLeft: 5 }
                         ]}
+                        numberOfLines={1}
+                        ellipsizeMode='tail'
                     >
-                        {troncateTitle(item.title, true)}
+                        {item.title}
                     </Text>
                 </View>
             </ImageBackground>
@@ -47,18 +63,29 @@ const Large = ({ item }) => {
     );
 };
 
-const Small = ({ item }) => {
+const Detailed = ({ item }) => {
+    const { width } = useWindowDimensions();
+
     const containerPressHandler = () => {};
 
     return (
         <TouchableOpacity
-            style={styles.smallContainer}
+            style={[
+                styles.detailedContainer,
+                { width: getCardWidth(width, 'detailed') }
+            ]}
             activeOpacity={0.8}
             onPress={containerPressHandler}
         >
             <Image style={styles.image} source={{ uri: item.image }} />
             <View style={styles.content}>
-                <Text style={styles.title}>{troncateTitle(item.title)}</Text>
+                <Text
+                    style={styles.title}
+                    numberOfLines={2}
+                    ellipsizeMode='tail'
+                >
+                    {item.title}
+                </Text>
             </View>
             <View style={styles.header}>
                 {item.user?.avatar && (
@@ -67,7 +94,7 @@ const Small = ({ item }) => {
                         source={{ uri: item.user.avatar }}
                     />
                 )}
-                <Icon
+                <PressableIcon
                     style={styles.bookmark}
                     name='bookmark'
                     size={28}
@@ -78,8 +105,11 @@ const Small = ({ item }) => {
     );
 };
 
-const Card = ({ item, large = false }) => {
-    return large ? <Large item={item} /> : <Small item={item} />;
+const Card = ({ item, type = 'normal' }) => {
+    if (type === 'normal') return <Normal item={item} />;
+    if (type === 'detailed') return <Detailed item={item} />;
+
+    throw new Error('Unknown card type');
 };
 
 export default Card;

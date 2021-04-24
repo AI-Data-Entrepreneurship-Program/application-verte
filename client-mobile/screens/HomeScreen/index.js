@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import _ from 'lodash';
-
-import styles from './styles';
+import React, { useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Card from '../../components/Card';
+import styles from './styles';
 
 const data = [
     {
@@ -49,11 +48,13 @@ const YoursSection = () => {
             <View style={styles.header}>
                 <Text style={styles.title}>Yours</Text>
             </View>
-            <View>
+            <View style={{ flex: 1, width: '100%' }}>
                 <FlatList
                     data={state}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Card item={item} large={true} />}
+                    renderItem={({ item }) => (
+                        <Card item={item} type='normal' />
+                    )}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     bounces={false}
@@ -79,11 +80,13 @@ const ExploreSection = () => {
                 </TouchableOpacity>
                 {/*  */}
             </View>
-            <View>
+            <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
                 <FlatList
                     data={state}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Card item={item} />}
+                    renderItem={({ item }) => (
+                        <Card item={item} type='detailed' />
+                    )}
                     showsVerticalScrollIndicator={false}
                     bounces={false}
                 />
