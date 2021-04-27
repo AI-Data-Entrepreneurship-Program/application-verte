@@ -10,6 +10,7 @@ const data = [
     {
         id: 1,
         title: 'How to recycle cans',
+        description: 'Occaecat id cillum et aute.',
         // image:
         //     'https://www.instrupix.com/wp-content/uploads/2019/10/diy-rope-wrapped-tin-cans-for-office-supplies.jpg',
         user: {
@@ -21,13 +22,16 @@ const data = [
     {
         id: 2,
         title: 'Reduce how much electricity we use',
-        // image:
-        //     'https://cdn.pixabay.com/photo/2020/05/31/19/53/light-bulb-5244001_960_720.jpg',
+        description:
+            'Velit magna amet ipsum ad culpa laboris adipisicing et anim officia officia est incididunt quis.',
+        image:
+            'https://cdn.pixabay.com/photo/2020/05/31/19/53/light-bulb-5244001_960_720.jpg',
         category: { color: 'orange' }
     },
     {
         id: 3,
         title: 'Install solar pannels',
+        description: 'Ex non sit laborum id dolore.',
         // image:
         //     'https://cdn.pixabay.com/photo/2012/03/03/23/11/alternative-21581_960_720.jpg',
         category: { color: 'orange' }
@@ -35,6 +39,8 @@ const data = [
     {
         id: 4,
         title: 'Stop sending emails',
+        description:
+            'Ullamco ex exercitation id ex elit sint irure esse dolore irure excepteur cillum anim incididunt.',
         // image:
         //     'https://cdn.pixabay.com/photo/2014/05/02/21/49/laptop-336373_960_720.jpg',
         category: { color: 'cyan' }

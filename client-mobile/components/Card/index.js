@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import {
     Image,
@@ -27,12 +28,10 @@ const getCardWidth = (width, type) => {
     return cardWidth;
 };
 
-const Normal = ({ item }) => {
+const Normal = ({ item, containerPressHandler }) => {
     const { width } = useWindowDimensions();
     const { theme } = useContext(ThemeContext);
     const colors = Object.values(theme.colors);
-
-    const containerPressHandler = () => {};
 
     const ImageContent = () => {
         return (
@@ -91,12 +90,10 @@ const Normal = ({ item }) => {
     );
 };
 
-const Detailed = ({ item }) => {
+const Detailed = ({ item, containerPressHandler }) => {
     const { width } = useWindowDimensions();
     const { theme } = useContext(ThemeContext);
     const colors = Object.values(theme.colors);
-
-    const containerPressHandler = () => {};
 
     return (
         <TouchableOpacity
@@ -150,8 +147,22 @@ const Detailed = ({ item }) => {
 };
 
 const Card = ({ item, type = 'normal' }) => {
-    if (type === 'normal') return <Normal item={item} />;
-    if (type === 'detailed') return <Detailed item={item} />;
+    const navigation = useNavigation();
+
+    const containerPressHandler = () =>
+        navigation.navigate('Details', { item });
+
+    if (type === 'normal')
+        return (
+            <Normal item={item} containerPressHandler={containerPressHandler} />
+        );
+    if (type === 'detailed')
+        return (
+            <Detailed
+                item={item}
+                containerPressHandler={containerPressHandler}
+            />
+        );
 
     throw new Error('Unknown card type');
 };

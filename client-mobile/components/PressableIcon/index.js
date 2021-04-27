@@ -7,8 +7,8 @@ const PressableIcon = ({
     name,
     style: propsStyles = {},
     size,
-    color,
-    onPress
+    color = 'black',
+    onPress = () => {}
 }) => {
     return (
         <TouchableOpacity
