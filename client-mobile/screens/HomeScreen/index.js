@@ -1,13 +1,8 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
-import {
-    FlatList,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View
-} from 'react-native';
+import { FlatList, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles';
 
@@ -19,7 +14,7 @@ const data = [
         //     'https://www.instrupix.com/wp-content/uploads/2019/10/diy-rope-wrapped-tin-cans-for-office-supplies.jpg',
         user: {
             avatar:
-                'https://i.pinimg.com/originals/ce/da/29/ceda297b3ec4d9f166e3fbd408becb25.png'
+                'https://i.pinimg.com/564x/7b/e3/c8/7be3c860904fd21fbc09bb5422035f2a.jpg'
         },
         category: { color: 'pink' }
     },
@@ -78,14 +73,7 @@ const ExploreSection = () => {
         <View style={styles.exploreContainer}>
             <View style={styles.header}>
                 <Text style={styles.title}>Explore</Text>
-                {/* this should probably be turned into a button component */}
-                <TouchableOpacity
-                    style={[styles.button, { width: 50 }]}
-                    activeOpacity={0.8}
-                >
-                    <Text style={{ fontSize: 16 }}>Sort</Text>
-                </TouchableOpacity>
-                {/*  */}
+                <Button containerStyle={styles.button} title='Sort' />
             </View>
             <View
                 style={{

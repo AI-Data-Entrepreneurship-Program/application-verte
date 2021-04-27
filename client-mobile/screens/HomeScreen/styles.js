@@ -26,11 +26,7 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     button: {
-        borderRadius: 50,
         backgroundColor: 'rgba(95, 95, 95, 0.1)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 20,
         marginHorizontal: 10
     }
 });
