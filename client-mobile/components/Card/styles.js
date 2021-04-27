@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         backgroundColor: 'rgba(95, 95, 95, 0.1)',
         borderRadius: 10,
-        marginVertical: 5,
+        margin: 5,
         flexDirection: 'row'
     },
     image: {
@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     bookmark: {
-        bottom: 8
+        bottom: 5
     },
     avatar: {
         width: 30,
         height: 30,
         borderRadius: 100,
-        bottom: 8
+        bottom: 5
     }
 });
 

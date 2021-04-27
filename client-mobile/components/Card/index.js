@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     Image,
     ImageBackground,
@@ -7,6 +7,7 @@ import {
     useWindowDimensions,
     View
 } from 'react-native';
+import { ThemeContext } from '../../contexts/Theme';
 import PressableIcon from '../PressableIcon';
 import styles from './styles';
 
@@ -20,7 +21,7 @@ const getCardWidth = (width, type) => {
 
     if (type === 'detailed') {
         if (width <= 800) cardWidth = width * 0.9;
-        else cardWidth = 800;
+        else cardWidth = 700;
     }
 
     return cardWidth;
@@ -28,23 +29,14 @@ const getCardWidth = (width, type) => {
 
 const Normal = ({ item }) => {
     const { width } = useWindowDimensions();
+    const { theme } = useContext(ThemeContext);
+    const colors = Object.values(theme.colors);
 
     const containerPressHandler = () => {};
 
-    return (
-        <TouchableOpacity
-            style={[
-                styles.normalContainer,
-                { width: getCardWidth(width, 'normal') }
-            ]}
-            activeOpacity={0.8}
-            onPress={containerPressHandler}
-        >
-            <ImageBackground
-                style={styles.imageBackgroundContainer}
-                imageStyle={styles.imageBackground}
-                source={{ uri: item.image }}
-            >
+    const ImageContent = () => {
+        return (
+            <View style={{ flex: 1 }}>
                 <View style={[styles.header, { flex: 1 }]}></View>
                 <View style={styles.footer}>
                     <Text
@@ -58,13 +50,51 @@ const Normal = ({ item }) => {
                         {item.title}
                     </Text>
                 </View>
-            </ImageBackground>
+            </View>
+        );
+    };
+
+    return (
+        <TouchableOpacity
+            style={[
+                styles.normalContainer,
+                { width: getCardWidth(width, 'normal') }
+            ]}
+            activeOpacity={0.8}
+            onPress={containerPressHandler}
+        >
+            {item.image ? (
+                <ImageBackground
+                    style={styles.imageBackgroundContainer}
+                    imageStyle={styles.imageBackground}
+                    source={{ uri: item.image }}
+                >
+                    <ImageContent />
+                </ImageBackground>
+            ) : (
+                <View
+                    style={[
+                        styles.imageBackgroundContainer,
+                        styles.imageBackground,
+                        {
+                            backgroundColor:
+                                colors[
+                                    Math.floor(Math.random() * colors.length)
+                                ]
+                        }
+                    ]}
+                >
+                    <ImageContent />
+                </View>
+            )}
         </TouchableOpacity>
     );
 };
 
 const Detailed = ({ item }) => {
     const { width } = useWindowDimensions();
+    const { theme } = useContext(ThemeContext);
+    const colors = Object.values(theme.colors);
 
     const containerPressHandler = () => {};
 
@@ -77,7 +107,21 @@ const Detailed = ({ item }) => {
             activeOpacity={0.8}
             onPress={containerPressHandler}
         >
-            <Image style={styles.image} source={{ uri: item.image }} />
+            {item.image ? (
+                <Image style={styles.image} source={{ uri: item.image }} />
+            ) : (
+                <View
+                    style={[
+                        styles.image,
+                        {
+                            backgroundColor:
+                                colors[
+                                    Math.floor(Math.random() * colors.length)
+                                ]
+                        }
+                    ]}
+                />
+            )}
             <View style={styles.content}>
                 <Text
                     style={styles.title}
