@@ -1,61 +1,41 @@
-import { Dimensions, StyleSheet } from 'react-native';
-
-const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
-    normalContainer: {
-        height: 200,
+    container: {
+        width: 250,
+        height: 150,
+        borderRadius: 20,
+        margin: 5,
         alignItems: 'center',
-        borderRadius: 10,
-        marginHorizontal: 5
+        backgroundColor: colors.four
     },
-    imageBackgroundContainer: {
+    header: {
+        flex: 1,
         width: '100%',
-        height: '100%'
-    },
-    imageBackground: {
-        borderRadius: 10
+        flexDirection: 'row',
+        bottom: 5,
+        marginHorizontal: 10
     },
     footer: {
         width: '100%',
-        height: 30,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10,
+        height: '25%',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,
         justifyContent: 'center'
     },
-    detailedContainer: {
-        height: 100,
-        alignContent: 'center',
-        backgroundColor: 'rgba(95, 95, 95, 0.1)',
-        borderRadius: 10,
-        margin: 5,
-        flexDirection: 'row'
-    },
-    image: {
-        width: '35%',
-        height: '100%',
-        borderRadius: 10
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
+    title: {
+        fontSize: 18,
+        color: '#222222',
         marginHorizontal: 5
     },
-    title: {
-        fontSize: 16
-    },
-    header: {
-        flexDirection: 'row'
-    },
-    bookmark: {
-        bottom: 5
-    },
-    avatar: {
+    userPicturePlaceholder: {
         width: 30,
         height: 30,
         borderRadius: 100,
-        bottom: 5
+        backgroundColor: colors.five,
+        bottom: 3
     }
 });
 
