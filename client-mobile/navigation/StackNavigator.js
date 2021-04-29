@@ -3,12 +3,14 @@ import React from 'react';
 import DetailsScreen from '../screens/DetailsScreen';
 import TabNavigator from './TabNavigator';
 import LoginQuestionScreen from '../screens/LoginQuestion';
+import LoginQuestionScreen from './screens/LoginQuestion';
 
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
     return (
-        <Stack.Navigator initialRouteName='Home'>
+        <Stack.Navigator initialRouteName='LoginQuestion'>
+            <Stack.Screen name="LoginQuestion" component={LoginQuestionScreen} />
             <Stack.Screen
                 name='HomeStack'
                 component={TabNavigator}
