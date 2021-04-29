@@ -2,13 +2,13 @@ import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import {
     FlatList,
+    Platform,
     Text,
     TextInput,
     TouchableOpacity,
     useWindowDimensions,
     View
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { useQuery } from 'react-query';
@@ -45,7 +45,7 @@ const HomeScreen = () => {
     ]);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={[styles.header, { height: height * 0.1 }]}>
                 <Text style={styles.appName}>Gethr</Text>
                 <View style={styles.userPicturePlaceholder} />
@@ -63,7 +63,7 @@ const HomeScreen = () => {
                     {yoursStatus === 'success' && (
                         <FlatList
                             style={{ width: '100%' }}
-                            contentContainerStyle={styles.flatlistContent}
+                            // contentContainerStyle={styles.flatlistContent}
                             data={yoursActions}
                             keyExtractor={item => item.action_id.toString()}
                             renderItem={({ item }) => <Card item={item} />}
@@ -118,7 +118,11 @@ const HomeScreen = () => {
                     )}
                     {exploreStatus === 'success' && (
                         <FlatList
-                            contentContainerStyle={styles.flatlistContent}
+                            contentContainerStyle={
+                                Platform.OS === 'web'
+                                    ? styles.flatlistContent
+                                    : {}
+                            }
                             data={_.shuffle(exploreActions)}
                             keyExtractor={item => item.action_id.toString()}
                             renderItem={({ item }) => <Card item={item} />}
@@ -137,7 +141,7 @@ const HomeScreen = () => {
                 size={450}
                 color={`${colors.one}50`}
             />
-        </SafeAreaView>
+        </View>
     );
 };
 

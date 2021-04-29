@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     backgroundIcon: {
         position: 'absolute',
         bottom: -150,
-        left: -150,
         zIndex: -1
     }
 });

@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 20,
         margin: 5,
-        alignItems: 'center',
-        backgroundColor: colors.four
+        alignItems: 'center'
     },
     listContainer: {
         flexGrow: 1,
@@ -82,12 +81,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         flexDirection: 'row',
         alignSelf: 'center',
-        padding: 3
+        paddingHorizontal: 12
     },
     backgroundIcon: {
         position: 'absolute',
         bottom: -150,
-        left: -150,
         zIndex: -1
     },
     loadingText: {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { colors } from '../../consts/styles';
@@ -10,7 +9,7 @@ const DetailsScreen = ({ route, navigation }) => {
     const { item } = route.params;
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.image}>
                 <TouchableOpacity
                     style={{ justifyContent: 'center' }}
@@ -39,7 +38,7 @@ const DetailsScreen = ({ route, navigation }) => {
                 size={450}
                 color={`${colors.one}50`}
             />
-        </SafeAreaView>
+        </View>
     );
 };
 
