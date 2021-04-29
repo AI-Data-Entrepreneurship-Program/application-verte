@@ -1,20 +1,23 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import UserContextProvider from './context/UserContext';
+import StackNavigator from './navigation/StackNavigator';
 
-import Tab from './navigation/TabNavigator';
-import HomeScreen from './screens/HomeScreen';
-import SuggestionScreen from './screens/SuggestionScreen';
-import CommunityScreen from './screens/CommunityScreen';
+const client = new QueryClient();
 
 const App = () => {
     return (
-        <NavigationContainer>
-            <Tab.Navigator initialRouteName='Home'>
-                <Tab.Screen name='Home' component={HomeScreen} />
-                <Tab.Screen name='Suggestion' component={SuggestionScreen} />
-                <Tab.Screen name='Community' component={CommunityScreen} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <QueryClientProvider client={client}>
+            <UserContextProvider>
+                <SafeAreaProvider>
+                    <NavigationContainer>
+                        <StackNavigator />
+                    </NavigationContainer>
+                </SafeAreaProvider>
+            </UserContextProvider>
+        </QueryClientProvider>
     );
 };
 
