@@ -5,7 +5,7 @@ export const find = async () => {
     return data.json();
 };
 
-export const create = async (userId, diet, isGarden, transport, notation) => {
+export const create = async (userId, diet, garden, transport, notation) => {
     const data = await fetch(
         'https://turtleiatech.pythonanywhere.com/UserData',
         {
@@ -13,7 +13,7 @@ export const create = async (userId, diet, isGarden, transport, notation) => {
             body: {
                 user_id: userId,
                 regime_alimentaire: diet,
-                jardin: isGarden,
+                jardin: garden,
                 transport,
                 notation
             }
