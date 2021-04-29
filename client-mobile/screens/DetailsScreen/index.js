@@ -27,8 +27,10 @@ const DetailsScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.body}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
+                <Text style={styles.title}>{item.action_title}</Text>
+                <Text style={styles.description}>
+                    {item.action_description}
+                </Text>
             </View>
 
             <FontAwesomeIcon

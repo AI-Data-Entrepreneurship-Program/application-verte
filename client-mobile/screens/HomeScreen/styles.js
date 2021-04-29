@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     listContainer: {
         flexGrow: 1,
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     searchbar: {
         backgroundColor: `${colors.one}50`,
@@ -88,6 +89,10 @@ const styles = StyleSheet.create({
         bottom: -150,
         left: -150,
         zIndex: -1
+    },
+    loadingText: {
+        fontSize: 24,
+        color: '#222222'
     }
 });
 

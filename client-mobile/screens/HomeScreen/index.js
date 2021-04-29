@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     FlatList,
     Text,
@@ -11,61 +11,38 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
+import { useQuery } from 'react-query';
+import * as actions from '../../api/actions';
 import Card from '../../components/Card';
 import { colors } from '../../consts/styles';
+import { UserContext } from '../../context/UserContext';
 import styles from './styles';
-
-const data = [
-    {
-        id: 1,
-        title: 'How to recycle cans',
-        description: 'Occaecat id cillum et aute.',
-        user: {
-            avatar:
-                'https://i.pinimg.com/564x/7b/e3/c8/7be3c860904fd21fbc09bb5422035f2a.jpg'
-        },
-        category: { color: 'cadetblue' }
-    },
-    {
-        id: 2,
-        title: 'Reduce how much electricity we use',
-        description:
-            'Velit magna amet ipsum ad culpa laboris adipisicing et anim officia officia est incididunt quis.',
-        image:
-            'https://cdn.pixabay.com/photo/2020/05/31/19/53/light-bulb-5244001_960_720.jpg',
-        category: { color: 'burlywood' }
-    },
-    {
-        id: 3,
-        title: 'Install solar pannels',
-        description: 'Ex non sit laborum id dolore.',
-        category: { color: 'darkgrey' }
-    },
-    {
-        id: 4,
-        title: 'Stop sending emails',
-        description:
-            'Ullamco ex exercitation id ex elit sint irure esse dolore irure excepteur cillum anim incididunt.',
-        category: { color: 'crimson' }
-    },
-    {
-        id: 5,
-        title: 'Lorem Ipsum',
-        description: 'Nostrud laboris qui consequat reprehenderit.',
-        category: { color: 'rosybrown' }
-    },
-    {
-        id: 6,
-        title: 'Lorem Ipsum',
-        description:
-            'Excepteur exercitation ut cillum occaecat ad ex ipsum cupidatat deserunt incididunt magna.',
-        category: { color: 'orange' }
-    }
-];
 
 const HomeScreen = () => {
     const { height } = useWindowDimensions();
+    const { current } = useContext(UserContext); // TODO: use current user actions
+
     const [searchQuery, setSearchQuery] = useState('');
+
+    const { data: yoursData, status: yoursStatus } = useQuery(
+        'yoursActions',
+        actions.find
+    );
+    const [yoursActions, setYoursActions] = useState(yoursData);
+
+    const { data: exploreData, status: exploreStatus } = useQuery(
+        'exploreActions',
+        actions.find
+    );
+    const [exploreActions, setExploreActions] = useState(exploreData);
+
+    useEffect(() => yoursData && setYoursActions(JSON.parse(yoursData)), [
+        yoursData
+    ]);
+
+    useEffect(() => exploreData && setExploreActions(JSON.parse(exploreData)), [
+        exploreData
+    ]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -80,17 +57,22 @@ const HomeScreen = () => {
                 </View>
 
                 <View style={styles.listContainer}>
-                    <FlatList
-                        style={{ width: '100%' }}
-                        contentContainerStyle={styles.flatlistContent}
-                        data={data}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <Card item={item} />}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        bounces={false}
-                    />
+                    {yoursStatus === 'loading' && (
+                        <Text style={styles.loadingText}>Fetching data</Text>
+                    )}
+                    {yoursStatus === 'success' && (
+                        <FlatList
+                            style={{ width: '100%' }}
+                            contentContainerStyle={styles.flatlistContent}
+                            data={yoursActions}
+                            keyExtractor={item => item.action_id.toString()}
+                            renderItem={({ item }) => <Card item={item} />}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                            bounces={false}
+                        />
+                    )}
                 </View>
             </View>
 
@@ -131,16 +113,21 @@ const HomeScreen = () => {
                 </View>
 
                 <View style={styles.listContainer}>
-                    <FlatList
-                        contentContainerStyle={styles.flatlistContent}
-                        data={_.shuffle(data)}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <Card item={item} />}
-                        horizontal={false}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        bounces={false}
-                    />
+                    {exploreStatus === 'loading' && (
+                        <Text style={styles.loadingText}>Fetching data</Text>
+                    )}
+                    {exploreStatus === 'success' && (
+                        <FlatList
+                            contentContainerStyle={styles.flatlistContent}
+                            data={_.shuffle(exploreActions)}
+                            keyExtractor={item => item.action_id.toString()}
+                            renderItem={({ item }) => <Card item={item} />}
+                            horizontal={false}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                            bounces={false}
+                        />
+                    )}
                 </View>
             </View>
 

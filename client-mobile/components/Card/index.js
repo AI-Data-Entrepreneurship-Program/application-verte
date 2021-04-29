@@ -32,7 +32,7 @@ const Card = ({ item }) => {
                     numberOfLines={1}
                     ellipsizeMode='tail'
                 >
-                    {item.title}
+                    {item.action_title}
                 </Text>
             </View>
         </TouchableOpacity>
