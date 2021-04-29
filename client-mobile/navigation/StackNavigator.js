@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import DetailsScreen from '../screens/DetailsScreen';
 import TabNavigator from './TabNavigator';
+import LoginQuestionScreen from '../screens/LoginQuestion';
 
 const Stack = createStackNavigator();
 

@@ -4,6 +4,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeContextProvider from './contexts/Theme';
 import StackNavigator from './navigation/StackNavigator';
 
+import LoginQuestionScreen from './screens/LoginQuestion';
+
 const App = () => {
     return (
         <SafeAreaProvider>
