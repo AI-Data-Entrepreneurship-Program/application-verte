@@ -32,7 +32,9 @@ class Carte(Resource):
         if not action:
             abort(404, message="{} doesn't exist".format(carte_id))
         else:
-            return json.dumps(action, cls=AlchemyEncoder)
+            action = json.loads(json.dumps(action, cls=AlchemyEncoder))
+            action = {str(action["action_id"]): action}
+            return action
     
     # add a new action will be here
     #def post(self):
@@ -41,9 +43,9 @@ class Carte(Resource):
 # This allows us to get all actions --- curl http://127.0.0.1:5000/cartes
 class Cartes(Resource):
     def get(self):
-        actions = Actions.query.all()
-        return json.dumps(actions, cls=AlchemyEncoder)
-
+        actions = json.loads(json.dumps(Actions.query.all(), cls=AlchemyEncoder))
+        actions = {str(dict["action_id"]): dict for dict in actions}
+        return actions 
 
 # This allows us to insert a new user --- curl http://127.0.0.1:5000/UserData -d "user_id=xxxxx&regime_alimentaire=xxxx&jardin=xxx&transport=xxx&notation=xxxx"
 class UserData(Resource):
@@ -106,11 +108,22 @@ class Likes(Resource):
         change.his_actions = "{}".format(his_actions)
         db.session.commit()
 
+        #modify the notation of the action
+        action = json.dumps(Actions.query.filter_by(action_id=args['action_id']).first(), cls=AlchemyEncoder)
+        notation_action = int(json.loads(action)["notation"])
+        notation_action += int(args['likes'])
+
+        change2 = Actions.query.filter_by(action_id=args['action_id']).first()
+        change2.notation = notation_action
+        db.session.commit()
+
+
         return 'done'
 
 # get the list of users (for checking purposes) --- curl http://127.0.0.1:5000/UserCheck
 class UserCheck(Resource): 
     def get(self):
-        users = User.query.all()
-        return json.dumps(users, cls=AlchemyEncoder)
+        users = json.loads(json.dumps(User.query.all(), cls=AlchemyEncoder))
+        users = {str(dict["user_id"]): dict for dict in users}
+        return users
 

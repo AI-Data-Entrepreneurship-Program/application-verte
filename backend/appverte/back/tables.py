@@ -23,6 +23,8 @@ class Actions(db.Model):
     action_image = db.Column(db.String(100))
     category = db.Column(db.String(40))
     source = db.Column(db.String(100))
+    notation = db.Column(db.Integer())
+    
     def __repr__(self):
         return '<Action %r>' % self.action_id
 

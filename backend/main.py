@@ -29,7 +29,8 @@ def setup_database(app):
                 action_image= value['action_image'],
                 action_impact= value['action_impact'],
                 category= value['category'],
-                source = value['sources']
+                source = value['sources'],
+                notation = 0
             )
             )
         db.session.commit()
