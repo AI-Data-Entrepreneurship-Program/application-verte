@@ -8,7 +8,11 @@ const UserContextProvider = ({ children }) => {
     const { data } = useQuery('user', users.find);
     const [current, setCurrent] = useState(data);
 
-    useEffect(() => data && setCurrent(JSON.parse(data)[0]), [data]);
+    useEffect(() => {
+        data && console.log(Object.values(data)[0]);
+    }, [data]);
+
+    useEffect(() => data && setCurrent(Object.values(data)[0]), [data]);
 
     return (
         <UserContext.Provider value={{ current }}>

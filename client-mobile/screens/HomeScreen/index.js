@@ -36,13 +36,14 @@ const HomeScreen = () => {
     );
     const [exploreActions, setExploreActions] = useState(exploreData);
 
-    useEffect(() => yoursData && setYoursActions(JSON.parse(yoursData)), [
+    useEffect(() => yoursData && setYoursActions(Object.values(yoursData)), [
         yoursData
     ]);
 
-    useEffect(() => exploreData && setExploreActions(JSON.parse(exploreData)), [
-        exploreData
-    ]);
+    useEffect(
+        () => exploreData && setExploreActions(Object.values(exploreData)),
+        [exploreData]
+    );
 
     return (
         <View style={styles.container}>
@@ -63,7 +64,6 @@ const HomeScreen = () => {
                     {yoursStatus === 'success' && (
                         <FlatList
                             style={{ width: '100%' }}
-                            // contentContainerStyle={styles.flatlistContent}
                             data={yoursActions}
                             keyExtractor={item => item.action_id.toString()}
                             renderItem={({ item }) => <Card item={item} />}
