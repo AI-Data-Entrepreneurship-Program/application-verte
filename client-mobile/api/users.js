@@ -1,23 +1,19 @@
 export const find = async () => {
-    const data = await fetch(
-        'https://turtleiatech.pythonanywhere.com/UserCheck'
-    );
+    const url = 'https://turtleiatech.pythonanywhere.com/UserCheck';
+    const data = await fetch(url);
     return data.json();
 };
 
-export const create = async (userId, diet, garden, transport, notation) => {
-    const data = await fetch(
-        'https://turtleiatech.pythonanywhere.com/UserData',
-        {
-            method: 'POST',
-            body: {
-                user_id: userId,
-                regime_alimentaire: diet,
-                jardin: garden,
-                transport,
-                notation
-            }
-        }
-    );
-    return data.json();
+export const create = async (
+    user_id,
+    regime_alimentaire,
+    jardin,
+    transport,
+    notation
+) => {
+    const url = new URL('https://turtleiatech.pythonanywhere.com/UserData');
+    const params = { user_id, regime_alimentaire, jardin, transport, notation };
+    url.search = new URLSearchParams(params).toString();
+
+    await fetch(url, { method: 'POST' });
 };

@@ -1,21 +1,42 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import * as users from '../api/users';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import _ from 'lodash';
+import React, { createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-    const { data } = useQuery('user', users.find);
-    const [current, setCurrent] = useState(data);
+    const [current, setCurrent] = useState({});
 
-    useEffect(() => {
-        data && console.log(Object.values(data)[0]);
-    }, [data]);
+    const isLoggedIn = () => !_.isEmpty(current);
 
-    useEffect(() => data && setCurrent(Object.values(data)[0]), [data]);
+    const updateCurrentUser = async user => {
+        try {
+            const storedValue = JSON.stringify(user);
+            await AsyncStorage.setItem('@current_user', storedValue);
+            setCurrent(user);
+        } catch (error) {
+            console.log(`Couldn't update current user: ${error}`);
+        }
+    };
+
+    const getCurrentUser = async () => {
+        try {
+            return await AsyncStorage.getItem('@current_user');
+        } catch (error) {
+            console.log(`Couldn't get current user: ${error}`);
+        }
+    };
 
     return (
-        <UserContext.Provider value={{ current }}>
+        <UserContext.Provider
+            value={{
+                current,
+                setCurrent,
+                updateCurrentUser,
+                getCurrentUser,
+                isLoggedIn
+            }}
+        >
             {children}
         </UserContext.Provider>
     );

@@ -69,6 +69,33 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: colors.one,
         marginTop: 20
+    },
+    loginContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.three
+    },
+    loginTitle: {
+        fontSize: 24,
+        color: '#222222'
+    },
+    loginInput: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.one,
+        marginVertical: 10
+    },
+    loginBtn: {
+        width: '80%',
+        height: 50,
+        backgroundColor: colors.one,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    loginBtnTitle: {
+        fontSize: 24,
+        color: colors.three
     }
 });
 

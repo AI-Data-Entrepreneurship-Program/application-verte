@@ -9,7 +9,11 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
     return (
         <Tab.Navigator initialRouteName='Home'>
-            <Tab.Screen name='Home' component={HomeScreen} />
+            <Tab.Screen
+                name='Home'
+                component={HomeScreen}
+                options={{ tabBarVisible: false }}
+            />
             <Tab.Screen name='Suggestion' component={SuggestionScreen} />
             <Tab.Screen name='Community' component={CommunityScreen} />
         </Tab.Navigator>

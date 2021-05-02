@@ -33,6 +33,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: -150,
         zIndex: -1
+    },
+    addBtn: {
+        width: '80%',
+        height: 50,
+        backgroundColor: colors.one,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    addBtnTitle: {
+        fontSize: 24,
+        color: colors.three
     }
 });
 

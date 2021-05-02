@@ -7,8 +7,7 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 20,
         margin: 5,
-        alignItems: 'center',
-        backgroundColor: colors.four
+        alignItems: 'center'
     },
     header: {
         flex: 1,
@@ -20,14 +19,14 @@ const styles = StyleSheet.create({
     footer: {
         width: '100%',
         height: '25%',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,
         justifyContent: 'center'
     },
     title: {
         fontSize: 18,
-        color: '#222222',
+        color: 'white',
         marginHorizontal: 5
     },
     userPicturePlaceholder: {

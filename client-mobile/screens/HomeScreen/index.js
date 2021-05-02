@@ -13,6 +13,7 @@ import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { useQuery } from 'react-query';
 import * as actions from '../../api/actions';
+import * as users from '../../api/users';
 import Card from '../../components/Card';
 import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/UserContext';
@@ -20,15 +21,16 @@ import styles from './styles';
 
 const HomeScreen = () => {
     const { height } = useWindowDimensions();
-    const { current } = useContext(UserContext); // TODO: use current user actions
+
+    const { current, updateCurrentUser } = useContext(UserContext);
+    const { data: usersData, status: usersDataStatus } = useQuery(
+        'getUsers',
+        users.find
+    );
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    const { data: yoursData, status: yoursStatus } = useQuery(
-        'yoursActions',
-        actions.find
-    );
-    const [yoursActions, setYoursActions] = useState(yoursData);
+    const [yoursActions, setYoursActions] = useState([]);
 
     const { data: exploreData, status: exploreStatus } = useQuery(
         'exploreActions',
@@ -36,14 +38,32 @@ const HomeScreen = () => {
     );
     const [exploreActions, setExploreActions] = useState(exploreData);
 
-    useEffect(() => yoursData && setYoursActions(Object.values(yoursData)), [
-        yoursData
-    ]);
+    const searchWithQuery = (query, actions, setActions) => {
+        actions &&
+            setActions(
+                actions.filter(el =>
+                    el.action_title.toLowerCase().includes(query.toLowerCase())
+                )
+            );
+    };
+
+    useEffect(() => {
+        if (usersDataStatus === 'success') {
+            const user = usersData[current.user_id];
+            updateCurrentUser({ username: current.username, ...user });
+        }
+    }, [usersData]);
 
     useEffect(
         () => exploreData && setExploreActions(Object.values(exploreData)),
         [exploreData]
     );
+
+    useEffect(() => {
+        if (!searchQuery && exploreData)
+            setExploreActions(Object.values(exploreData));
+        else searchWithQuery(searchQuery, exploreActions, setExploreActions);
+    }, [searchQuery]);
 
     return (
         <View style={styles.container}>
@@ -54,14 +74,17 @@ const HomeScreen = () => {
 
             <View style={styles.yoursSection}>
                 <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Yours</Text>
+                    <Text style={styles.sectionTitle}>Vos Actions</Text>
                 </View>
 
                 <View style={styles.listContainer}>
-                    {yoursStatus === 'loading' && (
-                        <Text style={styles.loadingText}>Fetching data</Text>
+                    {yoursActions.length === 0 && (
+                        <Text style={styles.loadingText}>
+                            Vous devriez ajouter des actions
+                        </Text>
                     )}
-                    {yoursStatus === 'success' && (
+
+                    {yoursActions.length !== 0 && (
                         <FlatList
                             style={{ width: '100%' }}
                             data={yoursActions}
@@ -78,7 +101,7 @@ const HomeScreen = () => {
 
             <View style={styles.exploreSection}>
                 <View style={[styles.sectionHeader, { marginBottom: 5 }]}>
-                    <Text style={styles.sectionTitle}>Explore</Text>
+                    <Text style={styles.sectionTitle}>Explorer</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={styles.searchbar}>
                             <TouchableOpacity
@@ -98,17 +121,17 @@ const HomeScreen = () => {
                             <TextInput
                                 value={searchQuery}
                                 onChangeText={setSearchQuery}
-                                placeholder='search...'
+                                placeholder='recherche...'
                             />
                         </View>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             style={styles.sectionHeaderBtn}
                             activeOpacity={0.8}
                         >
                             <Text style={styles.sectionHeaderBtnTitle}>
                                 Sort
                             </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
 
@@ -125,7 +148,13 @@ const HomeScreen = () => {
                             }
                             data={_.shuffle(exploreActions)}
                             keyExtractor={item => item.action_id.toString()}
-                            renderItem={({ item }) => <Card item={item} />}
+                            renderItem={({ item }) => (
+                                <Card
+                                    item={item}
+                                    yours={yoursActions}
+                                    setYours={setYoursActions}
+                                />
+                            )}
                             horizontal={false}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}

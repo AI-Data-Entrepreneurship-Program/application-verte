@@ -1,64 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Platform,
     SafeAreaView,
     ScrollView,
     Text,
+    TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
 import uuid from 'react-native-uuid';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { useMutation } from 'react-query';
 import * as users from '../../api/users';
 import RadioButtonContainer from '../../components/RadioButton/RadioButtonContainer';
 import * as loginQuestions from '../../consts/loginQuestions';
-import { colors } from '../../consts/styles';
+import { UserContext } from '../../context/UserContext';
 import styles from './styles';
 
-const createUser = ({ first, second, third, fourth }) => {
-    return users.create(uuid.v4(), first, second, third, fourth);
+const createUser = ({ pickedAnswers, username, setCurrent }) => {
+    const user_id = uuid.v4();
+
+    setCurrent({ user_id, username });
+    return users.create(
+        user_id,
+        pickedAnswers.regime_alimentaire,
+        pickedAnswers.jardin,
+        pickedAnswers.transport,
+        pickedAnswers.notation
+    );
 };
 
 const LoginScreen = ({ navigation }) => {
     const mutation = useMutation(createUser);
+    const { isLoggedIn, setCurrent } = useContext(UserContext);
 
-    const [toggleForm, setToggleForm] = useState(false);
+    const [username, setUsername] = useState('');
     const [pickedAnswers, setPickedAnswers] = useState({});
 
     useEffect(() => {
         if (mutation.isSuccess) navigation.navigate('HomeStack');
     }, [mutation]);
 
-    const submitBtnPressHandler = async () => mutation.mutate(pickedAnswers);
+    const submitBtnPressHandler = async () =>
+        mutation.mutate({ pickedAnswers, username, setCurrent });
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView
-                contentContainerStyle={
-                    Platform.OS === 'web' || !toggleForm
-                        ? styles.scollView
-                        : { marginVertical: 10 }
-                }
-            >
-                <View style={styles.header}>
+            {!isLoggedIn() && (
+                <View style={styles.loginContainer}>
                     <Text style={styles.appName}>Gethr</Text>
-                    {!toggleForm && (
-                        <TouchableOpacity
-                            style={styles.arrowIcon}
-                            activeOpacity={0.8}
-                            onPress={() => setToggleForm(!toggleForm)}
-                        >
-                            <Icon
-                                name='arrowright'
-                                size={28}
-                                color={colors.one}
-                            />
-                        </TouchableOpacity>
-                    )}
+                    <Text style={styles.loginTitle}>
+                        Entrez votre nom d'utilisateur:
+                    </Text>
+                    <TextInput
+                        style={styles.loginInput}
+                        onChangeText={setUsername}
+                        value={username}
+                    />
+                    <TouchableOpacity
+                        style={styles.loginBtn}
+                        activeOpacity={0.8}
+                        onPress={() => setCurrent({ username })}
+                    >
+                        <Text style={styles.loginBtnTitle}>Continuer</Text>
+                    </TouchableOpacity>
                 </View>
+            )}
 
-                {toggleForm && (
+            {isLoggedIn() && (
+                <ScrollView
+                    contentContainerStyle={
+                        Platform.OS === 'web'
+                            ? styles.scollView
+                            : { marginVertical: 10 }
+                    }
+                >
+                    <View style={styles.header}>
+                        <Text style={styles.appName}>Gethr</Text>
+                    </View>
+
                     <View>
                         <View style={styles.questionHeader}>
                             <Text style={styles.text}>
@@ -71,7 +90,8 @@ const LoginScreen = ({ navigation }) => {
                                 onPress={idx =>
                                     setPickedAnswers({
                                         ...pickedAnswers,
-                                        first: loginQuestions.firstAnswers[idx]
+                                        regime_alimentaire:
+                                            loginQuestions.firstAnswers[idx]
                                     })
                                 }
                             />
@@ -88,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
                                 onPress={idx =>
                                     setPickedAnswers({
                                         ...pickedAnswers,
-                                        second:
+                                        jardin:
                                             loginQuestions.secondAnswers[idx]
                                     })
                                 }
@@ -106,7 +126,8 @@ const LoginScreen = ({ navigation }) => {
                                 onPress={idx =>
                                     setPickedAnswers({
                                         ...pickedAnswers,
-                                        third: loginQuestions.thirdAnswers[idx]
+                                        transport:
+                                            loginQuestions.thirdAnswers[idx]
                                     })
                                 }
                             />
@@ -123,7 +144,7 @@ const LoginScreen = ({ navigation }) => {
                                 onPress={idx =>
                                     setPickedAnswers({
                                         ...pickedAnswers,
-                                        fourth:
+                                        notation:
                                             loginQuestions.fourthAnswers[idx]
                                     })
                                 }
@@ -141,18 +162,15 @@ const LoginScreen = ({ navigation }) => {
                                 activeOpacity={0.8}
                                 onPress={submitBtnPressHandler}
                                 disabled={
-                                    !pickedAnswers.first ||
-                                    !pickedAnswers.second ||
-                                    !pickedAnswers.third ||
-                                    !pickedAnswers.fourth
+                                    Object.keys(pickedAnswers).length !== 4
                                 }
                             >
                                 <Text style={styles.text}>Commencer !</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                )}
-            </ScrollView>
+                </ScrollView>
+            )}
         </SafeAreaView>
     );
 };
