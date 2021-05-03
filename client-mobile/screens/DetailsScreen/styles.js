@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
     addBtnTitle: {
         fontSize: 24,
         color: colors.three
+    },
+    reaction: {
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

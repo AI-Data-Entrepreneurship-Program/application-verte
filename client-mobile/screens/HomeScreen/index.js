@@ -32,7 +32,7 @@ const HomeScreen = () => {
 
     const [yoursActions, setYoursActions] = useState([]);
 
-    const { data: exploreData, status: exploreStatus } = useQuery(
+    const { data: exploreData, status: exploreStatus, refetch } = useQuery(
         'exploreActions',
         actions.find
     );
@@ -153,6 +153,7 @@ const HomeScreen = () => {
                                     item={item}
                                     yours={yoursActions}
                                     setYours={setYoursActions}
+                                    refetch={refetch}
                                 />
                             )}
                             horizontal={false}

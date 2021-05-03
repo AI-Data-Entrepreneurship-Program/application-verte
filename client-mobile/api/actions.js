@@ -9,11 +9,10 @@ export const get = async id => {
     return data.json();
 };
 
-export const like = async (user_id, action_id) => {
+export const like = async (user_id, action_id, likes) => {
     const url = new URL('https://turtleiatech.pythonanywhere.com/likes');
-    const params = { user_id, action_id };
+    const params = { user_id, action_id, likes };
     url.search = new URLSearchParams(params).toString();
 
-    const data = await fetch(url, { method: 'POST' });
-    return data.json();
+    await fetch(url, { method: 'POST' });
 };

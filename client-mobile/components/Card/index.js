@@ -20,7 +20,7 @@ const getCategoryColor = category => {
     }
 };
 
-const Card = ({ item, yours, setYours }) => {
+const Card = ({ item, yours, setYours, refetch }) => {
     const { navigate } = useNavigation();
 
     return (
@@ -28,7 +28,9 @@ const Card = ({ item, yours, setYours }) => {
             <TouchableOpacity
                 style={styles.container}
                 activeOpacity={0.8}
-                onPress={() => navigate('Details', { item, yours, setYours })}
+                onPress={() =>
+                    navigate('Details', { item, yours, setYours, refetch })
+                }
             >
                 {!item.action_image && (
                     <View
