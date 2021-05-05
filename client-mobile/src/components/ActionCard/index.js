@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
 const ActionCard = ({ item, focused, onPress }) => {
+    const randomBool = useMemo(() => Math.random() < 0.5, []);
+
     return focused ? (
         <TouchableOpacity
-            style={styles.container}
+            style={[styles.container, { height: randomBool ? 180 : 230 }]}
             activeOpacity={0.8}
             onPress={onPress}
         >
-            <Image style={styles.image} source={{ uri: item.image_url }} />
+            <Image
+                style={[styles.image, { height: randomBool ? 150 : 200 }]}
+                source={{ uri: item.image_url }}
+                resizeMode='cover'
+            />
             <View style={styles.header}>
                 <Text
                     style={styles.title}
