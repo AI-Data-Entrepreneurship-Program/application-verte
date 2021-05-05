@@ -1,23 +1,15 @@
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import { Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import UserContextProvider from './context/UserContext';
-import StackNavigator from './navigation/StackNavigator';
-
-const client = new QueryClient();
+import ScreenContainer from './src/components/ScreenContainer';
 
 const App = () => {
     return (
-        <QueryClientProvider client={client}>
-            <UserContextProvider>
-                <SafeAreaProvider>
-                    <NavigationContainer>
-                        <StackNavigator />
-                    </NavigationContainer>
-                </SafeAreaProvider>
-            </UserContextProvider>
-        </QueryClientProvider>
+        <SafeAreaProvider>
+            <ScreenContainer>
+                <Text>Hello, world!</Text>
+            </ScreenContainer>
+        </SafeAreaProvider>
     );
 };
 
