@@ -8,10 +8,4 @@ export const colors = {
     five: '#f5881e'
 };
 
-export default StyleSheet.create({
-    containerCenter: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
+export default StyleSheet.create({});
