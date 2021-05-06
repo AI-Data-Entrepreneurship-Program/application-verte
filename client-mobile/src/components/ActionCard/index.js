@@ -3,9 +3,9 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
 const ActionCard = ({ item, focused, onPress }) => {
-    const randomBool = useMemo(() => Math.random() < 0.5, []);
+    const randomBool = useMemo(() => focused || Math.random() < 0.5, []);
 
-    return focused ? (
+    return (
         <TouchableOpacity
             style={[styles.container, { height: randomBool ? 180 : 230 }]}
             activeOpacity={0.8}
@@ -26,10 +26,6 @@ const ActionCard = ({ item, focused, onPress }) => {
                 </Text>
             </View>
         </TouchableOpacity>
-    ) : (
-        <View>
-            <Text>not focussed not yet implemented</Text>
-        </View>
     );
 };
 

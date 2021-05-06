@@ -3,10 +3,12 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         borderRadius: 10,
-        margin: 10
+        margin: 5,
+        height: 150
     },
     image: {
-        width: '100%',
+        width: 170,
+        height: 150,
         borderRadius: 10
     },
     header: {
@@ -16,8 +18,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 12,
         lineHeight: 12,
-        marginVertical: 3,
-        fontFamily: ['Roboto', 'sans-serif']
+        color: 'black'
     }
 });
 

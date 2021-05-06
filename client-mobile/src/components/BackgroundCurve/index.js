@@ -10,7 +10,7 @@ const BackgroundCurve = ({ firstColor, secondColor }) => {
         <View style={[StyleSheet.absoluteFill, styles.container]}>
             <Svg
                 width='100%'
-                height='100%'
+                height='50%'
                 style={{ backgroundColor: firstColor }}
             >
                 <Ellipse
@@ -23,7 +23,7 @@ const BackgroundCurve = ({ firstColor, secondColor }) => {
             </Svg>
             <Svg
                 width='100%'
-                height='100%'
+                height='50%'
                 style={{ backgroundColor: secondColor }}
             >
                 <Ellipse

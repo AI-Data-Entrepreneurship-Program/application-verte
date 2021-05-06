@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 import BackgroundCurve from '../../components/BackgroundCurve';
 import { colors } from '../../consts/styles';
@@ -9,7 +10,7 @@ const ActionDetailsScreen = ({ route, navigation }) => {
     const { item } = route.params;
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}
@@ -27,17 +28,12 @@ const ActionDetailsScreen = ({ route, navigation }) => {
                             size={20}
                             color={colors.lightOrange}
                         />
-                        <Text style={styles.btnTitle}>Start</Text>
+                        <Text style={styles.btnTitle}>Commencer</Text>
                     </TouchableOpacity>
-
-                    {/* footer */}
-                    <View>
-                        <Text> </Text>
-                    </View>
                 </View>
             </ScrollView>
 
-            <View style={styles.header}>
+            <SafeAreaView style={styles.header}>
                 <TouchableOpacity
                     style={styles.icon}
                     activeOpacity={0.8}
@@ -45,13 +41,13 @@ const ActionDetailsScreen = ({ route, navigation }) => {
                 >
                     <Icon name='arrowleft' size={28} />
                 </TouchableOpacity>
-            </View>
+            </SafeAreaView>
 
             <BackgroundCurve
                 firstColor='white'
                 secondColor={colors.lightOrange}
             />
-        </View>
+        </SafeAreaView>
     );
 };
 

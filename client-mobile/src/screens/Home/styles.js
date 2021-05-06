@@ -12,12 +12,10 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 24,
-        fontFamily: 'Roboto, sans-serif',
         color: colors.darkGreen
     },
     section: {
-        flex: 1,
-        width: '90%',
+        width: '100%',
         alignItems: 'center'
     }
 });

@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        position: 'absolute'
+        position: 'absolute',
+        marginLeft: 20
     },
     icon: {
         alignSelf: 'center',
@@ -19,39 +20,37 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '80%',
-        height: '100%',
+        height: 350,
         borderRadius: 20,
-        marginVertical: 20
+        marginBottom: 20,
+        marginTop: 40
     },
     content: {
-        flex: 1,
         width: '90%'
     },
     title: {
         fontSize: 28,
-        fontFamily: 'Roboto, sans-serif',
         color: colors.darkGreen,
         marginBottom: 5
     },
     description: {
         fontSize: 18,
-        fontFamily: 'Roboto, sans-serif',
         textAlign: 'justify'
     },
     button: {
         flexDirection: 'row',
-        width: '40%',
+        width: '55%',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
         backgroundColor: colors.darkGreen,
         marginVertical: 5,
-        paddingVertical: 10
+        padding: 10
     },
     btnTitle: {
         fontSize: 20,
-        fontFamily: 'Roboto, sans-serif',
-        color: colors.lightOrange
+        color: colors.lightOrange,
+        marginLeft: 5
     }
 });
 
