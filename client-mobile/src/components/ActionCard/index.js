@@ -19,7 +19,7 @@ const ActionCard = ({ item, focused, onPress }) => {
             <View style={styles.header}>
                 <Text
                     style={styles.title}
-                    numberOfLines={1}
+                    numberOfLines={2}
                     ellipsizeMode='tail'
                 >
                     {item.title}

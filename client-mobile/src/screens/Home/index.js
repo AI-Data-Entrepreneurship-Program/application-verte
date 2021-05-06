@@ -1,4 +1,5 @@
 import MasonryList from '@react-native-seoul/masonry-list';
+import _ from 'lodash';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,7 +10,7 @@ import { colors } from '../../consts/styles';
 import styles from './styles';
 
 const HomeScreen = ({ navigation }) => {
-    const [actions, setActions] = useState(data);
+    const [actions, setActions] = useState(_.shuffle(data));
 
     return (
         <SafeAreaView style={styles.container}>
@@ -35,10 +36,7 @@ const HomeScreen = ({ navigation }) => {
                 />
             </View>
 
-            <BackgroundCurve
-                firstColor='white'
-                secondColor={colors.lightOrange}
-            />
+            <BackgroundCurve firstColor='white' secondColor={colors.orange} />
         </SafeAreaView>
     );
 };
