@@ -21,15 +21,23 @@ const HomeScreen = ({ navigation }) => {
                     data={actions}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => (
-                        <ActionCard key={item.id} item={item} focused={true} />
+                        <ActionCard
+                            key={item.id}
+                            item={item}
+                            focused={true}
+                            onPress={() =>
+                                navigation.navigate('ActionDetails', { item })
+                            }
+                        />
                     )}
                     numColumns={2}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
 
             <BackgroundCurve
                 firstColor='white'
-                secondColor={colors.lightGreen}
+                secondColor={colors.lightOrange}
             />
         </SafeAreaView>
     );
