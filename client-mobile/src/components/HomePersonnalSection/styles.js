@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
         color: colors.darkGreen
     },
     section: {
-        width: '100%',
-        alignItems: 'center'
+        width: '100%'
     }
 });
 
