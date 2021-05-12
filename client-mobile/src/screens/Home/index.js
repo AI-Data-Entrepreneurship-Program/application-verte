@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <HomePersonnalSection actions={_.take(actions, 4)} />
             <HomeDiscoverSection actions={actions} />
-            <BackgroundCurve firstColor='white' secondColor={colors.orange} />
+            <BackgroundCurve firstColor={colors.lightPink} secondColor={colors.lightGreen} />
         </SafeAreaView>
     );
 };

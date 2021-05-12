@@ -95,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
             </ScrollView>
 
             <BackgroundCurve
-                firstColor='white'
+                firstColor={colors.lightPink}
                 secondColor={colors.lightOrange}
             />
         </SafeAreaView>

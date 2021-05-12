@@ -5,7 +5,8 @@ export const colors = {
     lightGreen: '#d6f5cd',
     lightOrange: '#f5e6d4',
     orange: '#ea9b6e',
-    five: '#f5881e'
+    five: '#f5881e',
+    lightPink: '#f5efe7'
 };
 
 export default StyleSheet.create({});
