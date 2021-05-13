@@ -11,7 +11,7 @@ const HomeDiscoverSection = ({ actions, setTogglePersonnalSection }) => {
     return (
         <>
             <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Decouverte</Text>
+                <Text style={styles.sectionTitle}>Découverte</Text>
             </View>
 
             <View style={styles.section}>
