@@ -45,7 +45,7 @@ const ActionDetailsScreen = ({ route, navigation }) => {
 
             <BackgroundCurve
                 firstColor={colors.lightPink}
-                secondColor={colors.lightOrange}
+                secondColor={colors.orange}
             />
         </SafeAreaView>
     );

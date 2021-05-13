@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export const colors = {
     darkGreen: '#53785f',
-    lightGreen: '#d6f5cd',
+    lightGreen: '#b8ddb6',
     lightOrange: '#f5e6d4',
-    orange: '#ea9b6e',
-    five: '#f5881e',
+    orange: '#fdc793',
+    pink: '#f2d4d0',
     lightPink: '#f5efe7'
 };
 

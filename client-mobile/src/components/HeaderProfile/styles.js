@@ -3,7 +3,7 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        width: '95%',
+        width: '100%',
         alignItems: 'flex-end'
     },
     pictureContainer: {
@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: colors.darkGreen,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginRight: 20,
+        marginVertical: 5
     }
 });
 
