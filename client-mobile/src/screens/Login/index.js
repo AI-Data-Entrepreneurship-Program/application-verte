@@ -10,7 +10,7 @@ import styles from './styles';
 const LoginScreen = ({ navigation }) => {
     const [pickedAnswers, setPickedAnswers] = useState({});
 
-    const submitHandler = () => navigation.navigate('Home');
+    const submitHandler = () => navigation.navigate('BottomTabStack');
 
     return (
         <SafeAreaView style={styles.container}>

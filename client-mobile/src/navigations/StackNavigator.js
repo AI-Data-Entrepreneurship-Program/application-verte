@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import ActionDetailsScreen from '../screens/ActionDetails';
-import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
+import BottomTabNavigatorProvider from './BottomTabNavigator';
 
 const StackNavigator = createStackNavigator();
 
@@ -15,8 +15,8 @@ export default function StackNavigatorProvider() {
                 options={{ headerShown: false }}
             />
             <StackNavigator.Screen
-                name='Home'
-                component={HomeScreen}
+                name='BottomTabStack'
+                component={BottomTabNavigatorProvider}
                 options={{ headerShown: false }}
             />
             <StackNavigator.Screen
