@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 import BackgroundCurve from '../../components/BackgroundCurve';
@@ -12,20 +12,28 @@ import styles from './styles';
 const RankingScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderProfile />
+            <ScrollView style={{ width: '100%', height: '100%' }}>
+                <View style={{ alignItems: 'center' }}>
+                    <HeaderProfile />
 
-            <RankingDescriptionSection />
+                    <RankingDescriptionSection />
 
-            <RankingTimer />
+                    <RankingTimer />
 
-            <TouchableOpacity
-                style={styles.startBtn}
-                activeOpacity={0.8}
-                onPress={() => {}}
-            >
-                <Text style={styles.startBtnTitle}>Participer !</Text>
-                <Icon name='arrowright' size={18} color={colors.orange} />
-            </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.startBtn}
+                        activeOpacity={0.8}
+                        onPress={() => {}}
+                    >
+                        <Text style={styles.startBtnTitle}>Participer !</Text>
+                        <Icon
+                            name='arrowright'
+                            size={18}
+                            color={colors.orange}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
 
             <BackgroundCurve
                 firstColor={colors.lightPink}
