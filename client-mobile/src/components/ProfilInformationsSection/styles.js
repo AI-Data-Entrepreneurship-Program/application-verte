@@ -1,12 +1,18 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 10,
-        margin: 30,
-        height: 150,
-        backgroundColor: 'white'
+        borderRadius: 15,
+        margin: "10%",
+        height: "18%",
+        width: "38%",
+        backgroundColor: '#f5f3f1',
+        shadowOffset: {
+            width: 5,
+            height: 5
+          },
+          shadowOpacity: 0.10,
+          shadowRadius: 5
     },
     image: {
         width: "100%",
@@ -14,16 +20,18 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     User: {
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight: 500,
+        letterSpacing: 0.5,
         lineHeight: 12,
-        color: 'black',
+        color: 'gray',
         margin: 10,
     },
     City: {
         fontSize: 11,
         lineHeight: 10,
-        color: 'black',
-        textTransform: 'uppercase'
+        color: 'gray',
+        //textTransform: 'uppercase'
     },
     header: {
         flex: 1,

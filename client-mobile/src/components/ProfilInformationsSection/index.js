@@ -6,29 +6,24 @@ import styles from './styles';
 const ProfilInformationsSection = ({  }) => {
     return(
         <TouchableOpacity
-            style={[styles.container, { height: 150, width: 150 }]}
+            style={[styles.container]}
             activeOpacity={0.8}
         >
             <Image
                 style={[styles.image]}
-                source={{ uri: 'http://static.hitek.fr/img/actualite/2017/07/11/1w0qfi1.jpg'}}
+                source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Icone_%C3%A9cologie_humaine.svg/480px-Icone_%C3%A9cologie_humaine.svg.png'}}
                 resizeMode='contain'
             />
             <View style={styles.header}>
-                <Text
-                    style={styles.User}
-                >
-                    Jean Neige
+                <Text style={styles.User}>
+                    Jean Ecolo
                 </Text>
-                <Text
-                    style={styles.City}
-                >
-                    Castle Black
+                <Text style={styles.City}>
+                    Marseille
                 </Text>
             </View>
         </TouchableOpacity>
     );
-
 };
 
 export default ProfilInformationsSection;

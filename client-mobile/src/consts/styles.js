@@ -6,7 +6,8 @@ export const colors = {
     lightOrange: '#f5e6d4',
     orange: '#ea9b6e',
     five: '#f5881e',
-    lightPink: '#f5efe7'
+    lightPink: '#f5efe7',
+    DeepPink: "#F0DDD1"
 };
 
 export default StyleSheet.create({});
