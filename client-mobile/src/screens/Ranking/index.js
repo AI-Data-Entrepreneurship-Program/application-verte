@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import BackgroundCurve from '../../components/BackgroundCurve';
 import HeaderProfile from '../../components/HeaderProfile';
 import RankingDescriptionSection from '../../components/RankingDescriptionSection';
+import RankingTimer from '../../components/RankingTimer';
 import { colors } from '../../consts/styles';
 import styles from './styles';
 
@@ -14,6 +15,8 @@ const RankingScreen = () => {
             <HeaderProfile />
 
             <RankingDescriptionSection />
+
+            <RankingTimer />
 
             <TouchableOpacity
                 style={styles.startBtn}
