@@ -23,14 +23,17 @@ def setup_database(app):
         for key, value in actions.items():
             db.session.add(
             Actions(
-                action_id= key,
-                action_title= value['action_title'],
-                action_description= value['action_description'],
-                action_image= value['action_image'],
-                action_impact= value['action_impact'],
+                action_id= str(key),
+                title= value['action_title'],
+                description= value['action_description'],
+                image_url= value['action_image'],
+                impact= value['action_impact'],
                 category= value['category'],
-                source = value['sources'],
-                notation = 0
+                #source = value['sources'],
+                rating = 0,
+                liked_by = '{}'.format([]),
+                disliked_by = '{}'.format([]),
+                top_action = 0
             )
             )
         db.session.commit()
@@ -40,12 +43,19 @@ def setup_database(app):
     with app.app_context():
         db.session.add(
         User(
-        user_id= 'xxx', 
-        regime = 'xxx',
-        espace_exterieur = 'xxx',
-        transport = 'xxx',
-        investissement = 'xxx',
-        his_actions= "{}".format({"1":1,"2":5})
+            user_id= 'xxx', 
+            username = 'dsdfs',
+            password= 'fsdsd',
+            avatar_url='https://365psd.com/images/istock/previews/1009/100996291-male-avatar-profile-picture-vector.jpg', 
+            actions= "['sefsdfdsf','sdfdsggr','fdgdgrgd']",
+            likes = "['sefsdfdsf','sdfdsggr','fdgdgrgd']",
+            dislikes = '{}'.format([]),
+            badges = '{}'.format([]),
+            level = 0, 
+            eating_habits = 'xxx',
+            garden = 'xxx',
+            transportation = 'xxx',
+            involvement = 'xxx'
         )
         )
         db.session.commit()
