@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useMutation, useQuery } from 'react-query';
@@ -18,31 +18,32 @@ const RegisterScreen = ({ navigation }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const usersQuery = useQuery('users', Users.find);
-    const userMutation = useMutation(props =>
-        Users.create(...Object.values(props))
+    const userMutation = useMutation(
+        props => Users.create(...Object.values(props)),
+        {
+            onCompleted: async () => {
+                await usersQuery.refetch();
+
+                if (!usersQuery.isSuccess) return;
+
+                const users = Object.values(usersQuery.data.data);
+                const user = users.find(el => el.username === username);
+
+                if (user) {
+                    setUsername('');
+                    setPassword('');
+                    setConfirmPassword('');
+
+                    setCurrentUserID(user.user_id);
+                    navigation.navigate('Form');
+                }
+            }
+        }
     );
 
-    useEffect(() => {
-        if (!userMutation.isSuccess || !usersQuery.isSuccess) return;
-
-        const users = Object.values(usersQuery.data.data);
-        const user = users.find(el => el.username === username);
-
-        if (user) {
-            setUsername('');
-            setPassword('');
-            setConfirmPassword('');
-
-            setCurrentUserID(user.user_id);
-            navigation.navigate('Form');
-        }
-    }, [userMutation.status, usersQuery.status]);
-
     const onButtonSubmit = () => {
-        if (confirmPassword === password) {
+        if (confirmPassword === password)
             userMutation.mutate({ username, password, confirmPassword });
-            usersQuery.refetch();
-        }
     };
 
     return (
