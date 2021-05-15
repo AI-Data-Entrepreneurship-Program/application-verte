@@ -11,7 +11,11 @@ const styles = StyleSheet.create({
         color: colors.darkGreen
     },
     section: {
-        flex: 1
+        flex: 1,
+        alignItems: 'center'
+    },
+    loadingTxt: {
+        fontSize: 18
     }
 });
 

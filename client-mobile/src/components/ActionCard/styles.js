@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
+        width: 170,
         borderRadius: 10,
         margin: 5,
         height: 150
@@ -19,6 +20,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 12,
         color: 'black'
+    },
+    notLoadedImg: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgrey',
+        borderRadius: 10
     }
 });
 
