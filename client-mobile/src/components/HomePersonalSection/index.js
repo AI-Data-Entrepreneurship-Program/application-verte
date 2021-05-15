@@ -26,12 +26,12 @@ const HomePersonnalSection = () => {
                 {cartesQuery.isSuccess && (
                     <FlatList
                         data={_.shuffle(Object.values(cartesQuery.data.data))}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.action_id}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => (
                             <ActionCard
-                                key={item.id}
+                                key={item.action_id}
                                 item={item}
                                 focused={true}
                                 onPress={() =>

@@ -50,7 +50,7 @@ const TypeTwo = ({ firstColor, secondColor }) => {
             >
                 <Ellipse
                     cx={0}
-                    cy={height * 0.75}
+                    cy='100%'
                     rx={width / 2}
                     ry={height / 4}
                     fill={secondColor}

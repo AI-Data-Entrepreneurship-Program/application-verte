@@ -1,35 +1,47 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import * as Users from '../../api/users';
 import BackgroundCurve from '../../components/BackgroundCurve';
 import InputWithTitle from '../../components/InputWithTitle';
 import LoginInputFooter from '../../components/LoginInputFooter';
 import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/User';
-import styles from './styles';
+import styles from '../Login/styles';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
     const { setCurrentUserID } = useContext(UserContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const usersQuery = useQuery('users', Users.find);
+    const userMutation = useMutation(props =>
+        Users.create(...Object.values(props))
+    );
 
-    const onButtonSubmit = () => {
-        if (!usersQuery.isSuccess) return;
+    useEffect(() => {
+        if (!userMutation.isSuccess || !usersQuery.isSuccess) return;
 
         const users = Object.values(usersQuery.data.data);
         const user = users.find(el => el.username === username);
 
-        if (user?.password === password) {
+        if (user) {
             setUsername('');
             setPassword('');
+            setConfirmPassword('');
 
             setCurrentUserID(user.user_id);
-            navigation.navigate('BottomTabStack');
+            navigation.navigate('Form');
+        }
+    }, [userMutation.status, usersQuery.status]);
+
+    const onButtonSubmit = () => {
+        if (confirmPassword === password) {
+            userMutation.mutate({ username, password, confirmPassword });
+            usersQuery.refetch();
         }
     };
 
@@ -50,12 +62,18 @@ const LoginScreen = ({ navigation }) => {
                         onChangeContent={setPassword}
                         isPassword={true}
                     />
+                    <InputWithTitle
+                        title='Confirmer mot de passe'
+                        content={confirmPassword}
+                        onChangeContent={setConfirmPassword}
+                        isPassword={true}
+                    />
                 </View>
 
                 <LoginInputFooter
-                    leftTitle={"S'enregister"}
-                    onLeftTitlePress={() => navigation.navigate('Register')}
-                    buttonTitle='Se connecter'
+                    leftTitle='Se connecter'
+                    onLeftTitlePress={() => navigation.navigate('Login')}
+                    buttonTitle={"S'enregister"}
                     onButtonPress={onButtonSubmit}
                 />
             </SafeAreaView>
@@ -63,10 +81,9 @@ const LoginScreen = ({ navigation }) => {
             <BackgroundCurve
                 firstColor={colors.lightPink}
                 secondColor={colors.lightGreen}
-                type={2}
             />
         </>
     );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

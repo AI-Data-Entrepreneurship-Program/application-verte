@@ -27,12 +27,12 @@ const HomeDiscoverSection = () => {
                 {cartesQuery.isSuccess && (
                     <MasonryList
                         data={_.shuffle(Object.values(cartesQuery.data.data))}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.action_id}
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) => (
                             <ActionCard
-                                key={item.id}
+                                key={item.action_id}
                                 item={item}
                                 focused={false}
                                 onPress={() =>
