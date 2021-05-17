@@ -5,7 +5,13 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import UserContextProvider from './src/context/User';
 import StackNavigatorProvider from './src/navigations/StackNavigator';
 
-const client = new QueryClient();
+const client = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false
+        }
+    }
+});
 
 const App = () => {
     return (
