@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import * as Users from '../../api/users';
 import BackgroundCurve from '../../components/BackgroundCurve';
 import InputWithTitle from '../../components/InputWithTitle';
@@ -17,34 +17,29 @@ const RegisterScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const usersQuery = useQuery('users', Users.find);
-    const userMutation = useMutation(
-        props => Users.create(...Object.values(props)),
-        {
-            onCompleted: async () => {
-                await usersQuery.refetch();
-
-                if (!usersQuery.isSuccess) return;
-
-                const users = Object.values(usersQuery.data.data);
-                const user = users.find(el => el.username === username);
-
-                if (user) {
-                    setUsername('');
-                    setPassword('');
-                    setConfirmPassword('');
-
-                    setCurrentUserID(user.user_id);
-                    navigation.navigate('Form');
-                }
-            }
-        }
+    const userMutation = useMutation(props =>
+        Users.create(...Object.values(props))
     );
 
     const onButtonSubmit = () => {
         if (confirmPassword === password)
             userMutation.mutate({ username, password, confirmPassword });
     };
+
+    useEffect(() => {
+        if (!userMutation.isSuccess) return;
+
+        const userID = userMutation.data.data.split(' ')[1];
+
+        Users.get(userID).then(data => {
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+
+            setCurrentUserID(data.user_id);
+            navigation.navigate('Form');
+        });
+    }, [userMutation.status]);
 
     return (
         <>

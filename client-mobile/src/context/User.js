@@ -7,8 +7,7 @@ const UserContextProvider = ({ children }) => {
     const [currentUserID, setCurrentUserID] = useState('');
 
     useEffect(() => {
-        const fetchUserID = async () => AsyncStorage.getItem('@user_id');
-        fetchUserID().then(data => setCurrentUserID(data));
+        AsyncStorage.getItem('@user_id').then(data => setCurrentUserID(data));
     }, []);
 
     return (
