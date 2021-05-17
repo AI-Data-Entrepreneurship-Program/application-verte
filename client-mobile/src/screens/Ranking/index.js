@@ -12,7 +12,10 @@ import styles from './styles';
 const RankingScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={{ width: '100%', height: '100%' }}>
+            <ScrollView
+                style={{ width: '100%', height: '100%' }}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={{ alignItems: 'center' }}>
                     <HeaderProfile />
 
@@ -33,6 +36,8 @@ const RankingScreen = () => {
                         />
                     </TouchableOpacity>
                 </View>
+
+                <View style={styles.footer} />
             </ScrollView>
 
             <BackgroundCurve

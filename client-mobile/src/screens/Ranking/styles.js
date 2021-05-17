@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
     startBtnTitle: {
         fontSize: 18,
         marginHorizontal: 5
+    },
+    footer: {
+        width: '100%',
+        height: 100
     }
 });
 
