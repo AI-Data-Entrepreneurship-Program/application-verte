@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
         color: colors.darkGreen
     },
     icon: {
-        alignItems: 'center',
-        justifyContent: 'center',
         marginHorizontal: 5
     }
 });

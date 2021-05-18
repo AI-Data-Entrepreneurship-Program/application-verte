@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import categoryFilters from '../../consts/filters';
 import { colors } from '../../consts/styles';
+import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
 const FilterBubble = ({ title, onPress, currentFilter }) => {
@@ -26,13 +27,7 @@ const FilterBubble = ({ title, onPress, currentFilter }) => {
 };
 
 const HomeExpHeader = ({ currentFilter, setCurrentFilter }) => {
-    const [filters, setFilters] = useState([
-        'All',
-        'Energie',
-        'Alimentation',
-        'Zero déchets',
-        'Transport'
-    ]);
+    const [filters, setFilters] = useState(categoryFilters);
     const [toggleFilter, setToggleFilter] = useState(false);
 
     return (
@@ -49,21 +44,13 @@ const HomeExpHeader = ({ currentFilter, setCurrentFilter }) => {
                     )
                 )}
 
-                <TouchableOpacity
+                <TouchableIcon
                     style={styles.icon}
-                    activeOpacity={0.8}
+                    type='MaterialIcons'
+                    name={toggleFilter ? 'arrow-back-ios' : 'arrow-forward-ios'}
+                    color={colors.darkGreen}
                     onPress={() => setToggleFilter(old => !old)}
-                >
-                    <Icon
-                        name={
-                            toggleFilter
-                                ? 'arrow-back-ios'
-                                : 'arrow-forward-ios'
-                        }
-                        size={24}
-                        color={colors.darkGreen}
-                    />
-                </TouchableOpacity>
+                />
             </View>
         </>
     );

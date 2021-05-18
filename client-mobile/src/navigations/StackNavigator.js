@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import ActionDetailsScreen from '../screens/ActionDetails';
+import CardDetails from '../screens/CardDetailsExp';
 import FormScreen from '../screens/Form';
 import HomeExpScreen from '../screens/HomeExp';
 import LoginScreen from '../screens/Login';
@@ -16,6 +17,11 @@ export default function StackNavigatorProvider() {
             <StackNavigator.Screen
                 name='HomeExp'
                 component={HomeExpScreen}
+                options={{ headerShown: false }}
+            />
+            <StackNavigator.Screen
+                name='CardDetails'
+                component={CardDetails}
                 options={{ headerShown: false }}
             />
             <StackNavigator.Screen

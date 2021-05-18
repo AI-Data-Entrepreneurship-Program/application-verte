@@ -3,57 +3,50 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        maxWidth: 600,
+        paddingHorizontal: 20
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'absolute',
-        marginLeft: 20
-    },
-    icon: {
-        alignSelf: 'center',
-        padding: 3
-    },
-    contentContainer: {
+    containerContent: {
+        flex: 1,
         alignItems: 'center'
     },
     image: {
-        width: '80%',
-        height: 350,
+        width: '100%',
+        height: '50%',
+        maxWidth: 400,
+        maxHeight: 600,
+        resizeMode: 'cover',
         borderRadius: 20,
-        marginBottom: 20,
-        marginTop: 40,
+        marginBottom: 10,
         backgroundColor: colors.lightOrange,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    content: {
-        width: '90%'
-    },
     title: {
         fontSize: 28,
         color: colors.darkGreen,
-        marginBottom: 5
+        textAlign: 'center'
     },
     description: {
         fontSize: 18,
         textAlign: 'justify'
     },
     button: {
-        flexDirection: 'row',
-        width: '55%',
+        width: '80%',
+        maxWidth: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 20,
         backgroundColor: colors.darkGreen,
-        marginVertical: 5,
-        padding: 10
+        flexDirection: 'row',
+        borderRadius: 20,
+        paddingVertical: 5,
+        marginVertical: 10
     },
-    btnTitle: {
-        fontSize: 20,
+    buttonTitle: {
+        fontSize: 24,
         color: colors.lightOrange,
-        marginLeft: 5
+        marginLeft: 10
     }
 });
 

@@ -1,0 +1,44 @@
+import React from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { colors } from '../../consts/styles';
+import { verifyImageUrl } from '../ActionCard';
+import TouchableIcon from '../TouchableIcon';
+import styles from './styles';
+
+const CardDetailsContent = ({ item }) => {
+    return (
+        <>
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.containerContent}
+                showsVerticalScrollIndicator={false}
+            >
+                {verifyImageUrl(item.image_url) ? (
+                    <Image
+                        style={styles.image}
+                        source={{ uri: item.image_url }}
+                    />
+                ) : (
+                    <View style={styles.image}>
+                        <TouchableIcon name='circle-with-cross' size={28} />
+                    </View>
+                )}
+
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.description}>{item.description}</Text>
+
+                <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+                    <TouchableIcon
+                        type='AntDesign'
+                        name='plus'
+                        size={20}
+                        color={colors.lightOrange}
+                    />
+                    <Text style={styles.buttonTitle}>Commencer</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </>
+    );
+};
+
+export default CardDetailsContent;

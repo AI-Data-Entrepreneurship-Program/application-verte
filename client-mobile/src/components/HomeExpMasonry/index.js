@@ -14,12 +14,10 @@ const HomeExpMasonry = ({ currentFilter }) => {
 
     const [cartes, setCartes] = useState([]);
 
-    useEffect(
-        () =>
-            cartesQuery.isSuccess &&
-            setCartes(Object.values(cartesQuery.data.data)),
-        [cartesQuery.status]
-    );
+    useEffect(() => {
+        cartesQuery.isSuccess &&
+            setCartes(Object.values(cartesQuery.data.data));
+    }, [cartesQuery.status]);
 
     useEffect(() => {
         if (!cartesQuery.isSuccess) return;
@@ -51,9 +49,7 @@ const HomeExpMasonry = ({ currentFilter }) => {
                             item={item}
                             focused={false}
                             onPress={() =>
-                                navigation.navigate('ActionDetails', {
-                                    item
-                                })
+                                navigation.navigate('CardDetails', { item })
                             }
                         />
                     )}
