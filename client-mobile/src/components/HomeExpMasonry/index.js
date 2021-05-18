@@ -39,9 +39,10 @@ const HomeExpMasonry = ({ currentFilter }) => {
 
             {cartesQuery.isSuccess && (
                 <MasonryList
+                    style={{ alignSelf: 'center' }}
                     data={cartes}
                     keyExtractor={item => item.action_id}
-                    numColumns={Math.floor(width / (170 + 5))}
+                    numColumns={Math.floor(width / (170 + 170 * 0.1))}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => (
                         <ActionCard
