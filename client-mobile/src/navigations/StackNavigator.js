@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import ActionDetailsScreen from '../screens/ActionDetails';
 import FormScreen from '../screens/Form';
+import HomeExpScreen from '../screens/HomeExp';
 import LoginScreen from '../screens/Login';
 import ProfilScreen from '../screens/Profil';
 import RegisterScreen from '../screens/Register';
@@ -11,7 +12,12 @@ const StackNavigator = createStackNavigator();
 
 export default function StackNavigatorProvider() {
     return (
-        <StackNavigator.Navigator initialRouteName='Login'>
+        <StackNavigator.Navigator initialRouteName='HomeExp'>
+            <StackNavigator.Screen
+                name='HomeExp'
+                component={HomeExpScreen}
+                options={{ headerShown: false }}
+            />
             <StackNavigator.Screen
                 name='Login'
                 component={LoginScreen}
