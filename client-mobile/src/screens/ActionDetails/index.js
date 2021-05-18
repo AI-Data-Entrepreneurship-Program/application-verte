@@ -6,7 +6,6 @@ import { default as EntypoIcon } from 'react-native-vector-icons/Entypo';
 import { useMutation } from 'react-query';
 import * as Favourite from '../../api/favourite';
 import { verifyImageUrl } from '../../components/ActionCard';
-import BackgroundCurve from '../../components/BackgroundCurve';
 import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/User';
 import styles from './styles';
@@ -78,14 +77,13 @@ const ActionDetailsScreen = ({ route, navigation }) => {
                     activeOpacity={0.8}
                     onPress={() => navigation.goBack()}
                 >
-                    <AntDesignIcon name='arrowleft' size={28} />
+                    <AntDesignIcon
+                        name='arrowleft'
+                        size={28}
+                        color={colors.darkGreen}
+                    />
                 </TouchableOpacity>
             </SafeAreaView>
-
-            <BackgroundCurve
-                firstColor={colors.lightPink}
-                secondColor={colors.orange}
-            />
         </SafeAreaView>
     );
 };
