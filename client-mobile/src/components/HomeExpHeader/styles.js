@@ -23,6 +23,21 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginHorizontal: 5
+    },
+    searchbarContainer: {
+        width: '70%',
+        height: 30,
+        backgroundColor: colors.lightOrange,
+        marginHorizontal: '15%',
+        marginTop: 5,
+        borderColor: colors.darkGreen,
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: '10%'
+    },
+    searchbar: {
+        width: '100%',
+        height: '100%'
     }
 });
 

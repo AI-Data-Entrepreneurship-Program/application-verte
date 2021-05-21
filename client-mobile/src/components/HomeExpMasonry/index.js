@@ -7,7 +7,7 @@ import * as Cartes from '../../api/cartes';
 import ActionCard from '../../components/ActionCard';
 import styles from './styles';
 
-const HomeExpMasonry = ({ currentFilter }) => {
+const HomeExpMasonry = ({ currentFilter, searchQuery }) => {
     const { width } = useWindowDimensions();
     const cartesQuery = useQuery('cartes', Cartes.find);
     const navigation = useNavigation();
@@ -22,14 +22,26 @@ const HomeExpMasonry = ({ currentFilter }) => {
     useEffect(() => {
         if (!cartesQuery.isSuccess) return;
 
-        setCartes(old => {
-            return currentFilter === 'All'
+        setCartes(
+            currentFilter === 'All'
                 ? Object.values(cartesQuery.data.data)
-                : Object.values(cartesQuery.data.data).filter(
-                      el => el.category === currentFilter
-                  );
-        });
+                : Object.values(cartesQuery.data.data).filter(el =>
+                      el.category.includes(currentFilter)
+                  )
+        );
     }, [currentFilter]);
+
+    useEffect(() => {
+        if (!cartesQuery.isSuccess) return;
+
+        setCartes(
+            searchQuery.length === 0
+                ? Object.values(cartesQuery.data.data)
+                : Object.values(cartesQuery.data.data).filter(el =>
+                      el.title.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+        );
+    }, [searchQuery]);
 
     return (
         <>
@@ -39,10 +51,9 @@ const HomeExpMasonry = ({ currentFilter }) => {
 
             {cartesQuery.isSuccess && (
                 <MasonryList
-                    style={{ alignSelf: 'center' }}
                     data={cartes}
                     keyExtractor={item => item.action_id}
-                    numColumns={Math.floor(width / (170 + 170 * 0.1))}
+                    numColumns={Math.floor(width / 170)}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => (
                         <ActionCard

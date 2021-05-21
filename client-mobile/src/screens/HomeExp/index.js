@@ -6,11 +6,19 @@ import styles from './styles';
 
 const HomeExpScreen = () => {
     const [currentFilter, setCurrentFilter] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
 
     return (
         <SafeAreaView style={styles.container}>
-            <HomeExpHeader {...{ currentFilter, setCurrentFilter }} />
-            <HomeExpMasonry currentFilter={currentFilter} />
+            <HomeExpHeader
+                {...{
+                    currentFilter,
+                    setCurrentFilter,
+                    searchQuery,
+                    setSearchQuery
+                }}
+            />
+            <HomeExpMasonry {...{ currentFilter, searchQuery }} />
         </SafeAreaView>
     );
 };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import categoryFilters from '../../consts/filters';
 import { colors } from '../../consts/styles';
 import TouchableIcon from '../TouchableIcon';
@@ -26,9 +26,22 @@ const FilterBubble = ({ title, onPress, currentFilter }) => {
     );
 };
 
-const HomeExpHeader = ({ currentFilter, setCurrentFilter }) => {
+const HomeExpHeader = ({
+    currentFilter,
+    setCurrentFilter,
+    searchQuery,
+    setSearchQuery
+}) => {
     const [filters, setFilters] = useState(categoryFilters);
     const [toggleFilter, setToggleFilter] = useState(false);
+    const [toggleSearch, setToggleSearch] = useState(false);
+
+    const searchbarRef = useRef(null);
+
+    //? focus not working: ref is null (component textinput is not mounted by default)
+    useEffect(() => {
+        searchbarRef.current && searchbarRef.current.focus();
+    }, [searchbarRef]);
 
     return (
         <>
@@ -51,6 +64,26 @@ const HomeExpHeader = ({ currentFilter, setCurrentFilter }) => {
                     color={colors.darkGreen}
                     onPress={() => setToggleFilter(old => !old)}
                 />
+
+                <TouchableIcon
+                    style={styles.icon}
+                    type='AntDesign'
+                    name='search1'
+                    color={colors.darkGreen}
+                    onPress={() => setToggleSearch(old => !old)}
+                />
+
+                {toggleSearch && (
+                    <View style={styles.searchbarContainer}>
+                        <TextInput
+                            style={styles.searchbar}
+                            ref={searchbarRef}
+                            value={searchQuery}
+                            placeholder='search...'
+                            onChangeText={setSearchQuery}
+                        />
+                    </View>
+                )}
             </View>
         </>
     );

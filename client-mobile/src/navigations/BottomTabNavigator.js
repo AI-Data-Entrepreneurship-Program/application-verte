@@ -1,13 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as EntypoIcon } from 'react-native-vector-icons/Entypo';
-import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as OcticonsIcon } from 'react-native-vector-icons/Octicons';
 import { colors } from '../consts/styles';
-import HomeScreen from '../screens/Home';
-import RankingScreen from '../screens/Ranking';
-import SuggestionsScreen from '../screens/Suggestions';
+import HomeExpScreen from '../screens/HomeExp';
+import ProfilScreen from '../screens/Profil';
 
 const BottomTabNavigator = createBottomTabNavigator();
 
@@ -20,8 +18,8 @@ export default function BottomTabNavigatorProvider() {
             }}
         >
             <BottomTabNavigator.Screen
-                name='Home'
-                component={HomeScreen}
+                name='HomeExp'
+                component={HomeExpScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <EntypoIcon
@@ -35,27 +33,13 @@ export default function BottomTabNavigatorProvider() {
                 }}
             />
             <BottomTabNavigator.Screen
-                name='Suggestions'
-                component={SuggestionsScreen}
+                name='Profil'
+                component={ProfilScreen}
                 options={{
+                    tabBarVisible: false,
                     tabBarIcon: ({ focused }) => (
-                        <OcticonsIcon
-                            name='comment-discussion'
-                            size={24}
-                            color={
-                                focused ? colors.darkGreen : colors.lightGreen
-                            }
-                        />
-                    )
-                }}
-            />
-            <BottomTabNavigator.Screen
-                name='Ranking'
-                component={RankingScreen}
-                options={{
-                    tabBarIcon: ({ focused }) => (
-                        <FontAwesome5Icon
-                            name='medal'
+                        <AntDesignIcon
+                            name='user'
                             size={24}
                             color={
                                 focused ? colors.darkGreen : colors.lightGreen
