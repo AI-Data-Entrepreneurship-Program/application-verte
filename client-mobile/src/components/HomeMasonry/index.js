@@ -7,7 +7,7 @@ import * as Cartes from '../../api/cartes';
 import ActionCard from '../../components/ActionCard';
 import styles from './styles';
 
-const HomeExpMasonry = ({ currentFilter, searchQuery }) => {
+const HomeMasonry = ({ currentFilter, searchQuery }) => {
     const { width } = useWindowDimensions();
     const cartesQuery = useQuery('cartes', Cartes.find);
     const navigation = useNavigation();
@@ -71,4 +71,4 @@ const HomeExpMasonry = ({ currentFilter, searchQuery }) => {
     );
 };
 
-export default HomeExpMasonry;
+export default HomeMasonry;

@@ -26,7 +26,7 @@ const FilterBubble = ({ title, onPress, currentFilter }) => {
     );
 };
 
-const HomeExpHeader = ({
+const HomeHeader = ({
     currentFilter,
     setCurrentFilter,
     searchQuery,
@@ -89,4 +89,4 @@ const HomeExpHeader = ({
     );
 };
 
-export default HomeExpHeader;
+export default HomeHeader;

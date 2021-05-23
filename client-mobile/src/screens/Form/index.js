@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import BackgroundCurve from '../../components/BackgroundCurve';
 import RadioButtonContainer from '../../components/RadioButton/RadioButtonContainer';
 import * as loginQuestions from '../../consts/loginQuestions';
 import { colors } from '../../consts/styles';
@@ -93,11 +92,6 @@ const FormScreen = ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
             </ScrollView>
-
-            <BackgroundCurve
-                firstColor={colors.lightPink}
-                secondColor={colors.lightOrange}
-            />
         </SafeAreaView>
     );
 };

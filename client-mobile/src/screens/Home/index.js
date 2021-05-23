@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import BackgroundCurve from '../../components/BackgroundCurve';
-import HeaderProfile from '../../components/HeaderProfile';
-import HomeDiscoverSection from '../../components/HomeDiscoverSection';
-import HomePersonalSection from '../../components/HomePersonalSection';
-import { colors } from '../../consts/styles';
+import HomeHeader from '../../components/HomeHeader';
+import HomeMasonry from '../../components/HomeMasonry';
 import styles from './styles';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
+    const [currentFilter, setCurrentFilter] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
+
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderProfile />
-            <HomePersonalSection />
-            <HomeDiscoverSection />
-            <BackgroundCurve
-                firstColor={colors.lightPink}
-                secondColor={colors.lightGreen}
+            <HomeHeader
+                {...{
+                    currentFilter,
+                    setCurrentFilter,
+                    searchQuery,
+                    setSearchQuery
+                }}
             />
+            <HomeMasonry {...{ currentFilter, searchQuery }} />
         </SafeAreaView>
     );
 };

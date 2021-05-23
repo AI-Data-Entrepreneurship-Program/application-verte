@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as EntypoIcon } from 'react-native-vector-icons/Entypo';
 import { colors } from '../consts/styles';
-import HomeExpScreen from '../screens/HomeExp';
+import HomeScreen from '../screens/Home';
 import ProfilScreen from '../screens/Profil';
 
 const BottomTabNavigator = createBottomTabNavigator();
@@ -18,8 +18,8 @@ export default function BottomTabNavigatorProvider() {
             }}
         >
             <BottomTabNavigator.Screen
-                name='HomeExp'
-                component={HomeExpScreen}
+                name='Home'
+                component={HomeScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <EntypoIcon
