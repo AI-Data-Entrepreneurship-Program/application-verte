@@ -3,17 +3,14 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         maxWidth: 600,
+        alignItems: 'center',
         paddingHorizontal: 20
-    },
-    containerContent: {
-        flex: 1,
-        alignItems: 'center'
     },
     image: {
         width: '100%',
-        height: '50%',
+        height: 300,
         maxWidth: 400,
         maxHeight: 600,
         resizeMode: 'cover',

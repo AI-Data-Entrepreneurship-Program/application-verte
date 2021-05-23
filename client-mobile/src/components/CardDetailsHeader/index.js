@@ -9,16 +9,14 @@ const CardDetailsHeader = () => {
     const { goBack } = useNavigation();
 
     return (
-        <>
-            <View style={styles.container}>
-                <TouchableIcon
-                    type='AntDesign'
-                    name='arrowleft'
-                    color={colors.darkGreen}
-                    onPress={goBack}
-                />
-            </View>
-        </>
+        <View style={styles.container}>
+            <TouchableIcon
+                type='AntDesign'
+                name='arrowleft'
+                color={colors.darkGreen}
+                onPress={goBack}
+            />
+        </View>
     );
 };
 
