@@ -11,7 +11,6 @@ const Card = ({ comment }) => {
         if (comment?.answers)
             setAnswers(
                 Object.values(comment.answers).sort((a, b) => {
-                    console.log(a.likes_count - b.likes_count);
                     b.likes_count - a.likes_count;
                 })
             );

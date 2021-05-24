@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../consts/styles';
@@ -6,6 +7,18 @@ import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
 const CardDetailsContent = ({ item }) => {
+    const startActionHandler = async () => {
+        const data = await AsyncStorage.getItem('@user_actions');
+        let newData = [item];
+
+        if (data)
+            newData = newData.concat(
+                JSON.parse(data).filter(el => el.action_id !== item.action_id)
+            );
+
+        await AsyncStorage.setItem('@user_actions', JSON.stringify(newData));
+    };
+
     return (
         <View style={styles.container}>
             {verifyImageUrl(item.image_url) ? (
@@ -19,7 +32,11 @@ const CardDetailsContent = ({ item }) => {
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
 
-            <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+            <TouchableOpacity
+                style={styles.button}
+                activeOpacity={0.8}
+                onPress={startActionHandler}
+            >
                 <TouchableIcon
                     type='AntDesign'
                     name='plus'

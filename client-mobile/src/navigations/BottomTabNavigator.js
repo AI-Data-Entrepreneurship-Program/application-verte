@@ -5,7 +5,7 @@ import { default as AntDesignIcon } from 'react-native-vector-icons/AntDesign';
 import { default as EntypoIcon } from 'react-native-vector-icons/Entypo';
 import { colors } from '../consts/styles';
 import HomeScreen from '../screens/Home';
-import ProfilScreen from '../screens/Profil';
+import ProfileScreen from '../screens/Profile';
 
 const BottomTabNavigator = createBottomTabNavigator();
 
@@ -33,8 +33,8 @@ export default function BottomTabNavigatorProvider() {
                 }}
             />
             <BottomTabNavigator.Screen
-                name='Profil'
-                component={ProfilScreen}
+                name='Profile'
+                component={ProfileScreen}
                 options={{
                     tabBarVisible: false,
                     tabBarIcon: ({ focused }) => (

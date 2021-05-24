@@ -1,10 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center'
+    },
+    exitIcon: {
+        margin: 35,
+        position: 'absolute',
+        bottom: 0
     }
 });
 
