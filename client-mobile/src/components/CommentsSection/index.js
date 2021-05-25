@@ -1,11 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import TouchableIcon from '../../components/TouchableIcon';
 import styles from './styles';
 
-const Card = ({ comment }) => {
+const EntryCard = ({ comment, setComments }) => {
+    const [content, setContent] = useState('');
+    const textInputRef = useRef(null);
+
+    const addCommentHandler = () => {
+        setComments(old =>
+            old.map(el => {
+                if (el.content.length === 0) el.content = content;
+                return el;
+            })
+        );
+    };
+
+    useEffect(() => {
+        if (textInputRef.current) textInputRef.current.focus();
+    }, [textInputRef]);
+
+    return (
+        <View style={styles.commentContainer}>
+            <View style={styles.commentHeader}>
+                <Image
+                    style={styles.commentAvatar}
+                    source={{
+                        uri: 'https://www.w3schools.com/w3images/avatar6.png'
+                    }}
+                />
+                <Text style={styles.commentUsername}>Toto</Text>
+            </View>
+
+            <TextInput
+                style={styles.commentContent}
+                ref={textInputRef}
+                value={content}
+                onChangeText={setContent}
+            />
+
+            <View style={styles.commentFooter}>
+                <TouchableOpacity
+                    style={styles.commentBtn}
+                    activeOpacity={0.8}
+                    onPress={addCommentHandler}
+                >
+                    <Text style={styles.commentBtnTitle}>Commenter</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+};
+
+const Card = ({ comment, setComments }) => {
     const [answers, setAnswers] = useState([]);
+
+    const answerHandler = () => {
+        //? la réponse n'est pas persistente
+        setAnswers(old => [
+            {
+                user_id: 'xxx',
+                avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+                username: 'Toto',
+                content: '',
+                likes_count: 0,
+                dislikes_count: 0
+            },
+            ...old
+        ]);
+    };
 
     useEffect(() => {
         if (comment?.answers)
@@ -15,6 +79,9 @@ const Card = ({ comment }) => {
                 })
             );
     }, []);
+
+    if (comment.content.length === 0)
+        return <EntryCard comment={comment} setComments={setComments} />;
 
     return (
         <View style={styles.commentContainer}>
@@ -33,7 +100,7 @@ const Card = ({ comment }) => {
                     <TouchableOpacity
                         style={styles.commentBtn}
                         activeOpacity={0.8}
-                        onPress={() => {}}
+                        onPress={answerHandler}
                     >
                         <Text style={styles.commentBtnTitle}>Répondre</Text>
                     </TouchableOpacity>
@@ -46,7 +113,11 @@ const Card = ({ comment }) => {
 
             <View style={styles.commentAnswers}>
                 {answers.map(el => (
-                    <Card key={uuid.v4()} comment={el} />
+                    <Card
+                        key={uuid.v4()}
+                        comment={el}
+                        setComments={setComments}
+                    />
                 ))}
             </View>
         </View>
@@ -60,6 +131,21 @@ const CommentsSection = ({ item }) => {
         )
     );
 
+    const commentHandler = () => {
+        setComments(old => [
+            {
+                user_id: 'xxx',
+                avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+                username: 'Toto',
+                content: '',
+                likes_count: 0,
+                dislikes_count: 0,
+                answers: {}
+            },
+            ...old
+        ]);
+    };
+
     return (
         <>
             <View style={styles.header}>
@@ -67,14 +153,14 @@ const CommentsSection = ({ item }) => {
                 <TouchableOpacity
                     style={styles.headerBtn}
                     activeOpacity={0.8}
-                    onPress={() => {}}
+                    onPress={commentHandler}
                 >
                     <Text style={styles.headerBtnTitle}>Commenter</Text>
                 </TouchableOpacity>
             </View>
 
             {comments.map(el => (
-                <Card key={uuid.v4()} comment={el} />
+                <Card key={uuid.v4()} comment={el} setComments={setComments} />
             ))}
         </>
     );
