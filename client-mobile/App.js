@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ActionContextProvider from './src/context/ActionContextProvider';
 import UserContextProvider from './src/context/User';
 import StackNavigatorProvider from './src/navigations/StackNavigator';
 
@@ -17,11 +18,13 @@ const App = () => {
     return (
         <QueryClientProvider client={client}>
             <UserContextProvider>
-                <SafeAreaProvider>
-                    <NavigationContainer>
-                        <StackNavigatorProvider />
-                    </NavigationContainer>
-                </SafeAreaProvider>
+                <ActionContextProvider>
+                    <SafeAreaProvider>
+                        <NavigationContainer>
+                            <StackNavigatorProvider />
+                        </NavigationContainer>
+                    </SafeAreaProvider>
+                </ActionContextProvider>
             </UserContextProvider>
         </QueryClientProvider>
     );

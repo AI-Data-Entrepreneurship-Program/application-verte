@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import categoryFilters from '../../consts/filters';
 import { colors } from '../../consts/styles';
+import { ActionContext } from '../../context/ActionContextProvider';
 import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
@@ -26,12 +27,10 @@ const FilterBubble = ({ title, onPress, currentFilter }) => {
     );
 };
 
-const HomeHeader = ({
-    currentFilter,
-    setCurrentFilter,
-    searchQuery,
-    setSearchQuery
-}) => {
+const HomeHeader = () => {
+    const { currentFilter, setCurrentFilter, searchQuery, setSearchQuery } =
+        useContext(ActionContext);
+
     const [filters, setFilters] = useState(categoryFilters);
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleSearch, setToggleSearch] = useState(false);

@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
+import { useMutation } from 'react-query';
+import * as Comment from '../../api/comments';
 import TouchableIcon from '../../components/TouchableIcon';
 import styles from './styles';
 
-const EntryCard = ({ comment, setComments }) => {
+const EntryCard = ({ action_id, comment, setComments }) => {
     const [content, setContent] = useState('');
     const textInputRef = useRef(null);
+
+    const commentMutation = useMutation(props =>
+        Comment.comment(...Object.values(props))
+    );
 
     const addCommentHandler = () => {
         setComments(old =>
@@ -15,6 +21,15 @@ const EntryCard = ({ comment, setComments }) => {
                 return el;
             })
         );
+
+        commentMutation.mutate({
+            action_id: action_id,
+            user_id: 'xxx',
+            username: 'dsdfs',
+            avatar_url:
+                'https://365psd.com/images/istock/previews/1009/100996291-male-avatar-profile-picture-vector.jpg',
+            content
+        });
     };
 
     useEffect(() => {
@@ -53,7 +68,7 @@ const EntryCard = ({ comment, setComments }) => {
     );
 };
 
-const Card = ({ comment, setComments }) => {
+const Card = ({ action_id, comment, setComments }) => {
     const [answers, setAnswers] = useState([]);
 
     const answerHandler = () => {
@@ -81,7 +96,13 @@ const Card = ({ comment, setComments }) => {
     }, []);
 
     if (comment.content.length === 0)
-        return <EntryCard comment={comment} setComments={setComments} />;
+        return (
+            <EntryCard
+                action_id={action_id}
+                comment={comment}
+                setComments={setComments}
+            />
+        );
 
     return (
         <View style={styles.commentContainer}>
@@ -160,7 +181,12 @@ const CommentsSection = ({ item }) => {
             </View>
 
             {comments.map(el => (
-                <Card key={uuid.v4()} comment={el} setComments={setComments} />
+                <Card
+                    key={uuid.v4()}
+                    action_id={item.action_id}
+                    comment={el}
+                    setComments={setComments}
+                />
             ))}
         </>
     );
