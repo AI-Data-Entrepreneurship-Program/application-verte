@@ -2,42 +2,32 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
-import * as Comment from '../../api/comments';
+import * as Comments from '../../api/comments';
 import TouchableIcon from '../../components/TouchableIcon';
+import useComments from '../../hooks/action/useComments';
 import styles from './styles';
 
-const EntryCard = ({ action_id, comment, setComments }) => {
+// TODO: user info to be completed
+const createEntryPlaceholder = () => ({
+    user_id: 'xxx',
+    avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+    username: 'Toto',
+    content: '',
+    likes_count: 0,
+    dislikes_count: 0,
+    entry: true
+});
+
+const EntryCard = ({ submitHandler }) => {
     const [content, setContent] = useState('');
     const textInputRef = useRef(null);
-
-    const commentMutation = useMutation(props =>
-        Comment.comment(...Object.values(props))
-    );
-
-    const addCommentHandler = () => {
-        setComments(old =>
-            old.map(el => {
-                if (el.content.length === 0) el.content = content;
-                return el;
-            })
-        );
-
-        commentMutation.mutate({
-            action_id: action_id,
-            user_id: 'xxx',
-            username: 'dsdfs',
-            avatar_url:
-                'https://365psd.com/images/istock/previews/1009/100996291-male-avatar-profile-picture-vector.jpg',
-            content
-        });
-    };
 
     useEffect(() => {
         if (textInputRef.current) textInputRef.current.focus();
     }, [textInputRef]);
 
     return (
-        <View style={styles.commentContainer}>
+        <>
             <View style={styles.commentHeader}>
                 <Image
                     style={styles.commentAvatar}
@@ -59,53 +49,28 @@ const EntryCard = ({ action_id, comment, setComments }) => {
                 <TouchableOpacity
                     style={styles.commentBtn}
                     activeOpacity={0.8}
-                    onPress={addCommentHandler}
+                    onPress={() => submitHandler(content)}
                 >
                     <Text style={styles.commentBtnTitle}>Commenter</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </>
     );
 };
 
-const Card = ({ action_id, comment, setComments }) => {
-    const [answers, setAnswers] = useState([]);
-
-    const answerHandler = () => {
-        //? la réponse n'est pas persistente
-        setAnswers(old => [
-            {
-                user_id: 'xxx',
-                avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
-                username: 'Toto',
-                content: '',
-                likes_count: 0,
-                dislikes_count: 0
-            },
-            ...old
-        ]);
+const Card = ({ comment, setter }) => {
+    const createEntryAnswer = () => {
+        setter(old =>
+            old.map(el => {
+                if (el.comment_id === comment.comment_id)
+                    el.answers = [createEntryPlaceholder(), ...el.answers];
+                return el;
+            })
+        );
     };
 
-    useEffect(() => {
-        if (comment?.answers)
-            setAnswers(
-                Object.values(comment.answers).sort((a, b) => {
-                    b.likes_count - a.likes_count;
-                })
-            );
-    }, []);
-
-    if (comment.content.length === 0)
-        return (
-            <EntryCard
-                action_id={action_id}
-                comment={comment}
-                setComments={setComments}
-            />
-        );
-
     return (
-        <View style={styles.commentContainer}>
+        <>
             <View style={styles.commentHeader}>
                 <Image
                     style={styles.commentAvatar}
@@ -121,7 +86,7 @@ const Card = ({ action_id, comment, setComments }) => {
                     <TouchableOpacity
                         style={styles.commentBtn}
                         activeOpacity={0.8}
-                        onPress={answerHandler}
+                        onPress={createEntryAnswer}
                     >
                         <Text style={styles.commentBtnTitle}>Répondre</Text>
                     </TouchableOpacity>
@@ -131,41 +96,77 @@ const Card = ({ action_id, comment, setComments }) => {
                 <TouchableIcon type='AntDesign' name='arrowup' />
                 <Text>{comment.likes_count}</Text>
             </View>
+        </>
+    );
+};
+
+const CommentCard = ({ action_id, comment, setter }) => {
+    const commentMutation = useMutation(props =>
+        Comments.comment(...Object.values(props))
+    );
+
+    const submitHandler = content => {
+        commentMutation.mutate({
+            action_id,
+            user_id: 'xxx',
+            username: 'Toto',
+            avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+            content
+        });
+
+        comment.content = content;
+        delete comment.entry;
+    };
+
+    return (
+        <View style={styles.commentContainer}>
+            {!comment?.entry && <Card {...{ comment, setter }} />}
+            {comment?.entry && <EntryCard submitHandler={submitHandler} />}
 
             <View style={styles.commentAnswers}>
-                {answers.map(el => (
-                    <Card
-                        key={uuid.v4()}
-                        comment={el}
-                        setComments={setComments}
-                    />
-                ))}
+                {comment?.answers &&
+                    comment.answers.map(el => (
+                        <AnswerCard
+                            key={uuid.v4()}
+                            action_id={action_id}
+                            comment={el}
+                            setter={undefined}
+                            parent_id={comment.comment_id}
+                        />
+                    ))}
             </View>
         </View>
     );
 };
 
-const CommentsSection = ({ item }) => {
-    const [comments, setComments] = useState(
-        Object.values(item.comments).sort(
-            (a, b) => b.likes_count - a.likes_count
-        )
+const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
+    const commentMutation = useMutation(props =>
+        Comments.answer(...Object.values(props))
     );
 
-    const commentHandler = () => {
-        setComments(old => [
-            {
-                user_id: 'xxx',
-                avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
-                username: 'Toto',
-                content: '',
-                likes_count: 0,
-                dislikes_count: 0,
-                answers: {}
-            },
-            ...old
-        ]);
+    const submitHandler = content => {
+        commentMutation.mutate({
+            action_id,
+            comment_id: parent_id,
+            user_id: 'xxx',
+            username: 'Toto',
+            avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+            content
+        });
+
+        comment.content = content;
+        delete comment.entry;
     };
+    return (
+        <View style={styles.commentContainer}>
+            {!comment?.entry && <Card {...{ comment, setter }} />}
+            {comment?.entry && <EntryCard submitHandler={submitHandler} />}
+        </View>
+    );
+};
+
+const CommentsSection = ({ item }) => {
+    const [comments, setComments] = useComments(item);
 
     return (
         <>
@@ -174,18 +175,20 @@ const CommentsSection = ({ item }) => {
                 <TouchableOpacity
                     style={styles.headerBtn}
                     activeOpacity={0.8}
-                    onPress={commentHandler}
+                    onPress={() =>
+                        setComments(old => [createEntryPlaceholder(), ...old])
+                    }
                 >
                     <Text style={styles.headerBtnTitle}>Commenter</Text>
                 </TouchableOpacity>
             </View>
 
             {comments.map(el => (
-                <Card
+                <CommentCard
                     key={uuid.v4()}
                     action_id={item.action_id}
                     comment={el}
-                    setComments={setComments}
+                    setter={setComments}
                 />
             ))}
         </>
