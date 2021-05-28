@@ -48,12 +48,19 @@ class Cartes(Resource):
             help = 'No disliked_by provided')
         self.reqparse.add_argument('top_action', type = int,
             help = 'No top_action provided')
+        self.reqparse.add_argument('comments', type = str,
+            help = 'No comments provided')
 
     # get an action by id --- curl http://127.0.0.1:5000/cartes/4
     def get(self, carte_id=None):
         if not carte_id: 
             actions = json.loads(json.dumps(Actions.query.all(), cls=AlchemyEncoder))
             actions = {str(dict["action_id"]): dict for dict in actions}
+            for key, value in actions.items():
+                value['comments'] = ast.literal_eval(value['comments'])
+                value['category'] = ast.literal_eval(value['category'])
+                value['liked_by'] = ast.literal_eval(value['liked_by'])
+                value['disliked_by'] = ast.literal_eval(value['disliked_by'])
             return actions 
         else: 
             action = Actions.query.filter_by(action_id=carte_id).first()
@@ -62,6 +69,12 @@ class Cartes(Resource):
             else:
                 action = json.loads(json.dumps(action, cls=AlchemyEncoder))
                 action = {str(action["action_id"]): action}
+                for key, value in action.items():
+                    value['comments'] = ast.literal_eval(value['comments'])
+                    value['category'] = ast.literal_eval(value['category'])
+                    value['liked_by'] = ast.literal_eval(value['liked_by'])
+                    value['disliked_by'] = ast.literal_eval(value['disliked_by'])
+                
                 return action
     
     # add a new action 
@@ -74,11 +87,12 @@ class Cartes(Resource):
                 description= args['description'],
                 image_url= args['image_url'],
                 impact= args['impact'],
-                category= args['category'],
+                category= "{}".format([i.strip() for i in args['category'].split(",")]),
                 rating = 0,
                 liked_by = '{}'.format([]),
                 disliked_by = '{}'.format([]),
-                top_action = 0
+                top_action = 0,
+                comments= '{}'.format({}),
             )
             )
         db.session.commit()
@@ -93,23 +107,23 @@ class Cartes(Resource):
         #check the args added
         #for arg in args: 
         #    action[arg] = args[arg]
-        if 'title' in args:
+        if not args['title'] == None:
             action.title = args['title']
-        if 'description' in args:
+        if not args['description'] == None:
             action.description = args['description']
-        if 'image_url' in args:
+        if not args['image_url'] == None:
             action.image_url = args['image_url']
-        if 'impact' in args:
+        if not args['impact'] == None:
             action.impact = args['impact']
-        if 'category' in args:
+        if not args['category'] == None:
             action.category = args['category']
-        if 'rating' in args:
+        if not args['rating'] == None:
             action.rating = args['rating']
-        if 'disliked_by' in args:
+        if not args['disliked_by'] == None:
             action.disliked_by = args['disliked_by']
-        if 'liked_by' in args:
+        if not args['liked_by'] == None:
             action.liked_by = args['liked_by']
-        if 'top_action' in args:
+        if not args['top_action'] == None:
             action.top_action = args['top_action']
         db.session.commit()
 
@@ -150,6 +164,11 @@ class Users(Resource):
         if not user_id: 
             users = json.loads(json.dumps(User.query.all(), cls=AlchemyEncoder))
             users = {str(dict["user_id"]): dict for dict in users}
+            for key, value in users.items():
+                value['badges'] = ast.literal_eval(value['badges'])
+                value['likes'] = ast.literal_eval(value['likes'])
+                value['dislikes'] = ast.literal_eval(value['dislikes'])
+                value['actions'] = ast.literal_eval(value['actions'])
             return users
         else: 
             user = User.query.filter_by(user_id=user_id).first()
@@ -158,6 +177,11 @@ class Users(Resource):
             else:
                 user = json.loads(json.dumps(user, cls=AlchemyEncoder))
                 user = {str(user["user_id"]): user}
+                for key, value in user.items():
+                    value['badges'] = ast.literal_eval(value['badges'])
+                    value['likes'] = ast.literal_eval(value['likes'])
+                    value['dislikes'] = ast.literal_eval(value['dislikes'])
+                    value['actions'] = ast.literal_eval(value['actions'])
                 return user
 
     # insert a new user
@@ -190,29 +214,29 @@ class Users(Resource):
         user = User.query.filter_by(user_id=args['user_id']).first()
 
         #check the args added
-        if 'username' in args:
+        if not args['username'] == None:
             user.username = args['username']
-        if 'password' in args:
+        if not args['password'] == None:
             user.password = args['password']
-        if 'avatar_url' in args:
+        if not args['avatar_url'] == None:
             user.avatar_url = args['avatar_url']
-        if 'level' in args:
+        if not args['level'] == None:
             user.level = args['level']
-        if 'actions' in args:
+        if not args['actions'] == None:
             user.actions = args['actions']
-        if 'likes' in args:
+        if not args['likes'] == None:
             user.likes = args['likes']
-        if 'dislikes' in args:
+        if not args['dislikes'] == None:
             user.dislikes = args['dislikes']
-        if 'badges' in args:
+        if not args['badges'] == None:
             user.badges = args['badges']
-        if 'eating_habits' in args:
+        if not args['eating_habits'] == None:
             user.eating_habits = args['eating_habits']
-        if 'garden' in args:
+        if not args['garden'] == None:
             user.garden = args['garden']
-        if 'transportation' in args:
+        if not args['transportation'] == None:
             user.transportation = args['transportation']
-        if 'involvement' in args:
+        if not args['involvement'] == None:
             user.involvement = args['involvement']
         #for arg in args: 
         #    user.arg = args[arg]
@@ -238,46 +262,100 @@ class Likes(Resource):
         self.reqparse.add_argument('action_id', type = str, required = True,
             help = 'No action_id title provided')
         self.reqparse.add_argument('likes', type = str, required = True,
-            help = 'No likes title provided')
+            help = 'No likes 1/-1 title provided')
+        self.reqparse.add_argument('type', type = str, required = True,
+            help = 'No type action/comment/answer provided')
+        self.reqparse.add_argument('comment_id', type = str, required = False,
+            help = 'No comment_id provided')
+        self.reqparse.add_argument('answer_id', type = str, required = False,
+            help = 'No answer_id provided')
 
     def post(self): 
         args = self.reqparse.parse_args()
         
-        # add the like or dislike to the user 
-        user = User.query.filter_by(user_id=args['user_id']).first()
-        
-        if int(args['likes']) == 1: 
-            likes = ast.literal_eval(user.likes)
-            likes.append(args['action_id'])
-            user.likes = '{}'.format(likes)
-            db.session.commit()
-        else: 
-            dislikes = ast.literal_eval(user.dislikes)
-            dislikes.append(args['action_id'])
-            user.dislikes = '{}'.format(dislikes) 
-            db.session.commit()
-
-
-        #modify the notation of the action
-        action = json.dumps(Actions.query.filter_by(action_id=args['action_id']).first(), cls=AlchemyEncoder)
-        notation_action = int(json.loads(action)["rating"])
-        notation_action += int(args['likes'])
-
-        change2 = Actions.query.filter_by(action_id=args['action_id']).first()
-        change2.rating = notation_action
-        
-        # add the user as dislikes or likes 
-        if int(args['likes']) == 1: 
-            likes = ast.literal_eval(change2.liked_by)
-            likes.append(args['user_id'])
-            change2.liked_by = '{}'.format(likes)
-           
-        else: 
-            dislikes = ast.literal_eval(change2.disliked_by)
-            dislikes.append(args['user_id'])
-            change2.disliked_by = '{}'.format(dislikes)
+        if args['type'] == 'action':
+            # add the like or dislike to the user 
+            user = User.query.filter_by(user_id=args['user_id']).first()
             
-        db.session.commit()
+            if int(args['likes']) == 1: 
+                likes = ast.literal_eval(user.likes)
+                likes.append(args['action_id'])
+                user.likes = '{}'.format(likes)
+                db.session.commit()
+            else: 
+                dislikes = ast.literal_eval(user.dislikes)
+                dislikes.append(args['action_id'])
+                user.dislikes = '{}'.format(dislikes) 
+                db.session.commit()
+
+
+            #modify the notation of the action
+            action = json.dumps(Actions.query.filter_by(action_id=args['action_id']).first(), cls=AlchemyEncoder)
+            notation_action = int(json.loads(action)["rating"])
+            notation_action += int(args['likes'])
+
+            change2 = Actions.query.filter_by(action_id=args['action_id']).first()
+            change2.rating = notation_action
+            
+            # add the user as dislikes or likes 
+            if int(args['likes']) == 1: 
+                likes = ast.literal_eval(change2.liked_by)
+                likes.append(args['user_id'])
+                change2.liked_by = '{}'.format(likes)
+            
+            else: 
+                dislikes = ast.literal_eval(change2.disliked_by)
+                dislikes.append(args['user_id'])
+                change2.disliked_by = '{}'.format(dislikes)
+                
+            db.session.commit()
+        
+        if args['type'] == 'comment':
+            action = Actions.query.filter_by(action_id=args['action_id']).first()
+            comments = action.comments 
+            comments = ast.literal_eval(comments)
+            comment = comments[args['comment_id']]
+
+            #drop the comment in the comments 
+            comments.pop(args['comment_id'])
+
+            if int(args['likes']) == 1: 
+                comment['likes_count'] += 1
+            else:
+                comment['dislikes_count'] += 1
+
+            comment = {args['comment_id']: comment}
+            comments.update(comment)
+            
+            # update the action
+            action.comments = '{}'.format(comments)                
+            db.session.commit()
+
+              
+        if args['type'] == 'answer':
+            action = Actions.query.filter_by(action_id=args['action_id']).first()
+            comments = action.comments 
+            comments = ast.literal_eval(comments)
+            comment = comments[args['comment_id']]
+
+            #drop the comment in the comments 
+            comments.pop(args['comment_id'])
+
+            if int(args['likes']) == 1: 
+                comment['answers'][args['answer_id']]['likes_count'] += 1
+            else:
+                comment['answers'][args['answer_id']]['dislikes_count'] += 1
+
+
+
+
+            comment = {args['comment_id']: comment}
+            comments.update(comment)
+            
+            # update the action
+            action.comments = '{}'.format(comments)                
+            db.session.commit()
+
         return 'done'
 
 
@@ -355,13 +433,13 @@ class Badge(Resource):
         #check the args added
         #for arg in args: 
         #    badge[arg] = args[arg]
-        if 'title' in args:
+        if not args['title'] == None:
             badge.title = args['title']
-        if 'description' in args:
+        if not args['description'] == None:
             badge.description = args['description']
-        if 'image_url' in args:
+        if not args['image_url'] == None:
             badge.image_url = args['image_url']
-        if 'obtained_count' in args:
+        if not args['obtained_count'] == None:
             badge.obtained_count = args['obtained_count']
         db.session.commit()
 
@@ -400,5 +478,102 @@ class EarnBadge(Resource):
         badge = Badges.query.filter_by(badge_id=args['badge_id']).first()
         badge.obtained_count += 1
         db.session.commit()
+
+        return 'done'
+
+
+
+class Comment(Resource): 
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('action_id', type = str, required = True,
+            help = 'No action_id provided')
+        self.reqparse.add_argument('comment_id', type = str, required = True,
+            help = 'No comment_idprovided')
+        self.reqparse.add_argument('user_id', type = str, required = True,
+            help = 'No user_id provided')
+        self.reqparse.add_argument('avatar_url', type = str, required = True,
+            help = 'No avatar_url provided')
+        self.reqparse.add_argument('username', type = str, required = True,
+            help = 'No username provided')
+        self.reqparse.add_argument('content', type = str, required = True,
+            help = 'No content provided')
+        self.reqparse.add_argument('likes_count', type = str, required = False,
+            help = 'No likes_count provided')
+        self.reqparse.add_argument('dislikes_count', type = str, required = False,
+            help = 'No dislikes_count provided')
+        self.reqparse.add_argument('answer_id', type = str, required = False,
+            help = 'No answer_id provided')
+        self.reqparse.add_argument('type', type = str, required = False,
+            help = 'No type answer/comment provided')
+
+    def post(self): 
+        args = self.reqparse.parse_args()
+        
+        action = Actions.query.filter_by(action_id=args['action_id']).first()
+        print(args)
+        # create a comment
+        if args['type']=='comment':
+            
+            #reconstruct the dictionnary 
+            comment = {
+                args['comment_id']: {
+                        'user_id':args['user_id'], 
+                        'avatar_url':args['avatar_url'],
+                        'username':args['username'],
+                        'content':args['content'],
+                        'likes_count':0,
+                        'dislikes_count':0,
+                        'answers': {}
+                }
+            }
+            
+            # get the comment 
+            comments = action.comments 
+            comments = ast.literal_eval(comments)
+            comments.update(comment)
+
+            #update the action 
+            action.comments = '{}'.format(comments)               
+            db.session.commit()
+
+        #create an answer 
+        else: 
+
+            answer = {
+                args['answer_id']: {
+                        'user_id':args['user_id'], 
+                        'avatar_url':args['avatar_url'],
+                        'username':args['username'],
+                        'content':args['content'],
+                        'likes_count':0,
+                        'dislikes_count':0
+                }
+            }
+            
+            # load all comments 
+            comments = action.comments 
+            comments = ast.literal_eval(comments)
+
+            # get the comment to add the answer 
+            comment = comments[args['comment_id']]
+
+            #drop the comment in the comments 
+            comments.pop(args['comment_id'])
+
+            #get all answers of the comment 
+            answers = comment['answers']
+
+            # add the answer
+            answers.update(answer)
+
+            # update the comment and add it back to the list
+            comment['answers'] = answers
+            comment = {args['comment_id']: comment}
+            comments.update(comment)
+            
+            # update the action
+            action.comments = '{}'.format(comments)                
+            db.session.commit()
 
         return 'done'

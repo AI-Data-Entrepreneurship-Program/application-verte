@@ -29,11 +29,12 @@ class Actions(db.Model):
     description = db.Column(db.String(300))
     impact = db.Column(db.String(300))
     image_url = db.Column(db.String(300))
-    category = db.Column(db.String(40))
+    category = db.Column(db.Text)
     rating = db.Column(db.Integer())
     liked_by = db.Column(db.Text)
     disliked_by = db.Column(db.Text)
     top_action = db.Column(db.Integer()) #0/1
+    comments = db.Column(db.Text)
 
     def __repr__(self):
         return '<Action %r>' % self.id
