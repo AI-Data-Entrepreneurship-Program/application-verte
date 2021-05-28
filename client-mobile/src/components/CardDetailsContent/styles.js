@@ -44,6 +44,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: colors.lightOrange,
         marginLeft: 10
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5
+    },
+    ratingIcon: {
+        marginLeft: 5
     }
 });
 
