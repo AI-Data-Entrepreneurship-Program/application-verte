@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
             setPassword('');
 
             setCurrentUserID(user.user_id);
-            navigation.navigate('BottomTabStack');
+            navigation.navigate('Home');
         }
     };
 

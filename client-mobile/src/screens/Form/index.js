@@ -9,7 +9,7 @@ import styles from './styles';
 const FormScreen = ({ navigation }) => {
     const [pickedAnswers, setPickedAnswers] = useState({});
 
-    const submitHandler = () => navigation.navigate('BottomTabStack');
+    const submitHandler = () => navigation.navigate('Home');
 
     return (
         <SafeAreaView style={styles.container}>

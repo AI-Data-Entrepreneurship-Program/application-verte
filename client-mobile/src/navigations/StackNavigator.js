@@ -2,15 +2,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import CardDetails from '../screens/CardDetailsExp';
 import FormScreen from '../screens/Form';
+import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
+import ProfileScreen from '../screens/Profile';
 import RegisterScreen from '../screens/Register';
-import BottomTabNavigatorProvider from './BottomTabNavigator';
 
 const StackNavigator = createStackNavigator();
 
 export default function StackNavigatorProvider() {
     return (
-        <StackNavigator.Navigator initialRouteName='BottomTabStack'>
+        <StackNavigator.Navigator initialRouteName='Home'>
             <StackNavigator.Screen
                 name='CardDetails'
                 component={CardDetails}
@@ -32,8 +33,13 @@ export default function StackNavigatorProvider() {
                 options={{ headerShown: false }}
             />
             <StackNavigator.Screen
-                name='BottomTabStack'
-                component={BottomTabNavigatorProvider}
+                name='Home'
+                component={HomeScreen}
+                options={{ headerShown: false }}
+            />
+            <StackNavigator.Screen
+                name='Profile'
+                component={ProfileScreen}
                 options={{ headerShown: false }}
             />
         </StackNavigator.Navigator>
