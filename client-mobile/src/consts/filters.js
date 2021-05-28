@@ -21,6 +21,7 @@ export const getImage = category => {
         case 'Alimentation':
             return require('../../assets/img-alimentation.jpg');
         case 'Zero déchets':
+        case 'Zero dechets':
             return require('../../assets/img-zero-dechet.jpg');
         case 'Transport':
             return require('../../assets/img-transport.jpg');
