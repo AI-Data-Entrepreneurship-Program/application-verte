@@ -3,7 +3,9 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
 import * as Comments from '../../api/comments';
+import * as Likes from '../../api/likes';
 import TouchableIcon from '../../components/TouchableIcon';
+import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/UserContextProvider';
 import useComments from '../../hooks/action/useComments';
 import styles from './styles';
@@ -61,8 +63,12 @@ const EntryCard = ({ submitHandler }) => {
     );
 };
 
-const Card = ({ comment, setter }) => {
+const Card = ({ comment, setter, likeElement, dislikeElement }) => {
     const { currentUser } = useContext(UserContext);
+
+    const [isLiked, setIsLiked] = useState('');
+    const [likesCount, setLikesCount] = useState(comment.likes_count);
+    const [dislikesCount, setDislikesCount] = useState(comment.dislikes_count);
 
     const createEntryAnswer = () => {
         setter(old =>
@@ -75,6 +81,34 @@ const Card = ({ comment, setter }) => {
                 return el;
             })
         );
+    };
+
+    const likePressHandler = () => {
+        if (isLiked !== 'liked') {
+            if (isLiked === 'dislike') setDislikesCount(old => old - 1);
+
+            likeElement();
+            setIsLiked('liked');
+            setLikesCount(old => old + 1);
+        } else {
+            dislikeElement();
+            setIsLiked('');
+            setLikesCount(old => old - 1);
+        }
+    };
+
+    const dislikePressHandler = () => {
+        if (isLiked !== 'disliked') {
+            if (isLiked === 'liked') setLikesCount(old => old - 1);
+
+            dislikeElement();
+            setIsLiked('disliked');
+            setDislikesCount(old => old + 1);
+        } else {
+            likeElement();
+            setIsLiked('');
+            setDislikesCount(old => old - 1);
+        }
     };
 
     return (
@@ -99,10 +133,20 @@ const Card = ({ comment, setter }) => {
                         <Text style={styles.commentBtnTitle}>Répondre</Text>
                     </TouchableOpacity>
                 )}
-                <Text>{comment.dislikes_count}</Text>
-                <TouchableIcon type='AntDesign' name='arrowdown' />
-                <TouchableIcon type='AntDesign' name='arrowup' />
-                <Text>{comment.likes_count}</Text>
+                <Text>{dislikesCount}</Text>
+                <TouchableIcon
+                    type='AntDesign'
+                    name='arrowdown'
+                    color={isLiked === 'disliked' ? 'red' : 'black'}
+                    onPress={dislikePressHandler}
+                />
+                <TouchableIcon
+                    type='AntDesign'
+                    name='arrowup'
+                    color={isLiked === 'liked' ? colors.darkGreen : 'black'}
+                    onPress={likePressHandler}
+                />
+                <Text>{likesCount}</Text>
             </View>
         </>
     );
@@ -110,9 +154,32 @@ const Card = ({ comment, setter }) => {
 
 const CommentCard = ({ action_id, comment, setter }) => {
     const { currentUser } = useContext(UserContext);
+
     const commentMutation = useMutation(props =>
         Comments.comment(...Object.values(props))
     );
+
+    const commentLikesMutation = useMutation(props =>
+        Likes.comment(...Object.values(props))
+    );
+
+    const likeElement = () => {
+        commentLikesMutation.mutate({
+            action_id,
+            comment_id: comment.comment_id,
+            user_id: currentUser.user_id,
+            likes: 1
+        });
+    };
+
+    const dislikeElement = () => {
+        commentLikesMutation.mutate({
+            action_id,
+            comment_id: comment.comment_id,
+            user_id: currentUser.user_id,
+            likes: -1
+        });
+    };
 
     const submitHandler = content => {
         commentMutation.mutate({
@@ -129,7 +196,9 @@ const CommentCard = ({ action_id, comment, setter }) => {
 
     return (
         <View style={styles.commentContainer}>
-            {!comment?.entry && <Card {...{ comment, setter }} />}
+            {!comment?.entry && (
+                <Card {...{ comment, setter, likeElement, dislikeElement }} />
+            )}
             {comment?.entry && <EntryCard submitHandler={submitHandler} />}
 
             <View style={styles.commentAnswers}>
@@ -150,9 +219,34 @@ const CommentCard = ({ action_id, comment, setter }) => {
 
 const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
     const { currentUser } = useContext(UserContext);
+
     const commentMutation = useMutation(props =>
         Comments.answer(...Object.values(props))
     );
+
+    const answerLikesMutation = useMutation(props =>
+        Likes.answer(...Object.values(props))
+    );
+
+    const likeElement = () => {
+        answerLikesMutation.mutate({
+            action_id,
+            comment_id: parent_id,
+            answer_id: comment.answer_id,
+            user_id: currentUser.user_id,
+            likes: 1
+        });
+    };
+
+    const dislikeElement = () => {
+        answerLikesMutation.mutate({
+            action_id,
+            comment_id: parent_id,
+            answer_id: comment.answer_id,
+            user_id: currentUser.user_id,
+            likes: -1
+        });
+    };
 
     const submitHandler = content => {
         commentMutation.mutate({
@@ -169,7 +263,9 @@ const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
     };
     return (
         <View style={styles.commentContainer}>
-            {!comment?.entry && <Card {...{ comment, setter }} />}
+            {!comment?.entry && (
+                <Card {...{ comment, setter, likeElement, dislikeElement }} />
+            )}
             {comment?.entry && <EntryCard submitHandler={submitHandler} />}
         </View>
     );
