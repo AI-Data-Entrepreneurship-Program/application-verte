@@ -13,19 +13,26 @@ const UserContextProvider = ({ children }) => {
     );
 
     const addAction = action => {
+        if (currentUser.actions.some(el => el.action_id === action.action_id))
+            return;
+
         favouriteMutation.mutate({
             user_id: currentUser.user_id,
             action_id: action.action_id
         });
 
+        setCurrentUser(old => ({ ...old, actions: [...old.actions, action] }));
+    };
+
+    const removeAction = action_id => {
         setCurrentUser(old => ({
-            ...currentUser,
-            actions: [...currentUser.actions, action]
+            ...old,
+            actions: old.actions.filter(el => el.action_id !== action_id)
         }));
     };
 
     return (
-        <UserContext.Provider value={{ currentUser, addAction }}>
+        <UserContext.Provider value={{ currentUser, addAction, removeAction }}>
             {children}
         </UserContext.Provider>
     );

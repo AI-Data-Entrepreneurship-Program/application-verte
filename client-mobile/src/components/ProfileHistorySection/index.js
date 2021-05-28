@@ -1,4 +1,5 @@
 import MasonryList from '@react-native-seoul/masonry-list';
+import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { UserContext } from '../../context/UserContextProvider';
@@ -6,6 +7,8 @@ import ActionCard from '../ActionCard';
 import styles from './styles';
 
 const ProfileHistorySection = () => {
+    const { navigate } = useNavigation();
+
     const { currentUser } = useContext(UserContext);
     const [actions, setActions] = useState([]);
 
@@ -33,6 +36,7 @@ const ProfileHistorySection = () => {
                             key={item.action_id}
                             item={item}
                             focused={false}
+                            onPress={() => navigate('CardDetails', { item })}
                         />
                     )}
                 />

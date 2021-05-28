@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/UserContextProvider';
@@ -7,7 +7,19 @@ import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
 const CardDetailsContent = ({ item }) => {
-    const { addAction } = useContext(UserContext);
+    const { currentUser, addAction, removeAction } = useContext(UserContext);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const btnPressHandler = () => {
+        if (!isFavorite) addAction(item);
+        else removeAction(item.action_id);
+    };
+
+    useEffect(() => {
+        setIsFavorite(
+            currentUser.actions.some(el => el.action_id === item.action_id)
+        );
+    }, [currentUser.actions]);
 
     return (
         <View style={styles.container}>
@@ -25,15 +37,17 @@ const CardDetailsContent = ({ item }) => {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.8}
-                onPress={() => addAction(item)}
+                onPress={btnPressHandler}
             >
                 <TouchableIcon
                     type='AntDesign'
-                    name='plus'
+                    name={isFavorite ? 'check' : 'plus'}
                     size={20}
                     color={colors.lightOrange}
                 />
-                <Text style={styles.buttonTitle}>Commencer</Text>
+                <Text style={styles.buttonTitle}>
+                    {isFavorite ? 'Ajoutée' : 'Commencer'}
+                </Text>
             </TouchableOpacity>
         </View>
     );
