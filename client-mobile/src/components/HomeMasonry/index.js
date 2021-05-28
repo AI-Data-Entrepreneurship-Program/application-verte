@@ -1,13 +1,13 @@
 import MasonryList from '@react-native-seoul/masonry-list';
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
-import { Text, useWindowDimensions } from 'react-native';
+import { Text, useWindowDimensions, View } from 'react-native';
 import ActionCard from '../../components/ActionCard';
 import { ActionContext } from '../../context/ActionContextProvider';
 import styles from './styles';
 
 const HomeMasonry = () => {
-    const { width } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     const navigation = useNavigation();
     const { actions, actionsQuery } = useContext(ActionContext);
 
@@ -33,6 +33,9 @@ const HomeMasonry = () => {
                             }
                         />
                     )}
+                    ListFooterComponent={
+                        <View style={{ height: height * 0.2 }} />
+                    }
                 />
             )}
         </>
