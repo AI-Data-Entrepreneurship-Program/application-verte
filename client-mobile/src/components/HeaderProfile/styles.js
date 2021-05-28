@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 20,
-        backgroundColor: colors.darkGreen,
+        backgroundColor: colors.lightPurple,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 20,

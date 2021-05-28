@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         width: 170,
+        height: 150,
         borderRadius: 10,
         margin: 5,
-        height: 150
+        backgroundColor: 'white'
     },
     image: {
         width: 170,
@@ -17,9 +18,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        fontSize: 12,
+        fontSize: 14,
         lineHeight: 12,
-        color: 'black'
+        color: 'black',
+        marginHorizontal: 3,
+        paddingVertical: 3
     },
     notLoadedImg: {
         alignItems: 'center',

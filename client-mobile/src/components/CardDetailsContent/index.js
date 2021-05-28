@@ -75,7 +75,7 @@ const CardDetailsContent = ({ item }) => {
                     type='AntDesign'
                     name={isFavorite ? 'check' : 'plus'}
                     size={20}
-                    color={colors.lightOrange}
+                    color='white'
                 />
                 <Text style={styles.buttonTitle}>
                     {isFavorite ? 'Ajoutée' : 'Commencer'}
@@ -87,7 +87,7 @@ const CardDetailsContent = ({ item }) => {
                 <TouchableIcon
                     type='AntDesign'
                     name={isLiked ? 'heart' : 'hearto'}
-                    color={isLiked ? colors.darkGreen : 'black'}
+                    color={isLiked ? colors.lightPurple : 'black'}
                     style={styles.ratingIcon}
                     onPress={likeHandler}
                 />

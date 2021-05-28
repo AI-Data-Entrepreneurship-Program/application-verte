@@ -26,7 +26,7 @@ const ProfileBadgesSection = () => {
                 <TouchableIcon
                     type='Entypo'
                     name='dots-three-horizontal'
-                    color={colors.darkGreen}
+                    color={colors.lightPurple}
                 />
             </View>
 

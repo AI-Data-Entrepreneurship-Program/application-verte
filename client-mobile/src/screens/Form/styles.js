@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
     },
     appTitle: {
         fontSize: 42,
-        color: colors.darkGreen
+        color: colors.lightPurple
     },
     separation: {
         width: '80%',
         borderBottomWidth: 1,
-        borderColor: colors.darkGreen,
+        borderColor: colors.lightPurple,
         marginVertical: 10
     },
     title: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         marginVertical: 10,
         borderRadius: 20,
-        backgroundColor: colors.darkGreen
+        backgroundColor: colors.lightPurple
     },
     scrollView: {
         width: '100%'

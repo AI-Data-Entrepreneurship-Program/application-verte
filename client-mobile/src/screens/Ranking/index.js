@@ -32,7 +32,7 @@ const RankingScreen = () => {
                         <Icon
                             name='arrowright'
                             size={18}
-                            color={colors.orange}
+                            color={colors.lightPurple}
                         />
                     </TouchableOpacity>
                 </View>

@@ -13,7 +13,7 @@ const CardDetailsHeader = () => {
             <TouchableIcon
                 type='AntDesign'
                 name='arrowleft'
-                color={colors.darkGreen}
+                color={colors.lightPurple}
                 onPress={goBack}
             />
         </View>

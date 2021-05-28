@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 20,
         marginBottom: 10,
-        backgroundColor: colors.lightOrange,
+        backgroundColor: colors.lightPurple,
         alignItems: 'center',
         justifyContent: 'center'
     },
     title: {
         fontSize: 28,
-        color: colors.darkGreen,
+        color: colors.lightPurple,
         textAlign: 'center'
     },
     description: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         maxWidth: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.darkGreen,
+        backgroundColor: colors.lightPurple,
         flexDirection: 'row',
         borderRadius: 20,
         paddingVertical: 5,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     buttonTitle: {
         fontSize: 24,
-        color: colors.lightOrange,
+        color: 'white',
         marginLeft: 10
     },
     ratingContainer: {

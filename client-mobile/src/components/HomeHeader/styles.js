@@ -3,7 +3,7 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: '90%',
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
@@ -11,15 +11,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5
     },
     bubble: {
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         paddingVertical: 5,
         paddingHorizontal: 10,
         margin: 2,
-        borderRadius: 100
+        borderRadius: 100,
+        backgroundColor: 'white'
     },
     bubbleText: {
         fontSize: 18,
-        color: colors.darkGreen
+        color: colors.lightPurple
     },
     icon: {
         marginHorizontal: 5
@@ -27,10 +30,10 @@ const styles = StyleSheet.create({
     searchbarContainer: {
         width: '70%',
         height: 30,
-        backgroundColor: colors.lightOrange,
+        backgroundColor: 'white',
         marginHorizontal: '15%',
         marginTop: 5,
-        borderColor: colors.darkGreen,
+        borderColor: colors.lightPurple,
         borderWidth: 1,
         borderRadius: 20,
         paddingHorizontal: '10%'
@@ -38,6 +41,57 @@ const styles = StyleSheet.create({
     searchbar: {
         width: '100%',
         height: '100%'
+    },
+    avatarContainer: {
+        flex: 1,
+        alignItems: 'flex-end'
+    },
+    avatar: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        backgroundColor: colors.lightPurple
+    },
+    modalContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modalCard: {
+        width: '70%',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        borderWidth: 1,
+        borderColor: colors.lightPurple
+    },
+    modalCardHeader: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    modalCardTitle: {
+        fontSize: 21
+    },
+    modalFilterContainer: {
+        width: '100%',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginVertical: 3
+    },
+    modalFilterBubble: {
+        width: 24,
+        height: 24,
+        borderRadius: 100,
+        backgroundColor: 'lightgrey',
+        borderWidth: 2,
+        borderColor: 'lightgrey'
+    },
+    modalFilterTitle: {
+        fontSize: 18,
+        marginLeft: 10
     }
 });
 

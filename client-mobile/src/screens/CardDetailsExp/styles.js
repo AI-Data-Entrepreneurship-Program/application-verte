@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     separation: {
         width: '70%',
         borderBottomWidth: 1,
-        borderColor: colors.darkGreen,
+        borderColor: colors.lightPurple,
         marginVertical: 15,
         alignSelf: 'center'
     }

@@ -15,7 +15,7 @@ const HeaderProfile = () => {
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('Profil')}
             >
-                <Icon name='user' size={32} color={colors.lightOrange} />
+                <Icon name='user' size={32} color={colors.lightPurple} />
             </TouchableOpacity>
         </View>
     );

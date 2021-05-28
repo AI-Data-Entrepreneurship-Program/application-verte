@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         borderWidth: 0,
         borderColor: 'black',
-        backgroundColor: colors.lightOrange,
+        backgroundColor: colors.lightPurple,
         borderRadius: 10,
         margin: 5,
         height: 150,
@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 10
     },
-    content:{
+    content: {
         marginTop: 40,
-        marginLeft:20
+        marginLeft: 20
     }
-})
+});
 
 export default styles;

@@ -143,7 +143,7 @@ const Card = ({ comment, setter, likeElement, dislikeElement }) => {
                 <TouchableIcon
                     type='AntDesign'
                     name='arrowup'
-                    color={isLiked === 'liked' ? colors.darkGreen : 'black'}
+                    color={isLiked === 'liked' ? colors.lightPurple : 'black'}
                     onPress={likePressHandler}
                 />
                 <Text>{likesCount}</Text>

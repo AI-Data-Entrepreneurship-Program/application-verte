@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         marginVertical: 10,
-        color: colors.darkGreen
+        color: colors.lightPurple
     },
     inputContainer: {
         marginVertical: 20

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
-        backgroundColor: colors.darkGreen,
+        backgroundColor: colors.lightPurple,
         marginLeft: 10
     },
     inputFooterBtnTitle: {

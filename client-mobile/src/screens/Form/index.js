@@ -87,7 +87,7 @@ const FormScreen = ({ navigation }) => {
                     onPress={submitHandler}
                     disabled={Object.keys(pickedAnswers).length !== 4}
                 >
-                    <Text style={[styles.title, { color: colors.lightOrange }]}>
+                    <Text style={[styles.title, { color: colors.lightPurple }]}>
                         Continuer !
                     </Text>
                 </TouchableOpacity>

@@ -18,7 +18,7 @@ const RankingTimer = () => {
                     <Circle fill='white' cx={center} cy={center} r={radius} />
 
                     <Circle
-                        stroke={colors.darkGreen}
+                        stroke={colors.lightPurple}
                         cx={center}
                         cy={center}
                         r={radius}

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     radioButtonIcon: {
         backgroundColor: colors.lightGreen,
         borderWidth: 3,
-        borderColor: colors.darkGreen,
+        borderColor: colors.lightPurple,
         height: 30,
         width: 30,
         borderRadius: 30 / 2,
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     radioButtonIconInnerIcon: {
         height: 25,
         width: 25,
-        backgroundColor: colors.darkGreen,
+        backgroundColor: colors.lightPurple,
         borderRadius: 25 / 2,
         borderWidth: 3,
         borderColor: colors.lightGreen

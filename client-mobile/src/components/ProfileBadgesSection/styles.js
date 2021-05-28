@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 18,
-        color: colors.darkGreen
+        color: colors.lightPurple
     },
     badgeContainer: {
         width: 50,

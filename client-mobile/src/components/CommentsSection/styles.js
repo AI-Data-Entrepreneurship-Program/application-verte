@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     headerBtnTitle: {
         fontSize: 14,
-        color: colors.darkGreen
+        color: colors.lightPurple
     },
     commentContainer: {
         width: '90%',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
     commentAnswers: {
         borderLeftWidth: 1,
-        borderLeftColor: colors.darkGreen,
+        borderLeftColor: colors.lightPurple,
         paddingLeft: 10,
         alignSelf: 'flex-end'
     },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     commentBtnTitle: {
         fontSize: 14,
-        color: colors.darkGreen
+        color: colors.lightPurple
     }
 });
 

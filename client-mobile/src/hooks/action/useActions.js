@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -8,7 +9,7 @@ export default function useActions(find) {
 
     useEffect(() => {
         if (actionsQuery.isSuccess) {
-            let tmpActions = Object.values(actionsQuery.data.data);
+            let tmpActions = _.shuffle(Object.values(actionsQuery.data.data));
 
             setActions(
                 tmpActions.map(el => {
