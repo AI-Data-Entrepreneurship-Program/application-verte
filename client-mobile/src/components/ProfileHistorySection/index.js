@@ -1,18 +1,15 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import MasonryList from '@react-native-seoul/masonry-list';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { UserContext } from '../../context/UserContextProvider';
 import ActionCard from '../ActionCard';
 import styles from './styles';
 
 const ProfileHistorySection = () => {
+    const { currentUser } = useContext(UserContext);
     const [actions, setActions] = useState([]);
 
-    useEffect(() => {
-        AsyncStorage.getItem('@user_actions').then(
-            data => data && setActions(JSON.parse(data))
-        );
-    });
+    useEffect(() => setActions(currentUser.actions), [currentUser.actions]);
 
     return (
         <View style={styles.container}>

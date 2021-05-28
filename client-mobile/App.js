@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ActionContextProvider from './src/context/ActionContextProvider';
-import UserContextProvider from './src/context/User';
+import UserContextProvider from './src/context/UserContextProvider';
 import StackNavigatorProvider from './src/navigations/StackNavigator';
 
 const client = new QueryClient({

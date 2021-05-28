@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
 import * as Comments from '../../api/comments';
 import TouchableIcon from '../../components/TouchableIcon';
+import { UserContext } from '../../context/UserContextProvider';
 import useComments from '../../hooks/action/useComments';
 import styles from './styles';
 
-// TODO: user info to be completed
-const createEntryPlaceholder = () => ({
-    user_id: 'xxx',
-    avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
-    username: 'Toto',
+const createEntryPlaceholder = currentUser => ({
+    user_id: currentUser.user_id,
+    avatar_url: currentUser.avatar_url,
+    username: currentUser.username,
     content: '',
     likes_count: 0,
     dislikes_count: 0,
@@ -19,6 +19,7 @@ const createEntryPlaceholder = () => ({
 });
 
 const EntryCard = ({ submitHandler }) => {
+    const { currentUser } = useContext(UserContext);
     const [content, setContent] = useState('');
     const textInputRef = useRef(null);
 
@@ -32,10 +33,12 @@ const EntryCard = ({ submitHandler }) => {
                 <Image
                     style={styles.commentAvatar}
                     source={{
-                        uri: 'https://www.w3schools.com/w3images/avatar6.png'
+                        uri: currentUser.avatar_url
                     }}
                 />
-                <Text style={styles.commentUsername}>Toto</Text>
+                <Text style={styles.commentUsername}>
+                    {currentUser.username}
+                </Text>
             </View>
 
             <TextInput
@@ -59,11 +62,16 @@ const EntryCard = ({ submitHandler }) => {
 };
 
 const Card = ({ comment, setter }) => {
+    const { currentUser } = useContext(UserContext);
+
     const createEntryAnswer = () => {
         setter(old =>
             old.map(el => {
                 if (el.comment_id === comment.comment_id)
-                    el.answers = [createEntryPlaceholder(), ...el.answers];
+                    el.answers = [
+                        createEntryPlaceholder(currentUser),
+                        ...el.answers
+                    ];
                 return el;
             })
         );
@@ -101,6 +109,7 @@ const Card = ({ comment, setter }) => {
 };
 
 const CommentCard = ({ action_id, comment, setter }) => {
+    const { currentUser } = useContext(UserContext);
     const commentMutation = useMutation(props =>
         Comments.comment(...Object.values(props))
     );
@@ -108,9 +117,9 @@ const CommentCard = ({ action_id, comment, setter }) => {
     const submitHandler = content => {
         commentMutation.mutate({
             action_id,
-            user_id: 'xxx',
-            username: 'Toto',
-            avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+            user_id: currentUser.user_id,
+            username: currentUser.username,
+            avatar_url: currentUser.avatar_url,
             content
         });
 
@@ -140,6 +149,7 @@ const CommentCard = ({ action_id, comment, setter }) => {
 };
 
 const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
+    const { currentUser } = useContext(UserContext);
     const commentMutation = useMutation(props =>
         Comments.answer(...Object.values(props))
     );
@@ -148,9 +158,9 @@ const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
         commentMutation.mutate({
             action_id,
             comment_id: parent_id,
-            user_id: 'xxx',
-            username: 'Toto',
-            avatar_url: 'https://www.w3schools.com/w3images/avatar6.png',
+            user_id: currentUser.user_id,
+            username: currentUser.username,
+            avatar_url: currentUser.avatar_url,
             content
         });
 
@@ -166,6 +176,7 @@ const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
 };
 
 const CommentsSection = ({ item }) => {
+    const { currentUser } = useContext(UserContext);
     const [comments, setComments] = useComments(item);
 
     return (
@@ -176,7 +187,10 @@ const CommentsSection = ({ item }) => {
                     style={styles.headerBtn}
                     activeOpacity={0.8}
                     onPress={() =>
-                        setComments(old => [createEntryPlaceholder(), ...old])
+                        setComments(old => [
+                            createEntryPlaceholder(currentUser),
+                            ...old
+                        ])
                     }
                 >
                     <Text style={styles.headerBtnTitle}>Commenter</Text>

@@ -1,14 +1,18 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import { colors } from '../../consts/styles';
+import React, { useContext } from 'react';
+import { Image, Text, View } from 'react-native';
+import { UserContext } from '../../context/UserContextProvider';
 import styles from './styles';
 
 const ProfileInformationsSection = () => {
+    const { currentUser } = useContext(UserContext);
+
     return (
         <View style={styles.container}>
-            <Icon name='user' size={124} color={colors.darkGreen} />
-            <Text style={styles.username}>Jean Ecolo</Text>
+            <Image
+                style={styles.avatar}
+                source={{ uri: currentUser.avatar_url }}
+            />
+            <Text style={styles.username}>{currentUser.username}</Text>
         </View>
     );
 };

@@ -7,7 +7,7 @@ import BackgroundCurve from '../../components/BackgroundCurve';
 import InputWithTitle from '../../components/InputWithTitle';
 import LoginInputFooter from '../../components/LoginInputFooter';
 import { colors } from '../../consts/styles';
-import { UserContext } from '../../context/User';
+import { UserContext } from '../../context/UserContextProvider';
 import styles from './styles';
 
 const LoginScreen = ({ navigation }) => {

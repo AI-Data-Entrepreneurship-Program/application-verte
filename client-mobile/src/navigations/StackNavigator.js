@@ -1,6 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import ActionDetailsScreen from '../screens/ActionDetails';
 import CardDetails from '../screens/CardDetailsExp';
 import FormScreen from '../screens/Form';
 import LoginScreen from '../screens/Login';
@@ -35,11 +34,6 @@ export default function StackNavigatorProvider() {
             <StackNavigator.Screen
                 name='BottomTabStack'
                 component={BottomTabNavigatorProvider}
-                options={{ headerShown: false }}
-            />
-            <StackNavigator.Screen
-                name='ActionDetails'
-                component={ActionDetailsScreen}
                 options={{ headerShown: false }}
             />
         </StackNavigator.Navigator>
