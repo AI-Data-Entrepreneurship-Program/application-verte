@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useMutation } from 'react-query';
 import * as Likes from '../../api/likes';
+import { getImage } from '../../consts/filters';
 import { colors } from '../../consts/styles';
 import { UserContext } from '../../context/UserContextProvider';
-import { verifyImageUrl } from '../ActionCard';
 import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
@@ -57,13 +57,11 @@ const CardDetailsContent = ({ item }) => {
 
     return (
         <View style={styles.container}>
-            {verifyImageUrl(item.image_url) ? (
-                <Image style={styles.image} source={{ uri: item.image_url }} />
-            ) : (
-                <View style={styles.image}>
-                    <TouchableIcon name='circle-with-cross' size={28} />
-                </View>
-            )}
+            <Image
+                style={styles.image}
+                source={getImage(item.category[0])}
+                resizeMode='cover'
+            />
 
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
