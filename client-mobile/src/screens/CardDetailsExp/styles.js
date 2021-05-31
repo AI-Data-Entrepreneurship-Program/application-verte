@@ -1,9 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: Platform.OS === 'web' ? '70%' : '100%',
+        alignSelf: 'center',
         alignItems: 'center'
     },
     separation: {

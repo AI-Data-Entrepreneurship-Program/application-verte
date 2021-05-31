@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     Image,
     Modal,
+    Platform,
     Text,
     TextInput,
     TouchableOpacity,
@@ -15,6 +16,79 @@ import { ActionContext } from '../../context/ActionContextProvider';
 import { UserContext } from '../../context/UserContextProvider';
 import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
+
+const ModalContent = ({
+    filters,
+    currentFilter,
+    modalFilterBubbleHandler,
+    setToggleFilter
+}) => {
+    return (
+        <View style={styles.modalContainer}>
+            <View style={styles.modalCard}>
+                <View style={styles.modalCardHeader}>
+                    <Text style={styles.modalCardTitle}>Filtrer</Text>
+                    <TouchableIcon
+                        name='cross'
+                        size={21}
+                        onPress={() => setToggleFilter(false)}
+                    />
+                </View>
+
+                <>
+                    {filters.map(filter => (
+                        <View
+                            key={uuid.v4()}
+                            style={styles.modalFilterContainer}
+                        >
+                            <TouchableOpacity
+                                style={[
+                                    styles.modalFilterBubble,
+                                    {
+                                        backgroundColor: currentFilter.includes(
+                                            filter
+                                        )
+                                            ? colors.lightPurple
+                                            : 'lightgrey'
+                                    }
+                                ]}
+                                activeOpacity={0.8}
+                                onPress={() => modalFilterBubbleHandler(filter)}
+                            />
+                            <Text style={styles.modalFilterTitle}>
+                                {filter}
+                            </Text>
+                        </View>
+                    ))}
+                </>
+            </View>
+        </View>
+    );
+};
+
+const WebFilters = ({ filters, currentFilter, modalFilterBubbleHandler }) => {
+    return (
+        <View style={styles.webFilters}>
+            {filters.map(filter => (
+                <View key={uuid.v4()} style={styles.webModalFilterContainer}>
+                    <TouchableOpacity
+                        style={[
+                            styles.modalFilterBubble,
+                            {
+                                backgroundColor: currentFilter.includes(filter)
+                                    ? colors.lightPurple
+                                    : 'lightgrey'
+                            }
+                        ]}
+                        activeOpacity={0.8}
+                        onPress={() => modalFilterBubbleHandler(filter)}
+                    />
+                    <Text style={styles.modalFilterTitle}>{filter}</Text>
+                </View>
+            ))}
+        </View>
+    );
+};
 
 const HomeHeader = () => {
     const { navigate } = useNavigation();
@@ -45,69 +119,34 @@ const HomeHeader = () => {
             );
     };
 
-    //? focus not working: ref is null (component textinput is not mounted by default)
     useEffect(() => {
-        searchbarRef.current && searchbarRef.current.focus();
+        if (searchbarRef.current && Platform.OS !== 'web')
+            searchbarRef.current.focus();
     }, [searchbarRef]);
 
     return (
         <>
             <View style={styles.container}>
-                <Modal
-                    animationType='slide'
-                    visible={toggleFilter}
-                    transparent={true}
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalCard}>
-                            <View style={styles.modalCardHeader}>
-                                <Text style={styles.modalCardTitle}>
-                                    Filtrer
-                                </Text>
-                                <TouchableIcon
-                                    name='cross'
-                                    size={21}
-                                    onPress={() => setToggleFilter(false)}
-                                />
-                            </View>
-
-                            <>
-                                {filters.map(filter => (
-                                    <View
-                                        key={uuid.v4()}
-                                        style={styles.modalFilterContainer}
-                                    >
-                                        <TouchableOpacity
-                                            style={[
-                                                styles.modalFilterBubble,
-                                                {
-                                                    backgroundColor:
-                                                        currentFilter.includes(
-                                                            filter
-                                                        )
-                                                            ? colors.lightPurple
-                                                            : 'lightgrey'
-                                                }
-                                            ]}
-                                            activeOpacity={0.8}
-                                            onPress={() =>
-                                                modalFilterBubbleHandler(filter)
-                                            }
-                                        />
-                                        <Text style={styles.modalFilterTitle}>
-                                            {filter}
-                                        </Text>
-                                    </View>
-                                ))}
-                            </>
-                        </View>
-                    </View>
-                </Modal>
-
+                {Platform.OS !== 'web' && (
+                    <Modal
+                        animationType='slide'
+                        visible={toggleFilter}
+                        transparent={true}
+                    >
+                        <ModalContent
+                            {...{
+                                filters,
+                                currentFilter,
+                                modalFilterBubbleHandler,
+                                setToggleFilter
+                            }}
+                        />
+                    </Modal>
+                )}
                 <TouchableOpacity
                     style={styles.bubble}
                     activeOpacity={0.8}
-                    onPress={() => setToggleFilter(true)}
+                    onPress={() => setToggleFilter(old => !old)}
                 >
                     <TouchableIcon
                         type='AntDesign'
@@ -117,28 +156,39 @@ const HomeHeader = () => {
                     <Text style={styles.bubbleText}>Filtrer</Text>
                 </TouchableOpacity>
 
-                <TouchableIcon
-                    style={styles.icon}
-                    type='AntDesign'
-                    name='search1'
-                    color={colors.lightPurple}
-                    onPress={() => setToggleSearch(old => !old)}
-                />
+                {/* {Platform.OS !== 'web' && (
+                    <TouchableIcon
+                        style={styles.icon}
+                        type='AntDesign'
+                        name='search1'
+                        color={colors.lightPurple}
+                        onPress={() => setToggleSearch(old => !old)}
+                    />
+                )} */}
 
-                <View style={styles.avatarContainer}>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => navigate('Profile')}
-                    >
-                        <Image
-                            style={styles.avatar}
-                            source={{ uri: currentUser.avatar_url }}
-                            resizeMode='cover'
-                        />
-                    </TouchableOpacity>
+                <View style={styles.searchbarContainer}>
+                    <TextInput
+                        style={styles.searchbar}
+                        ref={searchbarRef}
+                        value={searchQuery}
+                        placeholder='search...'
+                        onChangeText={setSearchQuery}
+                    />
                 </View>
 
-                {toggleSearch && (
+                {/* <View style={styles.avatarContainer}> */}
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigate('Profile')}
+                >
+                    <Image
+                        style={styles.avatar}
+                        source={{ uri: currentUser.avatar_url }}
+                        resizeMode='cover'
+                    />
+                </TouchableOpacity>
+                {/* </View> */}
+                {Platform.OS !== 'web' && toggleSearch && (
                     <View style={styles.searchbarContainer}>
                         <TextInput
                             style={styles.searchbar}
@@ -148,6 +198,15 @@ const HomeHeader = () => {
                             onChangeText={setSearchQuery}
                         />
                     </View>
+                )}
+                {Platform.OS === 'web' && toggleFilter && (
+                    <WebFilters
+                        {...{
+                            filters,
+                            currentFilter,
+                            modalFilterBubbleHandler
+                        }}
+                    />
                 )}
             </View>
         </>

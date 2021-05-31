@@ -3,15 +3,15 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        alignItems: 'center'
+        width: '100%'
     },
     header: {
         width: '90%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 5
+        marginBottom: 5,
+        alignSelf: 'center'
     },
     headerTitle: {
         fontSize: 18,

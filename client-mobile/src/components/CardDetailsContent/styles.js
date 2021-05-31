@@ -3,8 +3,7 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
-        maxWidth: 600,
+        width: '100%',
         alignItems: 'center',
         paddingHorizontal: 20
     },

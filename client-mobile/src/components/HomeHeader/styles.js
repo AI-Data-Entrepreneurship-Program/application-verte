@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
+        justifyContent: 'space-evenly',
         marginVertical: 8,
         paddingHorizontal: 5
     },
@@ -28,15 +29,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     searchbarContainer: {
-        width: '70%',
+        flexGrow: 1,
+        maxWidth: '70%',
         height: 30,
         backgroundColor: 'white',
-        marginHorizontal: '15%',
         marginTop: 5,
         borderColor: colors.lightPurple,
         borderWidth: 1,
         borderRadius: 20,
-        paddingHorizontal: '10%'
+        paddingHorizontal: 30,
+        marginHorizontal: 5
     },
     searchbar: {
         width: '100%',
@@ -92,6 +94,18 @@ const styles = StyleSheet.create({
     modalFilterTitle: {
         fontSize: 18,
         marginLeft: 10
+    },
+    webFilters: {
+        width: '100%',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    webModalFilterContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginVertical: 3,
+        marginHorizontal: 5
     }
 });
 
