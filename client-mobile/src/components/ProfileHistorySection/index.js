@@ -1,12 +1,13 @@
 import MasonryList from '@react-native-seoul/masonry-list';
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { UserContext } from '../../context/UserContextProvider';
 import ActionCard from '../ActionCard';
 import styles from './styles';
 
 const ProfileHistorySection = () => {
+    const { width } = useWindowDimensions();
     const { navigate } = useNavigation();
 
     const { currentUser } = useContext(UserContext);
@@ -30,6 +31,9 @@ const ProfileHistorySection = () => {
                 <MasonryList
                     data={actions}
                     keyExtractor={item => item.action_id}
+                    numColumns={Math.floor(
+                        (width * (Platform.OS === 'web' ? 0.7 : 1)) / 170
+                    )}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => (
                         <ActionCard
