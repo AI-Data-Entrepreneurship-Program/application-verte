@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     commentAnswers: {
+        width: '90%',
         borderLeftWidth: 1,
         borderLeftColor: colors.lightPurple,
         paddingLeft: 10,
