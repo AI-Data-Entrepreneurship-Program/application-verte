@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Image,
     Modal,
@@ -101,8 +101,6 @@ const HomeHeader = () => {
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleSearch, setToggleSearch] = useState(false);
 
-    const searchbarRef = useRef(null);
-
     const modalFilterBubbleHandler = filter => {
         if (currentFilter.some(el => el === filter))
             setCurrentFilter(old => {
@@ -118,11 +116,6 @@ const HomeHeader = () => {
                 )
             );
     };
-
-    useEffect(() => {
-        if (searchbarRef.current && Platform.OS !== 'web')
-            searchbarRef.current.focus();
-    }, [searchbarRef]);
 
     return (
         <>
@@ -156,20 +149,9 @@ const HomeHeader = () => {
                     <Text style={styles.bubbleText}>Filtrer</Text>
                 </TouchableOpacity>
 
-                {/* {Platform.OS !== 'web' && (
-                    <TouchableIcon
-                        style={styles.icon}
-                        type='AntDesign'
-                        name='search1'
-                        color={colors.lightPurple}
-                        onPress={() => setToggleSearch(old => !old)}
-                    />
-                )} */}
-
                 <View style={styles.searchbarContainer}>
                     <TextInput
                         style={styles.searchbar}
-                        ref={searchbarRef}
                         value={searchQuery}
                         placeholder='search...'
                         onChangeText={setSearchQuery}
