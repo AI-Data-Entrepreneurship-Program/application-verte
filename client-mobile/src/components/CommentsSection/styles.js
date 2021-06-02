@@ -66,6 +66,16 @@ const styles = StyleSheet.create({
     commentBtnTitle: {
         fontSize: 14,
         color: colors.lightPurple
+    },
+    ratingBtnContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        justifyContent: 'center'
+    },
+    rating: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

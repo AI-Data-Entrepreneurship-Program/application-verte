@@ -1,4 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -15,7 +17,11 @@ const client = new QueryClient({
 });
 
 const App = () => {
-    return (
+    const [isFontLoaded] = useFonts({
+        'roboto-regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf')
+    });
+
+    return isFontLoaded ? (
         <QueryClientProvider client={client}>
             <UserContextProvider>
                 <ActionContextProvider>
@@ -27,6 +33,8 @@ const App = () => {
                 </ActionContextProvider>
             </UserContextProvider>
         </QueryClientProvider>
+    ) : (
+        <AppLoading />
     );
 };
 

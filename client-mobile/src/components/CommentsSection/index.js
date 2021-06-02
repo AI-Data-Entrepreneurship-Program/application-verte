@@ -133,20 +133,52 @@ const Card = ({ comment, setter, likeElement, dislikeElement }) => {
                         <Text style={styles.commentBtnTitle}>Répondre</Text>
                     </TouchableOpacity>
                 )}
-                <Text>{dislikesCount}</Text>
-                <TouchableIcon
-                    type='AntDesign'
-                    name='arrowdown'
-                    color={isLiked === 'disliked' ? 'red' : 'black'}
-                    onPress={dislikePressHandler}
-                />
-                <TouchableIcon
-                    type='AntDesign'
-                    name='arrowup'
-                    color={isLiked === 'liked' ? colors.lightPurple : 'black'}
-                    onPress={likePressHandler}
-                />
-                <Text>{likesCount}</Text>
+
+                <View style={styles.ratingBtnContainer}>
+                    <View style={styles.rating}>
+                        <Text
+                            style={[
+                                {
+                                    color:
+                                        isLiked === 'liked'
+                                            ? colors.lightPurple
+                                            : 'black'
+                                }
+                            ]}
+                        >
+                            {likesCount}
+                        </Text>
+                        <TouchableIcon
+                            type='AntDesign'
+                            name='arrowup'
+                            color={
+                                isLiked === 'liked'
+                                    ? colors.lightPurple
+                                    : 'black'
+                            }
+                            onPress={likePressHandler}
+                        />
+                    </View>
+
+                    <View style={styles.rating}>
+                        <Text
+                            style={[
+                                {
+                                    color:
+                                        isLiked === 'disliked' ? 'red' : 'black'
+                                }
+                            ]}
+                        >
+                            {dislikesCount}
+                        </Text>
+                        <TouchableIcon
+                            type='AntDesign'
+                            name='arrowdown'
+                            color={isLiked === 'disliked' ? 'red' : 'black'}
+                            onPress={dislikePressHandler}
+                        />
+                    </View>
+                </View>
             </View>
         </>
     );
