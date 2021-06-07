@@ -4,11 +4,13 @@ import { useMutation } from 'react-query';
 import * as Likes from '../../api/likes';
 import { getImage } from '../../consts/filters';
 import { colors } from '../../consts/styles';
+import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 import { UserContext } from '../../context/UserContextProvider';
 import TouchableIcon from '../TouchableIcon';
 import styles from './styles';
 
 const CardDetailsContent = ({ item }) => {
+    const { setAnalytics } = useContext(AnalyticsContext);
     const { currentUser, addAction, removeAction } = useContext(UserContext);
 
     const [isFavorite, setIsFavorite] = useState(false);
@@ -54,6 +56,17 @@ const CardDetailsContent = ({ item }) => {
         item.isLiked = isLiked;
         item.rating = rating;
     }, [isLiked, rating]);
+
+    useEffect(() => {
+        if (!isLiked) return;
+
+        setAnalytics(old => {
+            if (old.actions_liked_commented.some(id => id === item.action_id))
+                return old;
+            old.actions_liked_commented.push(item.action_id);
+            return old;
+        });
+    }, [isLiked]);
 
     return (
         <View style={styles.container}>

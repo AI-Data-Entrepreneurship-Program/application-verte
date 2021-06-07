@@ -5,6 +5,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ActionContextProvider from './src/context/ActionContextProvider';
+import AnalyticsContextProvider from './src/context/AnalyticsContextProvider';
 import UserContextProvider from './src/context/UserContextProvider';
 import StackNavigatorProvider from './src/navigations/StackNavigator';
 
@@ -23,15 +24,17 @@ const App = () => {
 
     return isFontLoaded ? (
         <QueryClientProvider client={client}>
-            <UserContextProvider>
-                <ActionContextProvider>
-                    <SafeAreaProvider>
-                        <NavigationContainer>
-                            <StackNavigatorProvider />
-                        </NavigationContainer>
-                    </SafeAreaProvider>
-                </ActionContextProvider>
-            </UserContextProvider>
+            <AnalyticsContextProvider>
+                <UserContextProvider>
+                    <ActionContextProvider>
+                        <SafeAreaProvider>
+                            <NavigationContainer>
+                                <StackNavigatorProvider />
+                            </NavigationContainer>
+                        </SafeAreaProvider>
+                    </ActionContextProvider>
+                </UserContextProvider>
+            </AnalyticsContextProvider>
         </QueryClientProvider>
     ) : (
         <AppLoading />

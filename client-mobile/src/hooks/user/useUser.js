@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
 import * as Users from '../../api/users';
+import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
 export default function useUser() {
+    const { setAnalytics, onQuit } = useContext(AnalyticsContext);
+
     const user_id = uuid.v4();
 
     const [currentUser, setCurrentUser] = useState({
@@ -25,6 +29,15 @@ export default function useUser() {
             password: currentUser.password,
             avatar_url: currentUser.avatar_url
         });
+
+        setAnalytics(old => {
+            old.id_session = currentUser.user_id;
+            old.time_started = Date();
+            old.device = Platform.OS;
+            return old;
+        });
+
+        return onQuit;
     }, []);
 
     return [currentUser, setCurrentUser];
