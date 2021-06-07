@@ -52,3 +52,22 @@ class Badges(db.Model):
         return '<Action %r>' % self.id
 
 
+class PrototypeData(db.Model):
+    id_session = db.Column(db.String(40), primary_key=True)
+    time_started  = db.Column(db.String(100))
+    time_ended  = db.Column(db.String(100))
+    device  = db.Column(db.String(100))
+    actions_clicked = db.Column(db.Text)
+    actions_added = db.Column(db.Text)
+    actions_liked_commented = db.Column(db.Text)
+    actions_disliked = db.Column(db.Text)
+    actions_viewed = db.Column(db.Text)
+    actions_stopped = db.Column(db.Text)
+    time_spent  = db.Column(db.String(100))
+    filters_selected  = db.Column(db.Text)
+    terms_searched  = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Action %r>' % self.id
+
+
