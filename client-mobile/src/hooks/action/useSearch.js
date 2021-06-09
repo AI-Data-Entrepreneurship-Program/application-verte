@@ -24,6 +24,8 @@ export default function useSearch(query, setter) {
             )
                 return old;
             old.terms_selected.push(searchQuery);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     }, [searchQuery]);

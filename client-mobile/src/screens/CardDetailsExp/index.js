@@ -17,6 +17,8 @@ const CardDetails = ({ route, navigation }) => {
             if (old.actions_clicked.some(id => id === item.action_id)) return;
 
             old.actions_clicked.push(item.action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     }, []);

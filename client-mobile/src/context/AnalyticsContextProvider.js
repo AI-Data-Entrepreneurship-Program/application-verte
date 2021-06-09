@@ -1,4 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
+import * as Analytics from '../api/analytics';
 
 export const AnalyticsContext = createContext();
 
@@ -21,25 +23,17 @@ const initAnalytics = () => {
 
 const AnalyticsContextProvider = ({ children }) => {
     const [analytics, setAnalytics] = useState(initAnalytics());
-
-    const onQuit = () => {
-        setAnalytics(old => {
-            old.time_ended = Date();
-            old.time_spent = old.time_ended - old.time_started;
-            return old;
-        });
-    };
+    const analyticsMutation = useMutation(props =>
+        Analytics.send(...Object.values(props))
+    );
 
     useEffect(() => {
         console.log(analytics);
-
-        if (analytics.time_spent !== 0) {
-            // TODO: send analytics to server
-        }
+        analyticsMutation.mutate(analytics);
     }, [analytics]);
 
     return (
-        <AnalyticsContext.Provider value={{ analytics, setAnalytics, onQuit }}>
+        <AnalyticsContext.Provider value={{ analytics, setAnalytics }}>
             {children}
         </AnalyticsContext.Provider>
     );

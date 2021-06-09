@@ -231,6 +231,8 @@ const CommentCard = ({ action_id, comment, setter }) => {
             if (old.actions_liked_commented.some(id => id === action_id))
                 return old;
             old.actions_liked_commented.push(action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     };
@@ -307,6 +309,8 @@ const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
             if (old.actions_liked_commented.some(id => id === action_id))
                 return old;
             old.actions_liked_commented.push(action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     };

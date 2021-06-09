@@ -31,6 +31,8 @@ const UserContextProvider = ({ children }) => {
                 return old;
 
             old.actions_added.push(action.action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     };

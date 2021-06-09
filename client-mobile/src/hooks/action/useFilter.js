@@ -26,6 +26,8 @@ export default function useFilter(query, setter, defaultFilter = ['All']) {
                     !old.filters_selected.includes(filter) &&
                     old.filters_selected.push(filter)
             );
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     }, [currentFilter]);

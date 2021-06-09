@@ -6,7 +6,7 @@ import * as Users from '../../api/users';
 import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
 export default function useUser() {
-    const { setAnalytics, onQuit } = useContext(AnalyticsContext);
+    const { setAnalytics } = useContext(AnalyticsContext);
 
     const user_id = uuid.v4();
 
@@ -34,10 +34,10 @@ export default function useUser() {
             old.id_session = currentUser.user_id;
             old.time_started = Date();
             old.device = Platform.OS;
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
-
-        return onQuit;
     }, []);
 
     return [currentUser, setCurrentUser];

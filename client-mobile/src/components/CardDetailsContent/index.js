@@ -64,6 +64,8 @@ const CardDetailsContent = ({ item }) => {
             if (old.actions_liked_commented.some(id => id === item.action_id))
                 return old;
             old.actions_liked_commented.push(item.action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
             return old;
         });
     }, [isLiked]);
