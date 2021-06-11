@@ -3,8 +3,8 @@
 ###################################
 
 
-# This backend server has been created for an app offering an information
-# feed for adopting sustainable behaviors (actions, good news, scientific facts)
+# This backend server has been created for an app offering an information feed for adopting sustainable behaviors (actions, good news, scientific facts)
+# 
 
 #This project contains : the server and the recommender system
 
