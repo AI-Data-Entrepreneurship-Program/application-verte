@@ -52,8 +52,10 @@ class Badges(db.Model):
         return '<Action %r>' % self.id
 
 
+#This class create a table for collecting data during our test phases
 class PrototypeData(db.Model):
-    id_session = db.Column(db.String(40), primary_key=True)
+    id_input = db.Column(db.String(100), primary_key=True)
+    id_session = db.Column(db.String(100))
     time_started  = db.Column(db.String(100))
     time_ended  = db.Column(db.String(100))
     device  = db.Column(db.String(100))

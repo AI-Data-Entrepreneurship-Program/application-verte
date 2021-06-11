@@ -7,6 +7,10 @@ import pandas as pd
 app = create_app()
 
 
+#######################################
+#######################################
+# launch the setup of the database 
+# DO ONLY ONCE, THE FIRST TIME
 def setup_database(app):
     with app.app_context():
         
@@ -94,7 +98,7 @@ def setup_database(app):
         db.session.commit()
     actions = ""
 
-    # This add a fake user
+    # This add a fake user, for testing purposes 
     with app.app_context():
         db.session.add(
         User(
@@ -114,13 +118,16 @@ def setup_database(app):
         )
         )
         db.session.commit()
-    #######################################
-    #######################################
+#######################################
+#######################################
 
 
 # launch app
 if __name__ == "__main__":
+    
+    #comment the line below after the first time it has run
     setup_database(app)
+    
     app.run()
 
 
