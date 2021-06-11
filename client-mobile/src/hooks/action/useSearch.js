@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
 export default function useSearch(query, setter) {
+    const { setAnalytics } = useContext(AnalyticsContext);
+
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
@@ -13,6 +16,18 @@ export default function useSearch(query, setter) {
                       el.title.toLowerCase().includes(searchQuery.toLowerCase())
                   )
         );
+
+        setAnalytics(old => {
+            if (
+                !searchQuery &&
+                old.terms_selected.some(term => term === searchQuery)
+            )
+                return old;
+            old.terms_selected.push(searchQuery);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
+            return old;
+        });
     }, [searchQuery]);
 
     return [searchQuery, setSearchQuery];

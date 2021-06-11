@@ -6,6 +6,7 @@ import * as Comments from '../../api/comments';
 import * as Likes from '../../api/likes';
 import TouchableIcon from '../../components/TouchableIcon';
 import { colors } from '../../consts/styles';
+import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 import { UserContext } from '../../context/UserContextProvider';
 import useComments from '../../hooks/action/useComments';
 import styles from './styles';
@@ -185,6 +186,7 @@ const Card = ({ comment, setter, likeElement, dislikeElement }) => {
 };
 
 const CommentCard = ({ action_id, comment, setter }) => {
+    const { setAnalytics } = useContext(AnalyticsContext);
     const { currentUser } = useContext(UserContext);
 
     const commentMutation = useMutation(props =>
@@ -224,6 +226,15 @@ const CommentCard = ({ action_id, comment, setter }) => {
 
         comment.content = content;
         delete comment.entry;
+
+        setAnalytics(old => {
+            if (old.actions_liked_commented.some(id => id === action_id))
+                return old;
+            old.actions_liked_commented.push(action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
+            return old;
+        });
     };
 
     return (
@@ -250,6 +261,7 @@ const CommentCard = ({ action_id, comment, setter }) => {
 };
 
 const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
+    const { setAnalytics } = useContext(AnalyticsContext);
     const { currentUser } = useContext(UserContext);
 
     const commentMutation = useMutation(props =>
@@ -292,6 +304,15 @@ const AnswerCard = ({ action_id, comment, setter, parent_id }) => {
 
         comment.content = content;
         delete comment.entry;
+
+        setAnalytics(old => {
+            if (old.actions_liked_commented.some(id => id === action_id))
+                return old;
+            old.actions_liked_commented.push(action_id);
+            old.time_ended = Date();
+            old.time_spent = old.time_ended - old.time_started;
+            return old;
+        });
     };
     return (
         <View style={styles.commentContainer}>
