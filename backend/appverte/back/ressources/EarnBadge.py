@@ -3,9 +3,7 @@ import json
 import ast
 from appverte.back.tables import db, User, Badges
 from appverte.back.alchemy_encoder import AlchemyEncoder
-
-
-# earn a badge 
+     
 class EarnBadge(Resource): 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -14,6 +12,7 @@ class EarnBadge(Resource):
         self.reqparse.add_argument('badge_id', type = str, required = True,
             help = 'No badge_id provided')
 
+    # add a new badge to a user --- curl http://127.0.0.1:5000/api/earnBadge -d "badge_id=xxxxx&user_id=xxx"
     def post(self): 
         args = self.reqparse.parse_args()
         

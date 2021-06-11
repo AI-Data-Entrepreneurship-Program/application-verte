@@ -1,7 +1,7 @@
 import json
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
-# This class is used to transform db output in string
+# This class is used to transform db output in json
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj.__class__, DeclarativeMeta):

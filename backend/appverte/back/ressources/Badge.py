@@ -4,8 +4,6 @@ import ast
 from appverte.back.tables import db, Badges
 from appverte.back.alchemy_encoder import AlchemyEncoder
 
-
-# add badges 
 class Badge(Resource): 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -20,11 +18,15 @@ class Badge(Resource):
 
 
     def get(self, badge_id=None):
+
+        # get all badges --- curl http://127.0.0.1:5000/api/badges 
         if not badge_id: 
             badges = json.loads(json.dumps(Badges.query.all(), cls=AlchemyEncoder))
             badges = {str(dict["badge_id"]): dict for dict in badges}
             return badges
         else: 
+
+            # get a badge by id --- curl http://127.0.0.1:5000/api/badges/<badge_id>
             badge = Badges.query.filter_by(badge_id=badge_id).first()
             if not badge:
                 abort(404, message="{} doesn't exist".format(badge_id))
@@ -33,7 +35,7 @@ class Badge(Resource):
                 badge = {str(badge["badge_id"]): badge}
                 return badge     
     
-    # add a new action 
+    # add a new badge --- curl http://127.0.0.1:5000/api/badges -d "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx"
     def post(self):
         args = self.reqparse.parse_args()
         db.session.add(
@@ -48,7 +50,7 @@ class Badge(Resource):
         db.session.commit()
         return 'done'
 
-    # modify action 
+    # modify a badge --- curl -X PUT http://127.0.0.1:5000/api/badges "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx&obtained_count=xxx"
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -64,14 +66,15 @@ class Badge(Resource):
         if not args['image_url'] == None:
             badge.image_url = args['image_url']
         if not args['obtained_count'] == None:
-            badge.obtained_count = args['obtained_count']
+            badge.obtained_count = int(args['obtained_count'])
         db.session.commit()
 
         return 'done'
 
-    # delete action 
+    # delete a badge --- curl -X DELETE http://127.0.0.1:5000/api/badges "badge_id=xxxxx"
     def delete(self):
         args = self.reqparse.parse_args()
         Badges.query.filter_by(badge_id=args['badge_id']).delete()
         db.session.commit()
         return 'done'
+

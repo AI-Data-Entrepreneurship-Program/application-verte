@@ -4,6 +4,8 @@ import ast
 from appverte.back.tables import db, User, Actions
 from appverte.back.alchemy_encoder import AlchemyEncoder
 
+   
+# add a new comment or answer to a comment --- curl http://127.0.0.1:5000/api/comment -d "action_id=104495155&comment_id=testpost&answer_id=testanswer&user_id=xxx&username=Tom&content=testpostcontent&type=comment/answer&avatar_url=https://www.w3schools.com/w3images/avatar6.png"    
 class Comment(Resource): 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -28,7 +30,6 @@ class Comment(Resource):
         self.reqparse.add_argument('type', type = str, required = False,
             help = 'No type answer/comment provided')
 
-    def post(self): 
         args = self.reqparse.parse_args()
         
         action = Actions.query.filter_by(action_id=args['action_id']).first()

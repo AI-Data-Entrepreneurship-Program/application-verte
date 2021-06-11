@@ -12,13 +12,13 @@ class Config:
     #local database
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
-    #prod database 
-    #SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{username}:{password}@{hostname}/{databasename}".format(
-     #   username="turtleiatech",
-      #  password="AzErTyUiOp26120!",
-       # hostname="turtleiatech.mysql.pythonanywhere-services.com",
-        #databasename="turtleiatech$turtle",
-    #)
+    # #prod database 
+    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{username}:{password}@{hostname}/{databasename}".format(
+    #     username="turtleiatech",
+    #     password=config.get('SQL_PASSWORD'),
+    #     hostname="turtleiatech.mysql.pythonanywhere-services.com",
+    #     databasename="turtleiatech$turtle",
+    # )
 
     SQLALCHEMY_POOL_RECYCLE = 299
     SQLALCHEMY_TRACK_MODIFICATIONS = False

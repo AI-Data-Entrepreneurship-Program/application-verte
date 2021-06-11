@@ -8,7 +8,8 @@ class Batch(Resource):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('user_id', type = str,
             help = 'No id title provided')
-  
+   
+    # get batches for user when connecting --- curl http://127.0.0.1:5000/api/batches/<user_id>
     def get(self, user_id=None):
         user = User.query.filter_by(user_id=user_id).first()
         if not user:
@@ -20,3 +21,6 @@ class Batch(Resource):
                 batches[i] = actions
             
             return batches 
+
+
+        

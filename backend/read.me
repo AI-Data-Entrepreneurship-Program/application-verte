@@ -1,35 +1,27 @@
-from flask import Blueprint
-from flask_restful import Api
-
-#initializing the blueprint
-back = Blueprint('back', __name__)
-
-# initialize the API
-api = Api(back)
-
-#import ressources
-from appverte.back.ressources.Badge import Badge
-from appverte.back.ressources.Batch import Batch
-from appverte.back.ressources.Cartes import Cartes
-from appverte.back.ressources.Comment import Comment
-from appverte.back.ressources.EarnBadge import EarnBadge
-from appverte.back.ressources.Favourite import Favourite
-from appverte.back.ressources.Likes import Likes
-from appverte.back.ressources.Prototype import Prototype
-from appverte.back.ressources.Users import Users
+###################################
+###################################
+###################################
 
 
-# opening access
-api.add_resource(Badge, '/api/badges', '/api/badges/<badge_id>') 
-api.add_resource(Batch, '/api/batches/<user_id>') 
-api.add_resource(Cartes, '/api/cartes', '/api/cartes/<carte_id>') 
-api.add_resource(Comment, '/api/comment') 
-api.add_resource(EarnBadge, '/api/earnBadge')
-api.add_resource(Favourite, '/api/favourite')  
-api.add_resource(Likes, '/api/likes') 
-api.add_resource(Prototype, '/api/prototypetesting') 
-api.add_resource(Users, '/api/users', '/api/users/<user_id>') 
+# This backend server has been created for an app offering an information
+# feed for adopting sustainable behaviors (actions, good news, scientific facts)
 
+#This project contains : the server and the recommender system
+
+###################################
+###################################
+###################################
+# QUICK START 
+python3 -m <envname> /path/to/new/virtual/environment
+source <envname>/bin/activate
+pip install -r requirements.txt
+python main.py 
+
+
+###################################
+###################################
+###################################
+# INTERACTING WITH THE SERVER 
 
 
 # ACTIONS 
@@ -50,6 +42,7 @@ api.add_resource(Users, '/api/users', '/api/users/<user_id>')
 # add a new badge to a user --- curl http://127.0.0.1:5000/api/earnBadge -d "badge_id=xxxxx&user_id=xxx"
 # add a new action as favorite for a user --- curl http://127.0.0.1:5000/api/favourite -d "user_id=xxxxx&action_id=xxxx"
 
+
 # BATCHES OF ACTIONS FOR USER (RECOMMENDER SYSTEM)
 # get batches for user when connecting --- curl http://127.0.0.1:5000/api/batches/<user_id>
 
@@ -66,9 +59,13 @@ api.add_resource(Users, '/api/users', '/api/users/<user_id>')
 # add data to SQL when new user is testing --- curl http://127.0.0.1:5000/api/prototypetesting -d "id_session=xxxxx&time_started=xxxx&time_ended=xxx&device=xxxx&actions_clicked=xxxxx&actions_added=xxxx&actions_liked_commented=xxxx&actions_disliked=xxxx&actions_viewed=xxx&actions_stopped=xxx&time_spent=xxxx&filters_selected=xxxx&terms_searched=xxx"
 # get all the data collected --- curl http://127.0.0.1:5000/api/prototypetesting
     
+    
 # BADGES 
-# get all badges --- curl http://127.0.0.1:5000/api/badges
+# get all badges --- curl http://127.0.0.1:5000/api/badges 
 # get a badge by id --- curl http://127.0.0.1:5000/api/badges/<badge_id>
 # add a new badge --- curl http://127.0.0.1:5000/api/badges -d "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx"
 # modify a badge --- curl -X PUT http://127.0.0.1:5000/api/badges "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx&obtained_count=xxx"
 # delete a badge --- curl -X DELETE http://127.0.0.1:5000/api/badges "badge_id=xxxxx"
+
+
+

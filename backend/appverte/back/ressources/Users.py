@@ -4,8 +4,7 @@ from appverte.back.alchemy_encoder import AlchemyEncoder
 from flask_restful import reqparse, abort, Resource
 import ast
 
-
-# This allows us to insert a new user --- curl http://127.0.0.1:5000/UserData -d "user_id=xxxxx&regime_alimentaire=xxxx&jardin=xxx&transport=xxx&notation=xxxx"
+    
 class Users(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -26,7 +25,10 @@ class Users(Resource):
         self.reqparse.add_argument('involvement', type = str,
             help = 'No involvement provided')
     
+
     def get(self, user_id=None):
+
+        # get all users --- curl http://127.0.0.1:5000/api/users 
         if not user_id: 
             users = json.loads(json.dumps(User.query.all(), cls=AlchemyEncoder))
             users = {str(dict["user_id"]): dict for dict in users}
@@ -37,6 +39,8 @@ class Users(Resource):
                 value['actions'] = ast.literal_eval(value['actions'])
             return users
         else: 
+
+            # get a user by id --- curl http://127.0.0.1:5000/api/users/<user_id>
             user = User.query.filter_by(user_id=user_id).first()
             if not user:
                 abort(404, message="{} doesn't exist".format(user_id))
@@ -50,7 +54,7 @@ class Users(Resource):
                     value['actions'] = ast.literal_eval(value['actions'])
                 return user
 
-    # insert a new user
+    # insert a new user --- curl http://127.0.0.1:5000/api/users -d "user_id=xxxxx&username=xxx&password=xxx&avatar_url=xxx&eating_habits=xxxx&garden=xxx&transportation=xxx&involvement=xxxx"
     def post(self): 
         args = self.reqparse.parse_args()
         db.session.add(
@@ -73,7 +77,7 @@ class Users(Resource):
         db.session.commit()
         return "user %s added" % str(args['user_id'])
 
-    # modify action 
+    # modify a user --- curl -X PUT http://127.0.0.1:5000/api/users "user_id=xxxxx&level=xxx&actions=xx&likes=xxx&dislikes=xxxx&badges=xxx&username=xxx&password=xxx&avatar_url=xxx&eating_habits=xxxx&garden=xxx&transportation=xxx&involvement=xxxx"
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -110,7 +114,8 @@ class Users(Resource):
 
         return 'done'
 
-    # delete action 
+
+    # delete a user --- curl -X DELETE http://127.0.0.1:5000/api/users "user_id=xxxxx"
     def delete(self):
         args = self.reqparse.parse_args()
         User.query.filter_by(user_id=args['user_id']).delete()

@@ -20,8 +20,8 @@ def create_app(config_class=Config):
     db.init_app(app) 
 
     #initializing blueprints (separate modules)
-    from appverte.main.routes import main
-    from appverte.back.routes import back
+    from appverte.main.routes import main # where the landing page is 
+    from appverte.back.routes import back # where the api is 
     app.register_blueprint(main)
     app.register_blueprint(back)
 

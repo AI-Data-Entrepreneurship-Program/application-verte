@@ -11,6 +11,7 @@ class Favourite(Resource):
         self.reqparse.add_argument('action_id', type = str, required = True,
             help = 'No action_id title provided')
 
+    # add a new action as favorite for a user --- curl http://127.0.0.1:5000/api/favourite -d "user_id=xxxxx&action_id=xxxx"
     def post(self): 
         args = self.reqparse.parse_args()
         

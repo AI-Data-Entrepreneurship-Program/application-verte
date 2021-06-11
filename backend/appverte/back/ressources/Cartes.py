@@ -3,10 +3,8 @@ import json
 import ast
 from appverte.back.tables import db, Actions
 from appverte.back.alchemy_encoder import AlchemyEncoder
-
-
-
-# returning or updating actions 
+   
+ 
 class Cartes(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -35,7 +33,7 @@ class Cartes(Resource):
 
     def get(self, carte_id=None):
         
-        # get all actions --- curl http://127.0.0.1:5000/cartes
+        # get all actions --- curl http://127.0.0.1:5000/api/cartes
         if not carte_id: 
             actions = json.loads(json.dumps(Actions.query.all(), cls=AlchemyEncoder))
             actions = {str(dict["action_id"]): dict for dict in actions}
@@ -47,7 +45,7 @@ class Cartes(Resource):
             return actions 
         else: 
             
-            # get action by list of ids --- curl http://127.0.0.1:5000/cartes/4,2,3
+            # get action by list of ids --- curl http://127.0.0.1:5000/api/cartes/4,2,3
             if "," in carte_id:
                 carte_ids = carte_id.split(",")
                 actions = Actions.query.filter(Actions.action_id.in_(carte_ids)).all()
@@ -60,7 +58,7 @@ class Cartes(Resource):
                     value['disliked_by'] = ast.literal_eval(value['disliked_by'])
                 return actions 
 
-            # get an action by id --- curl http://127.0.0.1:5000/cartes/4
+            # get an action by id --- curl http://127.0.0.1:5000/cartes/api/4
             else: 
                 action = Actions.query.filter_by(action_id=carte_id).first()
                 if not action:
@@ -76,7 +74,7 @@ class Cartes(Resource):
                     
                     return action
     
-    # add a new action curl http://127.0.0.1:5000/cartes -d "user_id=xxxxx&regime_alimentaire=xxxx&jardin=xxx&transport=xxx&notation=xxxx"
+    # add a new action curl http://127.0.0.1:5000/api/cartes -d "user_id=xxxxx&regime_alimentaire=xxxx&jardin=xxx&transport=xxx&notation=xxxx"
     def post(self):
         args = self.reqparse.parse_args()
         db.session.add(
@@ -97,7 +95,7 @@ class Cartes(Resource):
         db.session.commit()
         return 'done'
 
-    # modify action 
+    # modify an action --- curl -X PUT http://127.0.0.1:5000/api/cartes "action_id=xxxxx&title=xxxx&description=xxx&image_url=xxx&impact=xxx&category=xxx&rating=xxxx&disliked_by=xxx&liked_by=xxx&top_action=xxxx"
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -128,7 +126,7 @@ class Cartes(Resource):
 
         return 'done'
 
-    # delete action 
+    # delete an action --- curl -X DELETE http://127.0.0.1:5000/api/cartes "action_id=xxxxx"
     def delete(self):
         args = self.reqparse.parse_args()
         Actions.query.filter_by(id=args['action_id']).delete()
