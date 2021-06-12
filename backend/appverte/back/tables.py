@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-#This class create a table User in the database
+#create a table User in the database
 class User(db.Model):
     user_id = db.Column(db.String(40), primary_key=True)
     username  = db.Column(db.String(40))
@@ -22,7 +22,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.id
 
-#This class create a table Actions in the database
+#create a table Actions in the database
 class Actions(db.Model):
     action_id = db.Column(db.String(40), primary_key=True)
     title  = db.Column(db.String(200))
@@ -40,7 +40,7 @@ class Actions(db.Model):
         return '<Action %r>' % self.id
 
 
-#This class create a table Badges in the database
+#create a table Badges in the database
 class Badges(db.Model):
     badge_id = db.Column(db.String(40), primary_key=True)
     title  = db.Column(db.String(100))
@@ -52,8 +52,10 @@ class Badges(db.Model):
         return '<Action %r>' % self.id
 
 
+#create a table for collecting data during our test phases
 class PrototypeData(db.Model):
-    id_session = db.Column(db.String(40), primary_key=True)
+    id_input = db.Column(db.String(100), primary_key=True)
+    id_session = db.Column(db.String(100))
     time_started  = db.Column(db.String(100))
     time_ended  = db.Column(db.String(100))
     device  = db.Column(db.String(100))
