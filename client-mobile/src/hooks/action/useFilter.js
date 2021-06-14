@@ -1,27 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
-export default function useFilter(query, setter, defaultFilter = ['All']) {
+export default function useFilter(defaultFilter = ['All']) {
     const { setAnalytics } = useContext(AnalyticsContext);
 
-    const [currentFilter, setCurrentFilter] = useState(defaultFilter);
+    const [currentFilters, setCurrentFilters] = useState(defaultFilter);
 
     useEffect(() => {
-        if (!query.isSuccess) return;
-
-        let filtered = [];
-        const data = Object.values(query.data.data);
-
-        data.forEach(action => {
-            action.category.forEach(category => {
-                if (currentFilter.includes(category)) filtered.push(action);
-            });
-        });
-
-        setter(currentFilter.some(el => el === 'All') ? data : filtered);
-
         setAnalytics(old => {
-            currentFilter.forEach(
+            currentFilters.forEach(
                 filter =>
                     !old.filters_selected.includes(filter) &&
                     old.filters_selected.push(filter)
@@ -30,7 +17,7 @@ export default function useFilter(query, setter, defaultFilter = ['All']) {
             old.time_spent = old.time_ended - old.time_started;
             return old;
         });
-    }, [currentFilter]);
+    }, [currentFilters]);
 
-    return [currentFilter, setCurrentFilter];
+    return [currentFilters, setCurrentFilters];
 }

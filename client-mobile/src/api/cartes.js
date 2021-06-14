@@ -8,3 +8,8 @@ export const find = () => {
 export const get = id => {
     return axios.get(apiUrl + `cartes/${id}`);
 };
+
+export const getMany = ids => {
+    if (!ids) return;
+    return axios.get(apiUrl + `cartes/${ids}`);
+};

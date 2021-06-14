@@ -22,13 +22,12 @@ const initAnalytics = () => {
 };
 
 const AnalyticsContextProvider = ({ children }) => {
-    const [analytics, setAnalytics] = useState(initAnalytics());
+    const [analytics, setAnalytics] = useState(() => initAnalytics());
     const analyticsMutation = useMutation(props =>
         Analytics.send(...Object.values(props))
     );
 
     useEffect(() => {
-        console.log(analytics);
         analyticsMutation.mutate(analytics);
     }, [analytics]);
 

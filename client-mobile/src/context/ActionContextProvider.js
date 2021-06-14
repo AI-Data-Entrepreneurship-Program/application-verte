@@ -1,20 +1,27 @@
-import React, { createContext } from 'react';
-import * as Actions from '../api/cartes';
+import React, { createContext, useContext } from 'react';
+import { UserContext } from '../context/UserContextProvider';
 import useActions from '../hooks/action/useActions';
+import useBatch from '../hooks/action/useBatch';
 import useFilter from '../hooks/action/useFilter';
-import useSearch from '../hooks/action/useSearch';
+// import useSearch from '../hooks/action/useSearch';
 
 export const ActionContext = createContext();
 
 export default function ActionContextProvider({ children }) {
-    const [actions, setActions, actionsQuery] = useActions(Actions.find);
+    const { currentUser } = useContext(UserContext);
 
-    const [currentFilter, setCurrentFilter] = useFilter(
-        actionsQuery,
-        setActions
-    );
+    const batches = useBatch(currentUser.user_id);
+    const [actions, setActions, actionsQuery, batchIdx, setBatchIdx] =
+        useActions(batches);
 
-    const [searchQuery, setSearchQuery] = useSearch(actionsQuery, setActions);
+    const [currentFilters, setCurrentFilters] = useFilter();
+
+    // const [searchQuery, setSearchQuery] = useSearch(actionsQuery, setActions);
+
+    const onEndScroll = () => {
+        console.log('hello');
+        // setBatchIdx(batchIdx + 1);
+    };
 
     return (
         <ActionContext.Provider
@@ -22,10 +29,11 @@ export default function ActionContextProvider({ children }) {
                 actions,
                 setActions,
                 actionsQuery,
-                currentFilter,
-                setCurrentFilter,
-                searchQuery,
-                setSearchQuery
+                currentFilters,
+                setCurrentFilters,
+                // searchQuery,
+                // setSearchQuery,
+                onEndScroll
             }}
         >
             {children}

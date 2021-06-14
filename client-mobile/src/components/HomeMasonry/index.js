@@ -9,7 +9,16 @@ import styles from './styles';
 const HomeMasonry = () => {
     const { width, height } = useWindowDimensions();
     const navigation = useNavigation();
-    const { actions, actionsQuery } = useContext(ActionContext);
+    const { actions, actionsQuery, currentFilters } = useContext(ActionContext);
+
+    const getFilteredActions = (actions, currentFilters) => {
+        return currentFilters.includes('All')
+            ? actions
+            : actions.filter(action => {
+                  console.log(currentFilters, action.category);
+                  return currentFilters.includes(...action.category);
+              });
+    };
 
     return (
         <>
@@ -19,7 +28,7 @@ const HomeMasonry = () => {
 
             {actionsQuery.isSuccess && (
                 <MasonryList
-                    data={actions}
+                    data={getFilteredActions(actions, currentFilters)}
                     keyExtractor={item => item.action_id}
                     numColumns={Math.floor(width / 170)}
                     showsVerticalScrollIndicator={false}

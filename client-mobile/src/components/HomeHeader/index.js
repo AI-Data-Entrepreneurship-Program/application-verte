@@ -19,7 +19,7 @@ import styles from './styles';
 
 const ModalContent = ({
     filters,
-    currentFilter,
+    currentFilters,
     modalFilterBubbleHandler,
     setToggleFilter
 }) => {
@@ -45,11 +45,10 @@ const ModalContent = ({
                                 style={[
                                     styles.modalFilterBubble,
                                     {
-                                        backgroundColor: currentFilter.includes(
-                                            filter
-                                        )
-                                            ? colors.lightPurple
-                                            : 'lightgrey'
+                                        backgroundColor:
+                                            currentFilters.includes(filter)
+                                                ? colors.lightPurple
+                                                : 'lightgrey'
                                     }
                                 ]}
                                 activeOpacity={0.8}
@@ -94,7 +93,7 @@ const HomeHeader = () => {
     const { navigate } = useNavigation();
 
     const { currentUser } = useContext(UserContext);
-    const { currentFilter, setCurrentFilter, searchQuery, setSearchQuery } =
+    const { currentFilters, setCurrentFilters, searchQuery, setSearchQuery } =
         useContext(ActionContext);
 
     const [filters, setFilters] = useState(categoryFilters);
@@ -102,13 +101,13 @@ const HomeHeader = () => {
     const [toggleSearch, setToggleSearch] = useState(false);
 
     const modalFilterBubbleHandler = filter => {
-        if (currentFilter.some(el => el === filter))
-            setCurrentFilter(old => {
+        if (currentFilters.some(el => el === filter))
+            setCurrentFilters(old => {
                 if (old.length === 1) old.push('All');
                 return old.filter(el => el !== filter);
             });
         else
-            setCurrentFilter(old =>
+            setCurrentFilters(old =>
                 [...old, filter].filter(
                     el =>
                         (filter === 'All' && el === 'All') ||
@@ -129,7 +128,7 @@ const HomeHeader = () => {
                         <ModalContent
                             {...{
                                 filters,
-                                currentFilter,
+                                currentFilters,
                                 modalFilterBubbleHandler,
                                 setToggleFilter
                             }}
@@ -169,7 +168,6 @@ const HomeHeader = () => {
                         resizeMode='cover'
                     />
                 </TouchableOpacity>
-                {/* </View> */}
                 {Platform.OS !== 'web' && toggleSearch && (
                     <View style={styles.searchbarContainer}>
                         <TextInput
