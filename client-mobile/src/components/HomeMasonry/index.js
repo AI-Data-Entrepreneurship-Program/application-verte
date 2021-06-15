@@ -18,10 +18,9 @@ const HomeMasonry = () => {
     const getFilteredActions = (actions, currentFilters) => {
         return currentFilters.includes('All')
             ? actions
-            : actions.filter(action => {
-                  console.log(currentFilters, action.category);
-                  return currentFilters.includes(...action.category);
-              });
+            : actions.filter(action =>
+                  currentFilters.includes(...action.category)
+              );
     };
 
     return (
