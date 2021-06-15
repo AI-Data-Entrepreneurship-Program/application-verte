@@ -9,7 +9,11 @@ import styles from './styles';
 const HomeMasonry = () => {
     const { width, height } = useWindowDimensions();
     const navigation = useNavigation();
-    const { actions, actionsQuery, currentFilters } = useContext(ActionContext);
+    const {
+        actionsMirror: actions,
+        actionsQuery,
+        currentFilters
+    } = useContext(ActionContext);
 
     const getFilteredActions = (actions, currentFilters) => {
         return currentFilters.includes('All')

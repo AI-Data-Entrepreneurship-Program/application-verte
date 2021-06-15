@@ -3,7 +3,7 @@ import { UserContext } from '../context/UserContextProvider';
 import useActions from '../hooks/action/useActions';
 import useBatch from '../hooks/action/useBatch';
 import useFilter from '../hooks/action/useFilter';
-// import useSearch from '../hooks/action/useSearch';
+import useSearch from '../hooks/action/useSearch';
 
 export const ActionContext = createContext();
 
@@ -16,7 +16,7 @@ export default function ActionContextProvider({ children }) {
 
     const [currentFilters, setCurrentFilters] = useFilter();
 
-    // const [searchQuery, setSearchQuery] = useSearch(actionsQuery, setActions);
+    const [searchQuery, setSearchQuery, actionsMirror] = useSearch(actions);
 
     const onEndScroll = () => {
         console.log('hello');
@@ -31,9 +31,10 @@ export default function ActionContextProvider({ children }) {
                 actionsQuery,
                 currentFilters,
                 setCurrentFilters,
-                // searchQuery,
-                // setSearchQuery,
-                onEndScroll
+                searchQuery,
+                setSearchQuery,
+                onEndScroll,
+                actionsMirror
             }}
         >
             {children}

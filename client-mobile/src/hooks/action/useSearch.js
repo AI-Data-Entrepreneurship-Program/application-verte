@@ -1,25 +1,29 @@
 import { useContext, useEffect, useState } from 'react';
 import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
-export default function useSearch(query, setter) {
+export default function useSearch(value) {
     const { setAnalytics } = useContext(AnalyticsContext);
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [actionsMirror, setActionsMirror] = useState(value);
 
-    useEffect(() => {
-        if (!query.isSuccess) return;
-
-        setter(
+    const filter = () => {
+        setActionsMirror(
             searchQuery.length === 0
-                ? Object.values(query.data.data)
-                : Object.values(query.data.data).filter(el =>
+                ? value
+                : value.filter(el =>
                       el.title.toLowerCase().includes(searchQuery.toLowerCase())
                   )
         );
+    };
 
+    useEffect(() => filter(value), [value]);
+
+    useEffect(() => {
+        filter();
         setAnalytics(old => {
             if (
-                !searchQuery &&
+                !searchQuery ||
                 old.terms_selected.some(term => term === searchQuery)
             )
                 return old;
@@ -30,5 +34,5 @@ export default function useSearch(query, setter) {
         });
     }, [searchQuery]);
 
-    return [searchQuery, setSearchQuery];
+    return [searchQuery, setSearchQuery, actionsMirror];
 }
