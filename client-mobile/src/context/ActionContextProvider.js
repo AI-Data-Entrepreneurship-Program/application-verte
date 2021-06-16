@@ -19,8 +19,7 @@ export default function ActionContextProvider({ children }) {
     const [searchQuery, setSearchQuery, actionsMirror] = useSearch(actions);
 
     const onEndScroll = () => {
-        console.log('hello');
-        // setBatchIdx(batchIdx + 1);
+        if (batchIdx < batches.length) setBatchIdx(old => old + 1);
     };
 
     return (

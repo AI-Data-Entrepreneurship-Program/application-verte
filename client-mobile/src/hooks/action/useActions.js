@@ -26,16 +26,20 @@ export default function useActions(batches) {
     const [actions, setActions] = useState([]);
     const [batchIdx, setBatchIdx] = useState(0);
 
+    // batch system won't work on web so we take all batches here
     let actionsQuery = useQuery(
         ['actions', batches, batchIdx],
-        () => Actions.getMany(batches[batchIdx]),
+        () =>
+            Actions.getMany(
+                batches.reduce((previous, current) => previous + current)
+            ),
         { enabled: false }
     );
 
     useEffect(() => {
         if (!batches) return;
         actionsQuery.refetch();
-    }, [batches]);
+    }, [batches, batchIdx]);
 
     useEffect(() => {
         if (!actionsQuery.isSuccess || !actionsQuery.data) return;
