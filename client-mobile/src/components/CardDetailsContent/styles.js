@@ -22,27 +22,29 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         color: colors.lightPurple,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Poppins-title'
     },
     description: {
         fontSize: 18,
-        textAlign: 'justify'
+        textAlign: 'justify',
+        fontFamily: 'Poppins-text'
     },
     button: {
-        width: '80%',
-        maxWidth: 200,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.lightPurple,
         flexDirection: 'row',
         borderRadius: 20,
         paddingVertical: 5,
+        paddingHorizontal: 10,
         marginVertical: 10
     },
     buttonTitle: {
         fontSize: 24,
         color: 'white',
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: 'Poppins-text'
     },
     ratingContainer: {
         flexDirection: 'row',
@@ -51,6 +53,9 @@ const styles = StyleSheet.create({
     },
     ratingIcon: {
         marginLeft: 5
+    },
+    ratingText: {
+        fontFamily: 'Poppins-text'
     }
 });
 

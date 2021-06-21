@@ -1,16 +1,14 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ProfileBadgesSection from '../../components/ProfileBadgesSection';
 import ProfileHistorySection from '../../components/ProfileHistorySection';
 import ProfileInformationsSection from '../../components/ProfileInformationsSection';
 import styles from './styles';
 
-const ProfileScreen = ({ navigation: { goBack } }) => {
+const ProfileScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ProfileInformationsSection />
-            <ProfileBadgesSection />
             <ProfileHistorySection />
             <Icon
                 name='x'
@@ -18,7 +16,7 @@ const ProfileScreen = ({ navigation: { goBack } }) => {
                 color='gray'
                 raised='true'
                 containerStyle={styles.exitIcon}
-                onPress={() => goBack()}
+                onPress={() => navigation.goBack()}
             />
         </SafeAreaView>
     );

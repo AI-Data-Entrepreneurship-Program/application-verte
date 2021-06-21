@@ -1,4 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ActionContextProvider from './src/context/ActionContextProvider';
@@ -16,9 +18,14 @@ const ContextProviders = ({ children }) => (
 );
 
 const App = () => {
+    let [fontsLoaded] = useFonts({
+        'Poppins-text': require('./assets/fonts/Poppins/Poppins-Light.ttf'),
+        'Poppins-title': require('./assets/fonts/Poppins/Poppins-Medium.ttf')
+    });
+
     const Provider = useQueryClientProvider();
 
-    return (
+    return fontsLoaded ? (
         <Provider>
             <ContextProviders>
                 <SafeAreaProvider>
@@ -28,6 +35,8 @@ const App = () => {
                 </SafeAreaProvider>
             </ContextProviders>
         </Provider>
+    ) : (
+        <AppLoading />
     );
 };
 

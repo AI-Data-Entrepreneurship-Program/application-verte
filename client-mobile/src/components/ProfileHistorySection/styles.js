@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 18,
-        color: colors.lightPurple
+        color: colors.lightPurple,
+        fontFamily: 'Poppins-title'
     },
     placeholderText: {
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'Poppins-text'
     }
 });
 

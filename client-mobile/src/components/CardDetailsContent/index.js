@@ -98,7 +98,7 @@ const CardDetailsContent = ({ item }) => {
             </TouchableOpacity>
 
             <View style={styles.ratingContainer}>
-                <Text>{rating}</Text>
+                <Text style={styles.ratingText}>{rating}</Text>
                 <TouchableIcon
                     type='AntDesign'
                     name={isLiked ? 'heart' : 'hearto'}

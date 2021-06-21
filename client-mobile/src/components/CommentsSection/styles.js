@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 21,
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Poppins-title'
     },
     headerBtn: {
         alignItems: 'center',
@@ -19,7 +20,8 @@ const styles = StyleSheet.create({
     },
     headerBtnTitle: {
         fontSize: 14,
-        color: colors.lightPurple
+        color: colors.lightPurple,
+        fontFamily: 'Poppins-text'
     },
     commentContainer: {
         width: '90%',
@@ -39,11 +41,13 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     commentUsername: {
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'Poppins-text'
     },
     commentContent: {
         fontSize: 14,
-        textAlign: 'justify'
+        textAlign: 'justify',
+        fontFamily: 'Poppins-text'
     },
     commentFooter: {
         flexDirection: 'row',
@@ -65,7 +69,8 @@ const styles = StyleSheet.create({
     },
     commentBtnTitle: {
         fontSize: 14,
-        color: colors.lightPurple
+        color: colors.lightPurple,
+        fontFamily: 'Poppins-text'
     },
     ratingBtnContainer: {
         flexDirection: 'column',
@@ -76,6 +81,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    ratingText: {
+        fontFamily: 'Poppins-text'
     }
 });
 

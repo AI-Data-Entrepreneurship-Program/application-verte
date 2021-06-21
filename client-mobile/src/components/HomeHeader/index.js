@@ -103,15 +103,15 @@ const HomeHeader = () => {
     const modalFilterBubbleHandler = filter => {
         if (currentFilters.some(el => el === filter))
             setCurrentFilters(old => {
-                if (old.length === 1) old.push('All');
+                if (old.length === 1) old.push('Tout');
                 return old.filter(el => el !== filter);
             });
         else
             setCurrentFilters(old =>
                 [...old, filter].filter(
                     el =>
-                        (filter === 'All' && el === 'All') ||
-                        (filter !== 'All' && el !== 'All')
+                        (filter === 'Tout' && el === 'Tout') ||
+                        (filter !== 'Tout' && el !== 'Tout')
                 )
             );
     };
@@ -157,7 +157,6 @@ const HomeHeader = () => {
                     />
                 </View>
 
-                {/* <View style={styles.avatarContainer}> */}
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigate('Profile')}

@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     },
     bubbleText: {
         fontSize: 18,
-        color: colors.lightPurple
+        color: colors.lightPurple,
+        fontFamily: 'Poppins-title'
     },
     icon: {
         marginHorizontal: 5
@@ -75,7 +76,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     modalCardTitle: {
-        fontSize: 21
+        fontSize: 21,
+        fontFamily: 'Poppins-text'
     },
     modalFilterContainer: {
         width: '100%',
@@ -93,7 +95,8 @@ const styles = StyleSheet.create({
     },
     modalFilterTitle: {
         fontSize: 18,
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: 'Poppins-text'
     },
     webFilters: {
         width: '100%',

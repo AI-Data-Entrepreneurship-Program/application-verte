@@ -139,6 +139,7 @@ const Card = ({ comment, setter, likeElement, dislikeElement }) => {
                     <View style={styles.rating}>
                         <Text
                             style={[
+                                styles.ratingText,
                                 {
                                     color:
                                         isLiked === 'liked'
@@ -164,6 +165,7 @@ const Card = ({ comment, setter, likeElement, dislikeElement }) => {
                     <View style={styles.rating}>
                         <Text
                             style={[
+                                styles.ratingText,
                                 {
                                     color:
                                         isLiked === 'disliked' ? 'red' : 'black'

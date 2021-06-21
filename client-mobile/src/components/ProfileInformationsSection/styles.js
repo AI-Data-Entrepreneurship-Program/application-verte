@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 21,
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: 'Poppins-text'
     }
 });
 

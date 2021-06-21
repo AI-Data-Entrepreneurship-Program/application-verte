@@ -1,5 +1,5 @@
 export default [
-    'All',
+    'Tout',
     'Energie',
     'Alimentation',
     'Zero déchets',

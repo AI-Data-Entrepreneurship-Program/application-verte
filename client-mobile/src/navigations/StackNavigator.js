@@ -6,12 +6,18 @@ import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
 import ProfileScreen from '../screens/Profile';
 import RegisterScreen from '../screens/Register';
+import SplashScreen from '../screens/Splash';
 
 const StackNavigator = createStackNavigator();
 
 export default function StackNavigatorProvider() {
     return (
-        <StackNavigator.Navigator initialRouteName='Home'>
+        <StackNavigator.Navigator initialRouteName='Splash'>
+            <StackNavigator.Screen
+                name='Splash'
+                component={SplashScreen}
+                options={{ headerShown: false }}
+            />
             <StackNavigator.Screen
                 name='CardDetails'
                 component={CardDetails}

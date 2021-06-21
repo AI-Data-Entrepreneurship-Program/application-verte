@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         lineHeight: 12,
         color: 'black',
         marginHorizontal: 3,
-        paddingVertical: 3
+        paddingVertical: 3,
+        fontFamily: 'Poppins-text'
     },
     notLoadedImg: {
         alignItems: 'center',

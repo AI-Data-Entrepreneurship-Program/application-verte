@@ -16,7 +16,7 @@ const HomeMasonry = () => {
     } = useContext(ActionContext);
 
     const getFilteredActions = (actions, currentFilters) => {
-        return currentFilters.includes('All')
+        return currentFilters.includes('Tout')
             ? actions
             : actions.filter(action =>
                   currentFilters.includes(...action.category)
@@ -31,6 +31,7 @@ const HomeMasonry = () => {
 
             {actionsQuery.isSuccess && (
                 <MasonryList
+                    contentContainerStyle={{ alignItems: 'center' }}
                     data={getFilteredActions(actions, currentFilters)}
                     keyExtractor={item => item.action_id}
                     numColumns={Math.floor(width / 170)}

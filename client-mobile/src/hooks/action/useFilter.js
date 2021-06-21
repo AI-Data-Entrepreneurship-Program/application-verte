@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AnalyticsContext } from '../../context/AnalyticsContextProvider';
 
-export default function useFilter(defaultFilter = ['All']) {
+export default function useFilter(defaultFilter = ['Tout']) {
     const { setAnalytics } = useContext(AnalyticsContext);
 
     const [currentFilters, setCurrentFilters] = useState(defaultFilter);
