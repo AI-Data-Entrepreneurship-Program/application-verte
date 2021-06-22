@@ -4,10 +4,12 @@ from appverte.back.tables import db
 from flask_cors import CORS, cross_origin
 
 
+
 def create_app(config_class=Config):
 
     
     app = Flask(__name__)
+
 
     # allowing cors requests 
     cors = CORS(app, resources={r"/*": {"origins": "*"}})

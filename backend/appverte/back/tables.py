@@ -73,3 +73,8 @@ class PrototypeData(db.Model):
         return '<Action %r>' % self.id
 
 
+#class Admin(db.Model):
+#    __tablename__ = 'admin'
+ #   id = db.Column(db.Integer, primary_key = True)
+#    username = db.Column(db.String(32), index = True)
+#    password_hash = db.Column(db.String(128))
