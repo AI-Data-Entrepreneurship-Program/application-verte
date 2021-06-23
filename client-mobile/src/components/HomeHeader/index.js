@@ -65,7 +65,7 @@ const ModalContent = ({
     );
 };
 
-const WebFilters = ({ filters, currentFilter, modalFilterBubbleHandler }) => {
+const WebFilters = ({ filters, currentFilters, modalFilterBubbleHandler }) => {
     return (
         <View style={styles.webFilters}>
             {filters.map(filter => (
@@ -74,7 +74,7 @@ const WebFilters = ({ filters, currentFilter, modalFilterBubbleHandler }) => {
                         style={[
                             styles.modalFilterBubble,
                             {
-                                backgroundColor: currentFilter.includes(filter)
+                                backgroundColor: currentFilters.includes(filter)
                                     ? colors.lightPurple
                                     : 'lightgrey'
                             }
@@ -178,11 +178,13 @@ const HomeHeader = () => {
                         />
                     </View>
                 )}
+            </View>
+            <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
                 {Platform.OS === 'web' && toggleFilter && (
                     <WebFilters
                         {...{
                             filters,
-                            currentFilter,
+                            currentFilters,
                             modalFilterBubbleHandler
                         }}
                     />

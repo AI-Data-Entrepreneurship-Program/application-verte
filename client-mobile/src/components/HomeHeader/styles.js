@@ -3,9 +3,8 @@ import { colors } from '../../consts/styles';
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '80%',
         flexDirection: 'row',
-        flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         marginVertical: 8,

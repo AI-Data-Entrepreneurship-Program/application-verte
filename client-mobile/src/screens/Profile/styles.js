@@ -1,9 +1,9 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: Platform.OS === 'web' ? '70%' : '100%',
+        width: '100%',
         alignSelf: 'center',
         alignItems: 'center'
     },

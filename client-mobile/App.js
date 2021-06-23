@@ -5,16 +5,19 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ActionContextProvider from './src/context/ActionContextProvider';
 import AnalyticsContextProvider from './src/context/AnalyticsContextProvider';
+import AuthTokenContextProvider from './src/context/AuthTokenContextProvider';
 import UserContextProvider from './src/context/UserContextProvider';
 import useQueryClientProvider from './src/hooks/useQueryClientProvider';
 import StackNavigatorProvider from './src/navigations/StackNavigator';
 
 const ContextProviders = ({ children }) => (
-    <AnalyticsContextProvider>
-        <UserContextProvider>
-            <ActionContextProvider>{children}</ActionContextProvider>
-        </UserContextProvider>
-    </AnalyticsContextProvider>
+    <AuthTokenContextProvider>
+        <AnalyticsContextProvider>
+            <UserContextProvider>
+                <ActionContextProvider>{children}</ActionContextProvider>
+            </UserContextProvider>
+        </AnalyticsContextProvider>
+    </AuthTokenContextProvider>
 );
 
 const App = () => {
