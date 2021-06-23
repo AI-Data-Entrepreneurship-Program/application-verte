@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import * as Actions from '../../api/cartes';
@@ -32,6 +33,7 @@ export default function useActions(batches) {
         () =>
             Actions.getMany(
                 batches.reduce((previous, current) => previous + current)
+                // batches[0]
             ),
         { enabled: false }
     );
@@ -45,7 +47,7 @@ export default function useActions(batches) {
         if (!actionsQuery.isSuccess || !actionsQuery.data) return;
 
         const data = Object.values(actionsQuery.data.data);
-        setActions(old => old.concat(cleanActionData(data)));
+        setActions(old => old.concat(_.shuffle(cleanActionData(data))));
     }, [actionsQuery.status]);
 
     return [actions, setActions, actionsQuery, batchIdx, setBatchIdx];
