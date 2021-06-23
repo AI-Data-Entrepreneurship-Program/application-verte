@@ -1,6 +1,8 @@
 from appverte import create_app
-from appverte.back.tables import db, User, Actions
+from appverte.back.tables import db, User, Actions, Admin
 import pandas as pd 
+import random
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 
 # initialise app
@@ -64,6 +66,17 @@ def setup_database(app):
         )
         )
         db.session.commit()
+    
+    with app.app_context():
+        db.session.add(
+            Admin(
+                id= str(random.randint(0,10000000)),
+                username= 'turtleiatech',
+                password= generate_password_hash('ds2LKKJD342jkdjs23jkdj4JDS').decode('utf8')
+            )
+            )
+        db.session.commit()
+    
 
 
 setup_database(app)

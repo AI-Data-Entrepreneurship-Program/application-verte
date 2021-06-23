@@ -23,6 +23,12 @@ python main.py
 ###################################
 # INTERACTING WITH THE SERVER 
 
+# AUTHENTIFICATION 
+curl https://turtleiatech.pythonanywhere.com/api/auth/login -d "username=xxxxxx&password=xxxxxxxx"
+
+# YOU OBTAIN A TOKEN FOR 7 DAYS TO USE IN ANY QUERY ex:
+curl -H "Authorization: Bearer <TOKEN>" http://127.0.0.1:5000/api/cartes
+
 
 # ACTIONS 
 # get all actions --- curl http://127.0.0.1:5000/api/cartes

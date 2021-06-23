@@ -7,7 +7,7 @@ import math
 import random 
 import pandas as pd
 import numpy
-
+from flask_jwt_extended import jwt_required
 
 class Batch(Resource):
     def __init__(self):
@@ -16,6 +16,7 @@ class Batch(Resource):
             help = 'No user_id provided')
    
     # get batches for user when connecting --- curl http://127.0.0.1:5000/api/batches/<user_id>
+    @jwt_required()
     def get(self, user_id=None):
         #user = User.query.filter_by(user_id=user_id).first()
         #if not user:

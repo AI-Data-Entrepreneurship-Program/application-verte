@@ -3,7 +3,7 @@ import json
 import ast
 from appverte.back.tables import db, User, Actions
 from appverte.back.alchemy_encoder import AlchemyEncoder
-
+from flask_jwt_extended import jwt_required
     
 # insert new likes or dislikes --- curl http://127.0.0.1:5000/api/likes -d "user_id=xxxxx&action_id=xxxx&likes=1/-1"
 class Likes(Resource): 
@@ -22,6 +22,7 @@ class Likes(Resource):
         self.reqparse.add_argument('answer_id', type = str, required = False,
             help = 'No answer_id provided')
 
+    @jwt_required()
     def post(self): 
         args = self.reqparse.parse_args()
         

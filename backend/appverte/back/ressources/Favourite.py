@@ -2,6 +2,7 @@ from flask_restful import reqparse, abort, Resource
 import json
 import ast
 from appverte.back.tables import db, User
+from flask_jwt_extended import jwt_required
 
 class Favourite(Resource): 
     def __init__(self):
@@ -12,6 +13,7 @@ class Favourite(Resource):
             help = 'No action_id title provided')
 
     # add a new action as favorite for a user --- curl http://127.0.0.1:5000/api/favourite -d "user_id=xxxxx&action_id=xxxx"
+    @jwt_required()
     def post(self): 
         args = self.reqparse.parse_args()
         

@@ -3,7 +3,7 @@ import json
 from appverte.back.alchemy_encoder import AlchemyEncoder
 from flask_restful import reqparse, abort, Resource
 import ast
-
+from flask_jwt_extended import jwt_required
     
 class Users(Resource):
     def __init__(self):
@@ -26,6 +26,7 @@ class Users(Resource):
             help = 'No involvement provided')
     
 
+    @jwt_required()
     def get(self, user_id=None):
 
         # get all users --- curl http://127.0.0.1:5000/api/users 
@@ -55,6 +56,7 @@ class Users(Resource):
                 return user
 
     # insert a new user --- curl http://127.0.0.1:5000/api/users -d "user_id=xxxxx&username=xxx&password=xxx&avatar_url=xxx&eating_habits=xxxx&garden=xxx&transportation=xxx&involvement=xxxx"
+    @jwt_required()
     def post(self): 
         args = self.reqparse.parse_args()
         db.session.add(
@@ -78,6 +80,7 @@ class Users(Resource):
         return "user %s added" % str(args['user_id'])
 
     # modify a user --- curl -X PUT http://127.0.0.1:5000/api/users "user_id=xxxxx&level=xxx&actions=xx&likes=xxx&dislikes=xxxx&badges=xxx&username=xxx&password=xxx&avatar_url=xxx&eating_habits=xxxx&garden=xxx&transportation=xxx&involvement=xxxx"
+    @jwt_required()
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -116,6 +119,7 @@ class Users(Resource):
 
 
     # delete a user --- curl -X DELETE http://127.0.0.1:5000/api/users "user_id=xxxxx"
+    @jwt_required()
     def delete(self):
         args = self.reqparse.parse_args()
         User.query.filter_by(user_id=args['user_id']).delete()

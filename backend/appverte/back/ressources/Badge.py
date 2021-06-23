@@ -3,6 +3,8 @@ import json
 import ast
 from appverte.back.tables import db, Badges
 from appverte.back.alchemy_encoder import AlchemyEncoder
+from flask_jwt_extended import jwt_required
+
 
 class Badge(Resource): 
     def __init__(self):
@@ -16,7 +18,7 @@ class Badge(Resource):
         self.reqparse.add_argument('image_url', type = str,
             help = 'No image_url provided')
 
-
+    @jwt_required()
     def get(self, badge_id=None):
 
         # get all badges --- curl http://127.0.0.1:5000/api/badges 
@@ -36,6 +38,7 @@ class Badge(Resource):
                 return badge     
     
     # add a new badge --- curl http://127.0.0.1:5000/api/badges -d "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx"
+    @jwt_required()
     def post(self):
         args = self.reqparse.parse_args()
         db.session.add(
@@ -51,6 +54,7 @@ class Badge(Resource):
         return 'done'
 
     # modify a badge --- curl -X PUT http://127.0.0.1:5000/api/badges "badge_id=xxxxx&title=xxxx&description=xxx&image_url=xxx&obtained_count=xxx"
+    @jwt_required()
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -72,6 +76,7 @@ class Badge(Resource):
         return 'done'
 
     # delete a badge --- curl -X DELETE http://127.0.0.1:5000/api/badges "badge_id=xxxxx"
+    @jwt_required()
     def delete(self):
         args = self.reqparse.parse_args()
         Badges.query.filter_by(badge_id=args['badge_id']).delete()
