@@ -9,6 +9,8 @@ def training_recommender():
     
     ########################################
     # FINDING MOST SIMILAR USERS with kmeans
+    
+    #loading users
     users = pd.read_excel('users.xlsx')
     users.drop(columns=['likes','dislikes','badges','avatar_url','password','username','actions'], inplace=True)
     users = pd.get_dummies(users, columns=['eating_habits','garden','transportation'])
@@ -31,6 +33,8 @@ def training_recommender():
 
     ########################################
     # FINDING MOST SIMILAR ACTIONS with kmeans
+
+    #loading actions
     actions = pd.read_excel('Liste_actions.xlsx')
     actions = pd.get_dummies(actions, columns=['category'])
     actions.drop(columns=['action_image','action_title','action_impact','action_description','sources','disliked_by','liked_by','comments',], inplace=True)
@@ -55,7 +59,7 @@ def training_recommender():
     # ESTIMATE RATINGS FOR NEW USER-ACTIONS INTERACTIONS based on tabular fastai model
     
     # create dataset with all new interactions between the users and actions 
-    done = pd.read_excel('users.xlsx')
+    done = pd.read_excel('users.xlsx') #to be reimplaced by a request to the database
     done.drop(columns=['likes','dislikes','badges','avatar_url','password','username','level','eating_habits','garden','transportation','involvement'], inplace=True)
     done['actions'] = done['actions'].str.strip(',').str.split('\s*,\s*')
     done = pd.DataFrame(list(zip(done['actions'].explode().keys(), done['actions'].explode())), columns =['user_id', 'action_id'])
@@ -110,3 +114,31 @@ def training_recommender():
     learn = collab_learner(dls = dloader, n_factors = 40, y_range = (0, 10))
     learn.fit_one_cycle(n_epoch = 5, lr_max = 0.01, wd = 1e-2)
     learn.export("appverte/back/recommender/Embedding_Dot_Bias_Recommender_model3.pkl")
+
+
+    # loading action info
+    import numpy
+    action_ids =["%s" % x for x in pd.read_excel('Liste_actions.xlsx')["action_id"]]
+    # action_ids =[x.strip()[5:] for x in pd.read_excel('Liste_actions.xlsx')["action_id"]]
+    action_ids = numpy.array(action_ids, dtype=object)
+    action_ids
+
+    # loading user info
+    users = pd.read_excel('users.xlsx')['user_id']
+
+    # calculating user weight and saving it : we do not have to load the IA model in production. 
+    user_weights = []
+    for user in users:
+        user_weights.append(learn_prod.model.weight([user], is_item = False).cpu().numpy())
+    user_weights = numpy.array(user_weights)
+
+    from numpy import savetxt
+    savetxt('users_weights.csv', actions_weight, delimiter=',')
+
+    # calculating actions weights and saving it: we do not have to load the IA model in production. 
+    actions_weight = learn_prod.model.weight(action_ids, is_item = True)
+    actions_weight = actions_weight.cpu().numpy()
+    actions_weight
+
+    from numpy import savetxt
+    savetxt('action_weights.csv', actions_weight, delimiter=',')

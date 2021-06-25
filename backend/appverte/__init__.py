@@ -22,6 +22,19 @@ def create_app(config_class=Config):
     bcrypt = Bcrypt(app)
     jwt = JWTManager(app)
 
+    def handle_user_exception_again(e):
+        if isinstance(e, jwt.InvalidSignatureError):
+            return jsonify(OrderedDict([
+                ('status_code', e.status_code),
+                ('error', e.error),
+                ('description', e.description),
+            ])), e.status_code, e.headers
+        return e
+
+    app.handle_user_exception = handle_user_exception_again
+
+
+
     # initializing the db
     db.init_app(app) 
 

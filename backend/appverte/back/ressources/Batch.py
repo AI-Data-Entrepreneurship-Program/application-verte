@@ -100,16 +100,79 @@ class Batch(Resource):
             return batches 
 
         except: 
-
+            
             #######################
             # for testing purposes before the recommender system
+            #random.shuffle(keys)
+            #batches = {}
+            #for i in range(math.floor(len(keys)/8)): 
+            #    batches[i] = ','.join(keys[:8])
+            #    keys = keys[8:]
+            
+
+            #return keys
+            #######################
+            
             keys = Actions.query.with_entities(Actions.action_id).all()
             keys = [''.join(key) for key in keys]
             random.shuffle(keys)
-            batches = {}
-            for i in range(math.floor(len(keys)/8)): 
-                batches[i] = ','.join(keys[:8])
-                keys = keys[8:]
-            #######################
+            predictions = pd.DataFrame(keys, columns =['action_id'])
+            
+            # add categories to classify content
+            categories = pd.read_excel('Liste_actions.xlsx')[['action_id','category']]
+            categories['action_id'] = ["%s" % x for x in categories['action_id']]
+            predictions = predictions.merge(categories, on="action_id")
 
-            return batches
+        
+            # classify content
+            actions = predictions.loc[~predictions['category'].isin(['Point culture', 'Good news', 'ads'])]
+            actions1 = list(actions['action_id'][:math.floor(len(actions)/4)])
+            actions2 = list(actions['action_id'][math.floor(len(actions)/4):math.floor(len(actions)/2)])
+            actions3 = list(actions['action_id'][math.floor(len(actions)/2):math.floor(len(actions)/1.33)])
+            actions4 = list(actions['action_id'][math.floor(len(actions)/1.33):])
+
+            scientific_facts = predictions[predictions['category'] == 'Point culture']
+            scientific_facts1 = list(scientific_facts['action_id'][:math.floor(len(scientific_facts)/2)])
+            scientific_facts2 = list(scientific_facts['action_id'][:math.floor(len(scientific_facts)/2)])
+
+            good_news = predictions[predictions['category'] == 'Good news']
+            good_news = list(good_news['action_id'])
+
+            ads = predictions[predictions['category'] == 'ads']
+            ads = list(ads['action_id'])
+            #ads = ['1111'] * len(actions1)
+            random.shuffle(actions1)
+            random.shuffle(actions2)
+            random.shuffle(actions3)
+            random.shuffle(actions4)
+            random.shuffle(scientific_facts1)
+            random.shuffle(scientific_facts2)
+            random.shuffle(good_news)
+            #we do not shuffle ads 
+            
+            # organise content to be returned 
+            batches = {}
+
+            for i in range(len(good_news)):
+                actions_batch = []
+                actions_batch.append(actions1[0])
+                actions_batch.append(actions2[0])
+                actions_batch.append(actions3[0])
+                actions_batch.append(actions4[0])
+                actions_batch.append(scientific_facts1[0])
+                actions_batch.append(scientific_facts2[0])
+                actions_batch.append(good_news[0])
+                random.shuffle(actions_batch)
+                actions_batch.insert(random.randint(5,7), ads[0])
+                
+                actions1.pop(0)
+                actions2.pop(0)
+                actions3.pop(0)
+                actions4.pop(0)
+                scientific_facts1.pop(0)
+                scientific_facts2.pop(0)
+                good_news.pop(0)
+                ads.pop(0)
+                batches[i] = ','.join(actions_batch)
+                
+            return batches 
