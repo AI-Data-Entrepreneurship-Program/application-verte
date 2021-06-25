@@ -7,7 +7,7 @@
 # feed for adopting sustainable behaviors (actions, good news, scientific facts)
 
 #This project contains : the server and the recommender system
-
+# Recommender system is situated at backend/appverte/back/recommender/
 ###################################
 ###################################
 ###################################
