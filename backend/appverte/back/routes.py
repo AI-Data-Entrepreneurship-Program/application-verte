@@ -1,11 +1,13 @@
 from flask import Blueprint
 from flask_restful import Api
 
+
 #initializing the blueprint
 back = Blueprint('back', __name__)
 
 # initialize the API
 api = Api(back)
+
 
 #import ressources
 from appverte.back.ressources.Badge import Badge
@@ -17,6 +19,7 @@ from appverte.back.ressources.Favourite import Favourite
 from appverte.back.ressources.Likes import Likes
 from appverte.back.ressources.Prototype import Prototype
 from appverte.back.ressources.Users import Users
+from appverte.back.authentification import LoginApi
 
 
 # opening access
@@ -30,6 +33,8 @@ api.add_resource(Likes, '/api/likes')
 api.add_resource(Prototype, '/api/prototypetesting') 
 api.add_resource(Users, '/api/users', '/api/users/<user_id>') 
 
+# authentification
+api.add_resource(LoginApi, '/api/auth/login')
 
 
 # ACTIONS 

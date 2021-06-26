@@ -3,7 +3,7 @@ import json
 import ast
 from appverte.back.tables import db, Actions
 from appverte.back.alchemy_encoder import AlchemyEncoder
-   
+from flask_jwt_extended import jwt_required
  
 class Cartes(Resource):
     def __init__(self):
@@ -31,6 +31,7 @@ class Cartes(Resource):
         self.reqparse.add_argument('comments', type = str,
             help = 'No comments provided')
 
+    @jwt_required()
     def get(self, carte_id=None):
         
         # get all actions --- curl http://127.0.0.1:5000/api/cartes
@@ -75,6 +76,7 @@ class Cartes(Resource):
                     return action
     
     # add a new action curl http://127.0.0.1:5000/api/cartes -d "user_id=xxxxx&regime_alimentaire=xxxx&jardin=xxx&transport=xxx&notation=xxxx"
+    @jwt_required()
     def post(self):
         args = self.reqparse.parse_args()
         db.session.add(
@@ -96,6 +98,7 @@ class Cartes(Resource):
         return 'done'
 
     # modify an action --- curl -X PUT http://127.0.0.1:5000/api/cartes "action_id=xxxxx&title=xxxx&description=xxx&image_url=xxx&impact=xxx&category=xxx&rating=xxxx&disliked_by=xxx&liked_by=xxx&top_action=xxxx"
+    @jwt_required()
     def put(self):
         args = self.reqparse.parse_args()
         
@@ -127,6 +130,7 @@ class Cartes(Resource):
         return 'done'
 
     # delete an action --- curl -X DELETE http://127.0.0.1:5000/api/cartes "action_id=xxxxx"
+    @jwt_required()
     def delete(self):
         args = self.reqparse.parse_args()
         Actions.query.filter_by(id=args['action_id']).delete()

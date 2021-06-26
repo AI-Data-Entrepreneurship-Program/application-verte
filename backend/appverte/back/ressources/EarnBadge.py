@@ -3,7 +3,8 @@ import json
 import ast
 from appverte.back.tables import db, User, Badges
 from appverte.back.alchemy_encoder import AlchemyEncoder
-     
+from flask_jwt_extended import jwt_required
+
 class EarnBadge(Resource): 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -13,6 +14,7 @@ class EarnBadge(Resource):
             help = 'No badge_id provided')
 
     # add a new badge to a user --- curl http://127.0.0.1:5000/api/earnBadge -d "badge_id=xxxxx&user_id=xxx"
+    @jwt_required()
     def post(self): 
         args = self.reqparse.parse_args()
         

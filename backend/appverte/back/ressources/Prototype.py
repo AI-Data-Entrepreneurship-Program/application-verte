@@ -3,7 +3,7 @@ import json
 from appverte.back.tables import db, PrototypeData
 import random
 from appverte.back.alchemy_encoder import AlchemyEncoder
-
+from flask_jwt_extended import jwt_required
 
 
 class Prototype(Resource):
@@ -37,6 +37,7 @@ class Prototype(Resource):
             help = 'No time_spent provided')
     
     # add data from front end when new user is testing --- curl http://127.0.0.1:5000/api/prototypetesting -d "id_session=xxxxx&time_started=xxxx&time_ended=xxx&device=xxxx&actions_clicked=xxxxx&actions_added=xxxx&actions_liked_commented=xxxx&actions_disliked=xxxx&actions_viewed=xxx&actions_stopped=xxx&time_spent=xxxx&filters_selected=xxxx&terms_searched=xxx"
+    @jwt_required()
     def post(self): 
         args = self.reqparse.parse_args()
         db.session.add(
@@ -61,6 +62,7 @@ class Prototype(Resource):
         return "session %s info added" % str(args['id_session'])
 
     # get the data collected --- curl http://127.0.0.1:5000/api/prototypetesting
+    @jwt_required()
     def get(self):
             
         data = json.loads(json.dumps(PrototypeData.query.all(), cls=AlchemyEncoder))

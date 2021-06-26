@@ -8,7 +8,7 @@ with open('appverte/config.json') as config_file:
 
 class Config:
     SECRET_KEY= config.get('SECRET_KEY')
-    
+    JWT_SECRET_KEY = config.get('JWT_SECRET_KEY')
     #local database
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
