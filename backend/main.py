@@ -72,7 +72,7 @@ def setup_database(app):
             Admin(
                 id= str(random.randint(0,10000000)),
                 username= 'turtleiatech',
-                password= generate_password_hash('ds2LKKJD342jkdjs23jkdj4JDS').decode('utf8')
+                password= generate_password_hash('<INSERT PASSWORD HERE>').decode('utf8')
             )
             )
         db.session.commit()
